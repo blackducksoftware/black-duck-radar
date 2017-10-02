@@ -1,0 +1,14 @@
+{
+  "extends": "blackduck/es6",
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "codeFrame": false
+  },
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    // eslint 3.16.1 doesn't support this rule
+    "no-compare-neg-zero": "off"
+  }
+}

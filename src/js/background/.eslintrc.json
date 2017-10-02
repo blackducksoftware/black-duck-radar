@@ -1,0 +1,7 @@
+{
+  "globals": {
+    "chrome": true,
+    "DEBUG_REDUX": true,
+    "DEBUG_AJAX": true
+  }
+}

@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+.helpContainer {
+    width: 500px;
+    height: 350px;
+    line-height: 36px;
+    font-size: 10px;
+    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    color: #FFFFFF;
+    display: block;
+}
+
+.helpPanelText {
+    float: left;
+    padding-left: 25px;
+}
+
+.helpPanelText a {
+    color: #FFFFFF;
+}
+
+.copywriteBlock {
+    width: 475px;
+    display: block;
+    position: absolute;
+    bottom: 24px;
+    color: #FFF;
+}
+
+.copywrite {
+    text-align: center;
+}

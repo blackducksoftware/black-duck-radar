@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+.loginBlock {
+    width: 55%;
+    display: inline;
+    float: right;
+    margin-right: 10px;
+    vertical-align: top;
+    padding: 0px 5px 10px 0px;
+}
+
+.textBlock {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+    vertical-align: bottom;
+}
+
+.textItem {
+    text-align: right;
+    vertical-align: bottom;
+    line-height: 12px;
+    font-size: 10px;
+    color: #1B2855;
+    margin-bottom: 2px;
+    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+}
+
+.loginLink {
+    background:none;
+    float: right;
+    color:inherit;
+    border:none;
+    padding:0;
+    margin-left: 2px;
+    margin-right: 2px;
+    border-bottom:1px solid transparent;
+    outline:none;
+    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    cursor: pointer;
+    color: #00ACF2;
+}
+
+.loginLink:hover {
+    border-bottom:1px solid #00ACF2;
+}
+
+.loginForm {
+    width: 450px;
+    height: 175px;
+    top: 50%;
+    left: 50%;
+    margin-left: -225px;
+    position: absolute;
+    display: inline;
+    overflow: hidden;
+    box-shadow: 0 0 5px #333;
+}
+
+.loginImage {
+    background-color: white;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.loginImage::before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 35%;
+    opacity: 0.15;
+    z-index: 0;
+    background-image: url('https://avatars2.githubusercontent.com/u/431461?v=3&amp;s=80');
+    background-position: left bottom;
+    background-repeat: no-repeat;
+    background-size: 130px;
+}
+
+.loginInputPanel {
+    width: 65%;
+    height: 100%;
+    display: block;
+    float: right;
+}
+
+.loginFormControl {
+    float: right;
+    display: block;
+    margin: 6px 12px;
+    width: 100%;
+    font-size: 10px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+.loginButton {
+    float: right;
+    display: block;
+    margin: 6px 12px;
+    color: #fff;
+    background-color: #285f8f;
+    background: linear-gradient(to bottom,#285f8f 0,#255783 100%);
+    font-weight: 400;
+    text-align: center;
+    touch-action: manipulation;
+    cursor: pointer;
+    border: 1px solid transparent;
+    line-height: 1.42857143;
+    user-select: none;
+}
+
+.logoutInputContainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.logoutButton {
+    composes: loginLink;
+    position:absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.logoutButton:hover {
+    border-bottom:1px solid transparent;
+}
+
+.logoutButtonText {
+    margin-bottom: 6px;
+}
+
+.profileImage {
+    background-color: #ccc;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    margin-right: 6px;
+    margin-left: 2px;
+}

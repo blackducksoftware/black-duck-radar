@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+html,
+body {
+    margin: 0;
+    height: 100%;
+    overflow: scroll;
+    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    color: #E6E93A;
+    background-color: #000;
+}
+
+.input {
+    border: 0;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.credential-input {
+    background-color: transparent;
+    color: #FFF;
+    border-bottom: 2px gray solid;
+    margin-top: -17px;
+    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    display: block;
+    position: absolute;
+    float: right;
+}
+
+.ready-player-title {
+    text-align: center;
+    margin: 44px 0 0 0;
+}
+
+.login-title {
+    color: #FFF;
+    text-align: center;
+    margin: 41px 0 0 0;
+}
+
+.login-form {
+    margin: 27px 50px 0 50px;
+}
+
+.origin-label {
+    margin: 0;
+}
+
+#origin {
+    background-color: #D8D8D8;
+    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    height: 36px;
+    width: 100%;
+    font-size: 12px;
+    margin: 14px 0 0 0;
+}
+
+#origin.input-error {
+    border: 2px red solid;
+}
+
+.username-label {
+    display: block;
+    margin: 49px 0 0 0;
+}
+
+#username {
+    margin-left: 121px;
+    width: 279px;
+}
+
+.credential-input.input-error {
+    border-bottom: 2px red solid;
+}
+
+.password-label {
+    display: block;
+    margin: 31px 0 0 0;
+}
+
+.copywrite-block {
+    width: 100%;
+    display: block;
+    position: absolute;
+    bottom: 24px;
+    color: #FFF;
+}
+
+.copywrite {
+    text-align: center;
+}
+
+#password {
+    margin-left: 109px;
+    width: 290px;
+}
+
+.submit-link {
+    text-decoration: none;
+    color: #E6E93A;
+    float: right;
+    margin-top: 49px;
+}
+
+.submit-link:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#error {
+    height: 0;
+    margin-top: 27px;
+    text-align: center;
+    line-height: 75px;
+    color: #000;
+    background-color: #FF0000;
+    transition: height 0.1s ease;
+}
+
+#error.active {
+    height: 75px;
+    border: 1px #FF0000 solid;
+}

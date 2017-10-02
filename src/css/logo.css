@@ -1,0 +1,20 @@
+.logoImage {
+    height: 27px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.taglineText {
+    color: #FFFFFF;
+    font-size: 11px;
+    margin-left: 0px;
+    margin-top: 13px;
+    margin-right: 10px;
+    vertical-align: bottom;
+}
+
+.logoBlock {
+    height: 42px;
+    margin: 10px;
+    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+}

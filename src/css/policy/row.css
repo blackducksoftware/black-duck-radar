@@ -1,0 +1,25 @@
+.leftFloat {
+    composes: block from '../common/blocks.css';
+    float: left;
+}
+
+.policyText {
+    line-height: 36px;
+    font-size: 12px;
+}
+
+.nameLabel {
+    composes: policyText;
+    float: left;
+    padding-left: 47px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 425px;
+}
+
+.sourceLabel {
+    composes: policyText;
+    float: right;
+    padding-right: 42px;
+}

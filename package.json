@@ -1,0 +1,69 @@
+{
+  "name": "hub-radar",
+  "version": "0.0.1",
+  "description": "Chrome extension for displaying open source packages' licensing, security and operational risk via Black Duck's Knowledge Base",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --env.prod",
+    "webpack-debug": "webpack --display-error-details",
+    "dev-build": "webpack",
+    "debug-build": "webpack --env.debug-redux --env.debug-ajax",
+    "lint": "eslint 'src/js/**/*.js' 'src/js/**/*.jsx'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blackducksoftware/hub-radar.git"
+  },
+  "keywords": [
+    "open",
+    "source",
+    "security"
+  ],
+  "author": "Black Duck Software",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/blackducksoftware/hub-radar/issues"
+  },
+  "homepage": "https://github.com/blackducksoftware/hub-radar#readme",
+  "dependencies": {
+    "babel-polyfill": "6.23.0",
+    "prop-types": "^15.5.8",
+    "react": "^15.6.1",
+    "react-chrome-redux": "1.3.1",
+    "react-dom": "^15.6.1",
+    "react-frame-component": "^1.0.3",
+    "react-redux": "5.0.5",
+    "react-router": "4.0.0",
+    "redux": "3.6.0",
+    "redux-thunk": "2.2.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-external-helpers": "6.18.0",
+    "babel-plugin-transform-export-extensions": "6.22.0",
+    "babel-plugin-transform-object-rest-spread": "6.23.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "6.24.0",
+    "babel-preset-react": "6.23.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "browser-sync": "2.18.8",
+    "chalk": "^1.1.3",
+    "clean-webpack-plugin": "^0.1.16",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "^0.28.1",
+    "del": "2.2.2",
+    "eslint": "^4.0.0",
+    "eslint-config-blackduck": "git+https://github.com/blackducksoftware/eslint-config-blackduck.git",
+    "eslint-plugin-react": "^7.1.0",
+    "mkdir-promise": "1.0.0",
+    "moment": "^2.18.1",
+    "npm-run-all": "4.0.2",
+    "onchange": "3.2.1",
+    "style-loader": "^0.17.0",
+    "uglify-js": "2.8.18",
+    "webpack": "^2.5.1",
+    "yargs": "7.1.0"
+  }
+}

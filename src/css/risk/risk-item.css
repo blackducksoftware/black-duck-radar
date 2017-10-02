@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+.riskContainer {
+    width: 480px;
+    background-color: #000000;
+    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    font-size: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.riskContainerHeader {
+    text-align: center;
+    color: #00A4E6;
+    letter-spacing: 0;
+    line-height: 12px;
+}
+.riskItemsContainer {
+    width: 100%;
+    padding: 10px;
+    display: inline-flex;
+}
+.itemBox {
+    width: 100px;
+    height: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.itemValueContainer {
+    height: 75%;
+    width: 80px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #4a4a4a;
+    display: flex;
+    flex-direction: column-reverse;
+    border-style: solid;
+    border-width: thin;
+    border-color: #7a7a7a;
+}
+
+.itemIconContainer {
+    height: 50px;
+    margin-left: 30%;
+    margin-top: 20%;
+}
+
+.flipIcon {
+    transform: rotateX(180deg);
+}
+
+.itemValue {
+    color: #E6E93A;
+    height: 18px;
+    letter-spacing: 0;
+    line-height: 15px;
+    text-align: center;
+    vertical-align: center;
+    margin: 3px;
+}
+.itemLabel {
+    height: 25%;
+    font-size: 8px;
+    float: bottom;
+    line-height: 15px;
+    margin-top: 8px;
+    text-align: center;
+    color: #E6E93A;
+}
+
+.contributors {
+    height: 40px;
+    width: 40px;
+    margin-left: -4px;
+}

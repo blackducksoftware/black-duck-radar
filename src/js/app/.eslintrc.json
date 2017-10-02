@@ -1,0 +1,8 @@
+{
+  "extends": "blackduck/react",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  }
+}

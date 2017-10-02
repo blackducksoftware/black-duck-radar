@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+.licenseStatus {
+    composes: statusBar from './common/rows.css';
+    background-color: #4A4A4A;
+}
+
+.licenseText {
+    line-height: 36px;
+    font-size: 10px;
+    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    color: #FFFFFF;
+}
+
+.nameLabel {
+    composes: licenseText;
+    float: left;
+    padding-left: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 275px;
+}
+
+.nameLabel a {
+    color: #FFFFFF;
+    text-decoration: none !important;
+}
+
+.sharingLabel {
+    composes: licenseText;
+    float: right;
+    padding-right: 16px;
+    color: #FFFFFF;
+}

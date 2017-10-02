@@ -1,0 +1,13 @@
+.app {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+.appHeader {
+    display: inline-flex;
+    background-color: white;
+    width: 100%;
+}

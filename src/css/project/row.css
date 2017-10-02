@@ -1,0 +1,26 @@
+.leftFloat {
+    composes: block from '../common/blocks.css';
+    float: left;
+}
+
+.projectText {
+    line-height: 36px;
+    font-size: 14px;
+}
+
+.nameLabel {
+    composes: projectText;
+    float: left;
+    padding-left: 47px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 425px;
+    max-width: 425px;
+}
+
+.sourceLabel {
+    composes: projectText;
+    float: right;
+    padding-right: 42px;
+}

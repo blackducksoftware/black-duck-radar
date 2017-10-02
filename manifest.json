@@ -1,0 +1,46 @@
+{
+  "manifest_version": 4,
+  "name": "Black Duck Radar",
+  "description": "This extension shows license, vulnerability, and Black Duck Hub information about a component.",
+  "version": "0.0.1",
+  "background" : {
+    "scripts": ["background.min.js"],
+    "persistent" : false
+  },
+  "page_action": {
+    "default_icon": {
+      "16":"img/Ducky-80.png",
+      "48":"img/Ducky-80.png",
+      "128": "img/Ducky-80.png"
+    },
+    "default_title": "Component Information"
+  },
+  "icons" : {
+    "16":"img/Ducky-80.png",
+    "48":"img/Ducky-80.png",
+    "128": "img/Ducky-80.png"
+  },
+  "permissions": [
+    "declarativeContent",
+    "storage",
+    "tabs",
+    "webNavigation",
+    "activeTab", "https://ajax.googleapis.com/",
+    "https://collect.blackducksoftware.com/",
+    "https://www.npmjs.com/",
+    "https://cocoapods.org/",
+    "https://metacpan.org/",
+    "https://packagist.org/",
+    "https://pypi.org/",
+    "https://www.nuget.org/"
+  ],
+  "optional_permissions": [
+    "http://*/",
+    "https://*/"
+  ],
+  "web_accessible_resources": [
+    "login.css",
+    "logo.css",
+    "img/*.png"
+  ]
+}

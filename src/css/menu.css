@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+.menuBlock {
+    height: 60px;
+    display: flex;
+    width: 60%;
+}
+
+.menuItem {
+    height: 100%;
+    width: 84px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 12px;
+    font-size: 14px;
+    color: #1B2855;
+    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    cursor: pointer;
+}
+
+.clickableMenuItem {
+    margin-top: 8%;
+    margin-bottom: 1px;
+}
+
+.selectionBar {
+    transition: background-color 0.3s ease;
+    width: 84px;
+    height: 100%;
+    padding-top: 10px;
+    display: inline-block;
+    border-top-style: solid;
+    border-top-width: 10px;
+    border-top-color: #FFFFFF;
+    cursor: pointer;
+}
+
+.selectedBar {
+    composes: selectionBar;
+    border-top-style: solid;
+    border-top-width: 10px;
+    border-top-color: #1194F6;
+}
+
+.unselectedBar {
+    composes: selectionBar;
+    transition: background-color 0.3s ease, border-top-color 0.3s ease;
+    background-color: transparent;
+}
+
+.unselectedBar:hover {
+    border-top-color: rgba(17, 148, 246, 0.41);
+}

@@ -1,0 +1,32 @@
+.row {
+    background-color: #4A4A4A;
+    color: #FFFFFF;
+    height: 36px;
+    margin: 4px 0 4px 0;
+}
+
+.clickableRow {
+    composes: row;
+    transition: background-color 0.3s ease;
+}
+
+.clickableRow:hover {
+    background-color: #f6f6f6;
+    color: #000000;
+}
+
+.clickableRow a {
+    color: #FFFFFF;
+    transition: background-color 0.3s ease;
+    text-decoration: none !important;
+}
+
+.clickableRow:hover a {
+    color: #000000;
+}
+
+.statusBar {
+    width: 5px;
+    height: 100%;
+    float: left;
+}

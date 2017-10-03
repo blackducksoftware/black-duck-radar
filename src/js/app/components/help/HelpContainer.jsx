@@ -44,12 +44,18 @@ class HelpContainer extends Component {
     render() {
         const { chromeExtensionDetails } = this.props;
         const docUrl = 'https://blackducksoftware.atlassian.net/wiki/spaces/INTDOCS/overview';
+        const feedbackUrl = 'https://github.com/blackducksoftware/black-duck-radar/issues';
         return (
             <div className={helpContainer}>
                 <div className={helpPanelText}>
                     <div>{chromeExtensionDetails.description}</div>
                     <div>Version: {chromeExtensionDetails.version}</div>
-                    <a href={docUrl} title={docUrl} target='_blank'>Integrations Documentation</a>
+                    <div>
+                        <a href={docUrl} title={docUrl} target='_blank'>Integrations Documentation</a>
+                    </div>
+                    <div>
+                        <a href={feedbackUrl} title={feedbackUrl} target='_blank'>Extension Feedback</a>
+                    </div>
                 </div>
                 <div className={copywriteBlock}>
                     <p className={copywrite}>

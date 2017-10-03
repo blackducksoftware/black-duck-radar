@@ -54,7 +54,7 @@ class HelpContainer extends Component {
                         <a href={docUrl} title={docUrl} target='_blank'>Integrations Documentation</a>
                     </div>
                     <div>
-                        <a href={feedbackUrl} title={feedbackUrl} target='_blank'>Extension Feedback</a>
+                        <a href={feedbackUrl} title={feedbackUrl} target='_blank'>Send Feedback to the Team on GitHub</a>
                     </div>
                 </div>
                 <div className={copywriteBlock}>

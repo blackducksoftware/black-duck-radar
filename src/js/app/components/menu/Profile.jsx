@@ -8,7 +8,7 @@ import {
 } from 'app/store/actions/alias-actions';
 
 class Profile extends Component {
-    static itemName = 'ITEMS';
+    static itemName = 'PROFILE';
 
     static contextTypes = {
         store: PropTypes.object,

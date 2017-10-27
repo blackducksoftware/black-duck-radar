@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
-@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
 html,
@@ -7,7 +6,7 @@ body {
     margin: 0;
     height: 100%;
     overflow: scroll;
-    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    font-family: 'OpenSans', sans-serif;
     color: #E6E93A;
     background-color: #000;
 }
@@ -27,15 +26,10 @@ body {
     color: #FFF;
     border-bottom: 2px gray solid;
     margin-top: -17px;
-    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    font-family: OpenSans, Open San;
     display: block;
     position: absolute;
     float: right;
-}
-
-.ready-player-title {
-    text-align: center;
-    margin: 44px 0 0 0;
 }
 
 .login-title {
@@ -54,7 +48,7 @@ body {
 
 #origin {
     background-color: #D8D8D8;
-    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    font-family: 'OpenSans', sans-serif;
     height: 36px;
     width: 100%;
     font-size: 12px;

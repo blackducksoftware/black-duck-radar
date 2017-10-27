@@ -92,7 +92,6 @@ class LoginStatusContainer extends Component {
                     <div className={styles.textItem}>
                         <button className={styles.loginLink} onClick={this.displayLogin}>LOG IN</button>
                     </div>
-                    <div className={styles.textItem}>READY PLAYER 1</div>
                 </div>
             </div>
         );

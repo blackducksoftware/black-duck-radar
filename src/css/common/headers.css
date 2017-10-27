@@ -8,7 +8,7 @@
     transition: background-color 0.5s ease;
     height: 46px;
     width: 100%;
-    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    font-family: OpenSans, Open Sans;
     color: #F7F7F8;
     background-color: #CCCCCC;
     position: relative;

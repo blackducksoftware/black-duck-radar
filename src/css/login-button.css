@@ -1,5 +1,5 @@
 .loginBlock {
-    width: 55%;
+    width: 68%;
     display: inline;
     float: right;
     margin-right: 14px;
@@ -19,7 +19,7 @@
     text-align: right;
     vertical-align: bottom;
     line-height: 14px;
-    font-size: 10px;
+    font-size: 14px;
     color: #1B2855;
     margin-bottom: 2px;
     font-family: 'OpenSans', sans-serif;
@@ -86,7 +86,7 @@
 .loginFormControl {
     float: right;
     display: block;
-    margin: 6px 12px;
+    margin: 6px 14px;
     width: 100%;
     font-size: 10px;
     line-height: 1.42857143;

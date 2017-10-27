@@ -39,6 +39,11 @@ class LicenseContainer extends Component {
         return url;
     }
 
+    getLicenseTypeUrl() {
+        const { hubOrigin } = this.props;
+        return `${hubOrigin}/doc/Welcome.htm#licenses/licenseriskvalues.htm`;
+    }
+
     getLicenses() {
         const { licenses } = this.props;
 
@@ -48,7 +53,8 @@ class LicenseContainer extends Component {
                     key={license.license}
                     name={license.name}
                     codeSharing={license.codeSharing}
-                    url={this.getUiUrl(license.license)}
+                    licenseUrl={this.getUiUrl(license.license)}
+                    licenseTypeUrl={this.getLicenseTypeUrl()}
                 />
             ));
         }

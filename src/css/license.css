@@ -35,3 +35,8 @@
     padding-right: 16px;
     color: #FFFFFF;
 }
+
+.sharingLabel a {
+    color: #FFFFFF;
+    text-decoration: none !important;
+}

@@ -11,7 +11,8 @@ class License extends Component {
     static propTypes = {
         codeSharing: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
-        url: PropTypes.string.isRequired
+        licenseUrl: PropTypes.string.isRequired,
+        licenseTypeUrl: PropTypes.string.isRequired
     };
 
     getCodeSharingLabel() {
@@ -25,16 +26,44 @@ class License extends Component {
     }
 
     render() {
-        const { name, url } = this.props;
-        if (url) {
+        const { name, licenseUrl, licenseTypeUrl } = this.props;
+        const codeSharingLabel = this.getCodeSharingLabel();
+        console.log("License render");
+        if (licenseUrl && licenseTypeUrl) {
             return (
                 <div className={row}>
                     <div className={licenseStatus} />
                     <div className={nameLabel}>
-                        <a href={url} target='_blank' title={name} rel='noopener noreferrer'>{name}</a>
+                        <a href={licenseUrl} target='_blank' title={name} rel='noopener noreferrer'>{name}</a>
                     </div>
                     <div className={sharingLabel}>
-                        { this.getCodeSharingLabel() }
+                        <a href={licenseTypeUrl} target='_blank' title={codeSharingLabel} rel='noopener noreferrer'>{ codeSharingLabel }</a>
+                    </div>
+                </div>
+            );
+        }
+        else if (licenseUrl) {
+            return (
+                <div className={row}>
+                    <div className={licenseStatus} />
+                    <div className={nameLabel}>
+                        <a href={licenseUrl} target='_blank' title={name} rel='noopener noreferrer'>{name}</a>
+                    </div>
+                    <div className={sharingLabel}>
+                        { codeSharingLabel }
+                    </div>
+                </div>
+            );
+        }
+        else if (licenseTypeUrl) {
+            return (
+                <div className={row}>
+                    <div className={licenseStatus} />
+                    <div className={nameLabel} title={name}>
+                        {name}
+                    </div>
+                    <div className={sharingLabel}>
+                        <a href={licenseTypeUrl} target='_blank' title={codeSharingLabel} rel='noopener noreferrer'>{ codeSharingLabel }</a>
                     </div>
                 </div>
             );
@@ -46,7 +75,7 @@ class License extends Component {
                     {name}
                 </div>
                 <div className={sharingLabel}>
-                    { this.getCodeSharingLabel() }
+                    { codeSharingLabel }
                 </div>
             </div>
         );

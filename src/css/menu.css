@@ -1,11 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
-@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-
 .menuBlock {
     height: 60px;
     display: flex;
     width: 60%;
+    margin-left: 25px;
 }
 
 .menuItem {
@@ -15,8 +12,9 @@
     vertical-align: middle;
     line-height: 12px;
     font-size: 14px;
-    color: #1B2855;
-    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    color: black;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: normal;
     cursor: pointer;
 }
 

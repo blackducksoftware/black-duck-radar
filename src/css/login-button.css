@@ -1,14 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
-@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-
 .loginBlock {
     width: 55%;
     display: inline;
     float: right;
     margin-right: 10px;
     vertical-align: top;
-    padding: 0px 5px 10px 0px;
+    padding: 0 5px 10px 0;
 }
 
 .textBlock {

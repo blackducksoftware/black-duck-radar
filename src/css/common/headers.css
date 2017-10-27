@@ -1,13 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
-@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-
 .panelHeader {
-    height: 38px;
-    background-color: black;
+    height: 62px;
+    background-color: #5598D6;
     color: #F7F7F8;
-    margin-top: 10px;
-    margin-bottom: 10px;
 }
 
 .sectionHeader {

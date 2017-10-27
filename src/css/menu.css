@@ -19,14 +19,14 @@
 }
 
 .clickableMenuItem {
-    margin-top: 25%;
+    margin-top: 29%;
     margin-bottom: 1px;
 }
 
 .selectionBar {
     transition: background-color 0.3s ease;
     height: 100%;
-    padding-top: 6px;
+    padding-top: 7px;
     display: inline-block;
     border-top-style: solid;
     border-top-width: 5px;
@@ -38,7 +38,7 @@
     composes: selectionBar;
     border-top-style: solid;
     border-top-width: 5px;
-    border-top-color: #1194F6;
+    border-top-color: #5598D6;
 }
 
 .unselectedBar {

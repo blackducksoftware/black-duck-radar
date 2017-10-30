@@ -2,9 +2,9 @@
     width: 500px;
     height: 350px;
     line-height: 36px;
-    font-size: 10px;
+    font-size: 14px;
     font-family: 'OpenSans', sans-serif;
-    color: #FFFFFF;
+    color: #000000;
     display: block;
 }
 
@@ -14,7 +14,7 @@
 }
 
 .helpPanelText a {
-    color: #FFFFFF;
+    color: #000000;
 }
 
 .copywriteBlock {
@@ -22,7 +22,7 @@
     display: block;
     position: absolute;
     bottom: 24px;
-    color: #FFF;
+    color: #000000;
 }
 
 .copywrite {

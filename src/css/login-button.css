@@ -33,15 +33,15 @@
     padding:0;
     margin-left: 2px;
     margin-right: 2px;
-    border-bottom:1px solid transparent;
+    border-bottom:3px solid transparent;
     outline:none;
-    font-family: OpenSans, Open San;
+    font-family: 'OpenSans', 'Open San';
     cursor: pointer;
     color: #000000;
 }
 
 .loginLink:hover {
-    border-bottom:1px solid #000000;
+    border-bottom:3px solid #000000;
 }
 
 .loginForm {

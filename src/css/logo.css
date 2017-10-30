@@ -10,10 +10,15 @@
     margin-left: 0px;
     margin-right: 10px;
     margin-top: 5px;
+    font-family: 'OpenSans', sans-serif;
+    font-weight: normal;
 }
 
 .logoBlock {
     height: 42px;
-    margin: 10px;
-    font-family: 'Open Sans', sans-serif;
+    padding: 10px;
+    font-family: 'OpenSans-Bold', sans-serif;
+    font-weight: bold;
+    font-size: 19px;
+    background-color: #000000;
 }

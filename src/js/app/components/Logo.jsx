@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { logoBlock, logoImage, taglineText } from 'css/logo'
+import { logoBlock, logoImage, taglineText, radarText } from 'css/logo'
 
 export default class Logo extends Component {
     shouldComponentUpdate() {

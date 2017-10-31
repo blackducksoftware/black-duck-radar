@@ -13,15 +13,21 @@ class ProjectsContainer extends Component {
     };
 
     static propTypes = {
-        projectList: PropTypes.arrayOf(PropTypes.object),
-        componentVersion: PropTypes.object,
+        projectList: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.object),
+            PropTypes.string
+        ]),
+        componentVersion: PropTypes.oneOfType([
+            PropTypes.object,
+            PropTypes.string
+        ]),
         hubOrigin: PropTypes.string,
         syncHubComponentVersionReferenceProjects: PropTypes.func.isRequired
     };
 
     static defaultProps = {
-        projectList: undefined,
-        componentVersion: undefined,
+        projectList: SYNC_PENDING,
+        componentVersion: SYNC_PENDING,
         hubOrigin: undefined
     };
 

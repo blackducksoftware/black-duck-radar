@@ -13,14 +13,20 @@ class LicenseContainer extends Component {
     };
 
     static propTypes = {
-        licenses: PropTypes.arrayOf(PropTypes.object),
-        componentVersion: PropTypes.object,
+        licenses: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.object),
+            PropTypes.string
+        ]),
+        componentVersion: PropTypes.oneOfType([
+            PropTypes.object,
+            PropTypes.string
+        ]),
         hubOrigin: PropTypes.string
     };
 
     static defaultProps = {
-        licenses: null,
-        componentVersion: undefined,
+        licenses: SYNC_PENDING,
+        componentVersion: SYNC_PENDING,
         hubOrigin: undefined
     };
 
@@ -90,6 +96,4 @@ const mapStateToProps = ({ hubOrigin, hubComponentVersionMap }) => {
     };
 };
 
-const mapDispatchToProps = () => { };
-
-export default connect(mapStateToProps, mapDispatchToProps)(LicenseContainer);
+export default connect(mapStateToProps)(LicenseContainer);

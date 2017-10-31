@@ -54,8 +54,6 @@ class Profile extends Component {
     }
 }
 
-const mapStateToProps = () => { };
-
 const mapDispatchToProps = (dispatch) => {
     const tabId = Tab.getId();
     return {
@@ -65,4 +63,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(null, mapDispatchToProps)(Profile);

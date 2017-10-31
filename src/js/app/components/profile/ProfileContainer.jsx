@@ -19,13 +19,16 @@ class ProfileContainer extends Component {
 
     static propTypes = {
         componentName: PropTypes.string,
-        externalComponent: PropTypes.object,
+        externalComponent: PropTypes.oneOfType([
+            PropTypes.object,
+            PropTypes.string
+        ]),
         versionName: PropTypes.string
     };
 
     static defaultProps = {
         componentName: '',
-        externalComponent: undefined,
+        externalComponent: SYNC_PENDING,
         versionName: ''
     };
 
@@ -43,8 +46,8 @@ class ProfileContainer extends Component {
         return (
             <div className={block}>
                 <PanelHeader componentName={componentName} versionName={versionName} />
-                <LicensesContainer />
                 <OperationalRiskContainer />
+                <LicensesContainer />
                 <VulnerabilitiesContainer />
                 <PoliciesContainer />
                 <ProjectsContainer />
@@ -67,6 +70,4 @@ const mapStateToProps = ({ hubConnectionState = {}, hubExternalComponentMap = {}
     };
 };
 
-const mapDispatchToProps = () => { };
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer);
+export default connect(mapStateToProps)(ProfileContainer);

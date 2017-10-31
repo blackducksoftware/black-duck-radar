@@ -73,7 +73,7 @@ class Hub {
      * */
     async getComponentVersionReferenceProjects(componentVersion) {
         const references = await this.getComponentVersionReferences(componentVersion);
-        return Promise.all(references.map(::this.getReferenceProjectVersion));
+        return Promise.all(references.map(this.getReferenceProjectVersion.bind(this)));
     }
 
     async getComponentVersionReferences(componentVersion) {

@@ -18,15 +18,21 @@ class OperationalRiskContainer extends Component {
 
     static propTypes = {
         isHubConnected: PropTypes.bool.isRequired,
-        riskProfile: PropTypes.object,
-        componentVersion: PropTypes.object,
+        riskProfile: PropTypes.oneOfType([
+            PropTypes.object,
+            PropTypes.string
+        ]).isRequired,
+        componentVersion: PropTypes.oneOfType([
+            PropTypes.object,
+            PropTypes.string
+        ]).isRequired,
         syncHubComponentRiskProfile: PropTypes.func.isRequired
     };
 
     static defaultProps = {
-        riskProfile: undefined,
+        riskProfile: SYNC_PENDING,
         isHubConnected: false,
-        componentVersion: null
+        componentVersion: SYNC_PENDING
     };
 
     componentDidMount() {

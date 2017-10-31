@@ -11,7 +11,7 @@ class License extends Component {
     static propTypes = {
         codeSharing: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
-        licenseUrl: PropTypes.string.isRequired,
+        licenseUrl: PropTypes.object.isRequired,
         licenseTypeUrl: PropTypes.string.isRequired
     };
 
@@ -28,7 +28,6 @@ class License extends Component {
     render() {
         const { name, licenseUrl, licenseTypeUrl } = this.props;
         const codeSharingLabel = this.getCodeSharingLabel();
-        console.log("License render");
         if (licenseUrl && licenseTypeUrl) {
             return (
                 <div className={row}>

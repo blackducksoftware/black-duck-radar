@@ -1,15 +1,12 @@
 {
   "presets": [
     [
-      "es2015", { "modules": false }
+      "es2016"
     ],
-    "stage-0",
     "react"
   ],
   "plugins": [
     "external-helpers",
-    "transform-regenerator",
-    "syntax-async-functions",
-    "transform-runtime"
+    "transform-class-properties"
   ]
 }

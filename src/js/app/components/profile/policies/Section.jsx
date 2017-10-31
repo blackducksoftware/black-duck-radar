@@ -11,11 +11,14 @@ import {
 
 class Section extends Component {
     static propTypes = {
-        policyList: PropTypes.arrayOf(PropTypes.object)
+        policyList: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.object),
+            PropTypes.string
+        ])
     };
 
     static defaultProps = {
-        policyList: undefined
+        policyList: []
     };
 
     constructor(props) {
@@ -30,7 +33,9 @@ class Section extends Component {
         if (!count) {
             return null;
         }
+
         const { policyList } = this.props;
+
         return [
             policyList.map((policy) => {
                 return (
@@ -49,11 +54,7 @@ class Section extends Component {
 
     render() {
         const { policyList } = this.props;
-        let count = 0;
-        if (policyList) {
-            const policyKeys = Object.keys(policyList);
-            count = policyKeys.length;
-        }
+        const count = Array.isArray(policyList) ? policyList.length : 0;
 
         const collapsibleState = this.state.isExpanded ? expandedBlock : collapsedBlock;
 

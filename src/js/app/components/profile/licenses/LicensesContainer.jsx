@@ -25,8 +25,8 @@ class LicenseContainer extends Component {
     };
 
     static defaultProps = {
-        licenses: SYNC_PENDING,
-        componentVersion: SYNC_PENDING,
+        licenses: undefined,
+        componentVersion: undefined,
         hubOrigin: undefined
     };
 

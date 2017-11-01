@@ -26,8 +26,8 @@ class ProjectsContainer extends Component {
     };
 
     static defaultProps = {
-        projectList: SYNC_PENDING,
-        componentVersion: SYNC_PENDING,
+        projectList: undefined,
+        componentVersion: undefined,
         hubOrigin: undefined
     };
 

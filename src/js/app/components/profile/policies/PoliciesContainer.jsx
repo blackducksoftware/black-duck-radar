@@ -39,10 +39,10 @@ class PoliciesContainer extends Component {
     };
 
     static defaultProps = {
-        policyList: SYNC_PENDING,
-        bomComponents: SYNC_PENDING,
-        externalComponent: SYNC_PENDING,
-        referenceProjects: SYNC_PENDING
+        policyList: undefined,
+        bomComponents: undefined,
+        externalComponent: undefined,
+        referenceProjects: undefined
     };
 
     componentDidMount() {

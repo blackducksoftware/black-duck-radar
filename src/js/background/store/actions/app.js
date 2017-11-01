@@ -66,7 +66,7 @@ export const clearStore = ({ tabId }) => {
 export const unload = ({ tabId }) => {
     return async (dispatch) => {
         dispatch(setLoadState(tabId, loadEnum.UNLOADING));
-        Tabs.unmountFrame(tabId);
+        Tabs.unmountFrame(tabId).catch(() => {});
         dispatch(clearStore({ tabId }));
     };
 };

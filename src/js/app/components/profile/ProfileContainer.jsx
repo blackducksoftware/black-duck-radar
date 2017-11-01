@@ -28,7 +28,7 @@ class ProfileContainer extends Component {
 
     static defaultProps = {
         componentName: '',
-        externalComponent: SYNC_PENDING,
+        externalComponent: undefined,
         versionName: ''
     };
 

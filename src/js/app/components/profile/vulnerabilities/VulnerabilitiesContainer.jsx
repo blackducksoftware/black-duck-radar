@@ -20,7 +20,7 @@ class VulnerabilityContainer extends Component {
     };
 
     static defaultProps = {
-        vulnerabilityList: []
+        vulnerabilityList: undefined
     };
 
     shouldComponentUpdate({ vulnerabilityList: newVulnerabilityList }) {

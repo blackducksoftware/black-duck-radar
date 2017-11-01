@@ -30,9 +30,9 @@ class OperationalRiskContainer extends Component {
     };
 
     static defaultProps = {
-        riskProfile: SYNC_PENDING,
+        riskProfile: undefined,
         isHubConnected: false,
-        componentVersion: SYNC_PENDING
+        componentVersion: undefined
     };
 
     componentDidMount() {

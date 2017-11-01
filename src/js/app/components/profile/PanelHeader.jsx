@@ -3,15 +3,23 @@ import PropTypes from 'prop-types';
 import { panelHeader } from 'css/common/headers';
 import { projectLabel, versionLabel } from 'css/profile/profile-panel';
 
-const PanelHeader = ({ componentName, versionName }) => {
+const PanelHeader = ({ componentName, versionName, componentUrl }) => {
     return (
         <div className={panelHeader}>
-            <span className={projectLabel}>
+            <a href={componentUrl}
+               className={projectLabel}
+               target='_blank'
+               title={name}
+               rel='noopener noreferrer'>
                 {componentName}
-            </span>
-            <span className={versionLabel}>
+            </a>
+            <a href={componentUrl}
+               className={versionLabel}
+               target='_blank'
+               title={name}
+               rel='noopener noreferrer'>
                 {versionName}
-            </span>
+            </a>
         </div>
     );
 };

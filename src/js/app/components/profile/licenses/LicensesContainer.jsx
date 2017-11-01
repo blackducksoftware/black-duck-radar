@@ -41,7 +41,7 @@ class LicenseContainer extends Component {
         const { hubOrigin } = this.props;
         const licenseId = apiUrl.split('/').pop();
         const url = new URL(hubOrigin);
-        url.pathname = `ui/licenses/id:${licenseId}`;
+        url.pathname = `api/licenses/${licenseId}/text`;
         return url;
     }
 

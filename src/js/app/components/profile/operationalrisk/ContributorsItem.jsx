@@ -15,7 +15,7 @@ class ContributorsItem extends RiskItem {
         const fgClasses = `fa fa-user-circle ${contributorsIcon}`;
 
         return ([
-            <i className={fgClasses} ariaHidden="true" key="contributors-fgicon" />
+            <i className={fgClasses} key="contributors-fgicon" />
         ]);
     }
 

@@ -15,7 +15,7 @@ class NewVersionsItem extends RiskItem {
         const fgClasses = `fa fa-plus-circle ${versionsIcon}`;
 
         return ([
-            <i className={fgClasses} ariaHidden="true" key="versions-fgicon" />
+            <i className={fgClasses} key="versions-fgicon" />
         ]);
     }
 

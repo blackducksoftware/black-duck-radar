@@ -42,10 +42,10 @@ class ProfileContainer extends Component {
     }
 
     render() {
-        const { componentName, versionName } = this.props;
+        const { componentName, versionName, componentUrl } = this.props;
         return (
             <div className={block}>
-                <PanelHeader componentName={componentName} versionName={versionName} />
+                <PanelHeader componentName={componentName} versionName={versionName} componentUrl={componentUrl}/>
                 <OperationalRiskContainer />
                 <LicensesContainer />
                 <VulnerabilitiesContainer />
@@ -59,11 +59,12 @@ class ProfileContainer extends Component {
 const mapStateToProps = ({ hubConnectionState = {}, hubExternalComponentMap = {} }) => {
     const tabId = Tab.getId();
     const externalComponent = hubExternalComponentMap[tabId];
-    const { componentName, versionName } = externalComponent || {};
+    const { componentName, versionName, version: componentUrl } = externalComponent || {};
     const { isHubConnected } = hubConnectionState;
 
     return {
         externalComponent,
+        componentUrl,
         componentName,
         versionName,
         isHubConnected

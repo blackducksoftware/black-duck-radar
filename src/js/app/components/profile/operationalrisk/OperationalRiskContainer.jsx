@@ -21,11 +21,11 @@ class OperationalRiskContainer extends Component {
         riskProfile: PropTypes.oneOfType([
             PropTypes.object,
             PropTypes.string
-        ]).isRequired,
+        ]),
         componentVersion: PropTypes.oneOfType([
             PropTypes.object,
             PropTypes.string
-        ]).isRequired,
+        ]),
         syncHubComponentRiskProfile: PropTypes.func.isRequired
     };
 

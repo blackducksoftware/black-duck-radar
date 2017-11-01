@@ -1,5 +1,3 @@
-
-
 .projectLabel {
     color: white;
     margin-left: 10px;
@@ -7,6 +5,7 @@
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
     font-weight: 400;
+    text-decoration: none !important;
 }
 
 .versionLabel {
@@ -16,4 +15,5 @@
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
     font-weight: 400;
+    text-decoration: none !important;
 }

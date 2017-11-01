@@ -75,12 +75,12 @@ class OperationalRiskContainer extends Component {
         const { riskProfile, isHubConnected } = this.props;
         return (
             <div className={riskContainer}>
-                <div className={riskContainerHeader}>HEALTH SCORE LAST 12 MONTHS</div>
+                <div className={riskContainerHeader}>Operational Risk for the last 12 Months</div>
                 <div className={riskItemsContainer}>
-                    <ActivityItem riskProfile={riskProfile} isHubConnected={isHubConnected} />
                     <CommitsItem riskProfile={riskProfile} isHubConnected={isHubConnected} />
                     <NewVersionsItem riskProfile={riskProfile} isHubConnected={isHubConnected} />
                     <ContributorsItem riskProfile={riskProfile} isHubConnected={isHubConnected} />
+                    <ActivityItem riskProfile={riskProfile} isHubConnected={isHubConnected} isBottomItem />
                 </div>
             </div>
         );
@@ -92,6 +92,7 @@ const mapStateToProps = ({ hubComponentRiskProfileMap = {}, hubComponentVersionM
     const { isHubConnected } = hubConnectionState;
     const componentVersion = hubComponentVersionMap[tabId];
     const riskProfile = hubComponentRiskProfileMap[tabId];
+
     return {
         componentVersion,
         riskProfile,

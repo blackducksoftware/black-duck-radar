@@ -18,6 +18,10 @@
     cursor: pointer;
 }
 
+.selectedBar .menuItem {
+    color: #5598D6;
+}
+
 .clickableMenuItem {
     margin-top: 29%;
     margin-bottom: 1px;

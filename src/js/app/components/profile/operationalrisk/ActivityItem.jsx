@@ -1,55 +1,59 @@
 import React from 'react';
 import RiskItem from './RiskItem';
-import { flipIcon } from 'css/risk/risk-item';
+import {
+    flip,
+    bgIcon,
+    activityIcon
+} from 'css/risk/risk-item';
 
 class ActivityItem extends RiskItem {
     createIcon() {
-        const { riskProfile } = this.props;
-        let isIncreasing = false;
-        let isDecreasing = false;
-        if (riskProfile) {
-            if (riskProfile.activityData) {
-                if (riskProfile.activityData.trending === 'INCREASING') {
-                    isIncreasing = true;
-                } else if (riskProfile.activityData.trending === 'DECREASING') {
-                    isDecreasing = true;
-                }
-            }
-        }
+        const { riskProfile = {} } = this.props;
+        const { activityData } = riskProfile;
 
-        if (isIncreasing || isDecreasing) {
-            const imageUrl = this.getImageUrl('img/arrow.png');
-            if (isIncreasing) {
-                return (
-                    <img src={imageUrl} />
-                );
-            } else if (isDecreasing) {
-                return (
-                    <img src={imageUrl} className={flipIcon} />
-                );
-            }
+        if (!activityData) {
             return null;
         }
-        return null;
+
+        let icon;
+        switch (activityData.trending) {
+            case 'INCREASING':
+                icon = 'fa-arrow-circle-up';
+                break;
+
+            case 'DECREASING':
+                icon = 'fa-arrow-circle-down';
+                break;
+
+            default:
+                icon = 'fa-arrow-circle-right';
+                break;
+        }
+
+        const fgClasses = `fa ${icon} ${activityIcon}`;
+
+        return ([
+            <i className={fgClasses} key={fgClasses} />
+        ])
     }
 
     getName() {
         const { riskProfile, isHubConnected } = this.props;
-        let activityLabel = 'ACTIVITY';
+        let activityLabel = 'Activity';
         if (riskProfile) {
             if (riskProfile.activityData) {
                 if (riskProfile.activityData.trending === 'INCREASING') {
-                    activityLabel = 'INCREASING ACTIVITY';
+                    activityLabel = 'Increasing Activity';
                 } else if (riskProfile.activityData.trending === 'DECREASING') {
-                    activityLabel = 'DECREASING ACTIVITY';
+                    activityLabel = 'Decreasing Activity';
                 } else {
-                    activityLabel = 'NO ACTIVITY';
+                    activityLabel = 'Stable Activity';
                 }
             } else {
-                activityLabel = 'NO ACTIVITY';
+                activityLabel = 'Stable Activity';
             }
         } else if (isHubConnected) {
-            activityLabel = 'NO ACTIVITY';
+            activityLabel = 'Stable Activity';
         }
 
         return activityLabel;

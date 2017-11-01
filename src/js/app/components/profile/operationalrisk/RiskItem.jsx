@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { itemBox, itemValueContainer, itemIconContainer, itemLabel, itemValue } from 'css/risk/risk-item';
+import {
+    itemBox,
+    itemLabel,
+} from 'css/risk/risk-item';
 
 class RiskItem extends Component {
     createIcon() {
@@ -21,13 +24,8 @@ class RiskItem extends Component {
     render() {
         return (
             <div className={itemBox}>
-                <div className={itemValueContainer}>
-                    <div className={itemValue}>{this.getValue()}</div>
-                    <div className={itemIconContainer}>
-                        {this.createIcon()}
-                    </div>
-                </div>
-                <div className={itemLabel}>{this.getName()}</div>
+                <span className={itemLabel}>{this.getValue()}<br/>{this.getName()}</span>
+                {this.createIcon()}
             </div>
         );
     }

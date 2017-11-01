@@ -104,9 +104,9 @@ body {
 .submit-link {
     text-decoration: none;
     color: #000000;
-    float: right;
+    float: left;
     margin-top: 49px;
-    margin-right: 56px;
+    margin-left: 353px;
 }
 
 .submit-link:hover {

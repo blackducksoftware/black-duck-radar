@@ -85,7 +85,7 @@ body {
 }
 
 .copywrite-block {
-    width: 100%;
+    width: 500px;
     display: block;
     position: absolute;
     bottom: 24px;
@@ -104,9 +104,8 @@ body {
 .submit-link {
     text-decoration: none;
     color: #000000;
-    float: left;
+    float: right;
     margin-top: 49px;
-    margin-left: 353px;
 }
 
 .submit-link:hover {
@@ -127,4 +126,9 @@ body {
 #error.active {
     height: 75px;
     border: 1px #FF0000 solid;
+}
+
+.input-container {
+    width: 500px;
+    margin: auto;
 }

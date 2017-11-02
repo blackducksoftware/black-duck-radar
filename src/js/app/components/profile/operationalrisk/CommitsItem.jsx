@@ -1,25 +1,28 @@
 import React from 'react';
 import RiskItem from './RiskItem';
+import { commitsIcon, bgIcon } from 'css/risk/risk-item';
 
 class CommitsItem extends RiskItem {
     createIcon() {
-        const { riskProfile } = this.props;
-        if (riskProfile) {
-            if (riskProfile.activityData) {
-                const commitCount = riskProfile.activityData.commitCount12Month;
-                if (commitCount) {
-                    const imageUrl = this.getImageUrl('img/commits.png');
-                    return (
-                        <img src={imageUrl} />
-                    );
-                }
-            }
+        const { riskProfile = {} } = this.props;
+        const { activityData = {} } = riskProfile;
+        const { commitCount12Month } = activityData;
+
+        if (commitCount12Month === undefined) {
+            return null;
         }
-        return null;
+
+        const fgClasses = `fa fa-code-fork ${commitsIcon}`;
+        const bgClasses = `fa fa-circle ${bgIcon}`;
+
+        return ([
+            <i className={fgClasses} key="commits-fgicon" />,
+            <i className={bgClasses} key="commits-bgicon" />
+        ]);
     }
 
     getName() {
-        return 'COMMITS';
+        return 'Commits';
     }
 
     getValue() {

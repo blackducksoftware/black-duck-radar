@@ -1,10 +1,9 @@
 .loginBlock {
-    width: 68%;
+    width: 76%;
     display: inline;
     float: right;
-    margin-right: 14px;
     vertical-align: top;
-    padding: 0 5px 10px 0;
+    padding: 0 5px 0 0;
 }
 
 .textBlock {
@@ -22,26 +21,22 @@
     font-size: 14px;
     color: #1B2855;
     margin-bottom: 2px;
-    font-family: 'OpenSans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .loginLink {
     background:none;
     float: right;
-    color:inherit;
     border:none;
     padding:0;
     margin-left: 2px;
     margin-right: 2px;
     border-bottom:3px solid transparent;
     outline:none;
-    font-family: 'OpenSans', 'Open San';
+    font-family: 'Open Sans', sans-serif;
     cursor: pointer;
-    color: #000000;
-}
-
-.loginLink:hover {
-    border-bottom:3px solid #000000;
+    font-size: 14px;
+    color: #1B2855;
 }
 
 .loginForm {

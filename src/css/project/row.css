@@ -11,7 +11,7 @@
 .nameLabel {
     composes: projectText;
     float: left;
-    padding-left: 47px;
+    padding-left: 41px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

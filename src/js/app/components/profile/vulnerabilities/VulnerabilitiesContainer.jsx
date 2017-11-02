@@ -13,7 +13,10 @@ class VulnerabilityContainer extends Component {
     };
 
     static propTypes = {
-        vulnerabilityList: PropTypes.object
+        vulnerabilityList: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.object),
+            PropTypes.string
+        ])
     };
 
     static defaultProps = {

@@ -6,7 +6,7 @@ body {
     margin: 0;
     height: 100%;
     overflow: scroll;
-    font-family: 'OpenSans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 14px;
     color: #000000;
     background-color: #FFFFFF;
@@ -32,7 +32,7 @@ body {
     color: #000000;
     border-bottom: 2px gray solid;
     margin-top: -17px;
-    font-family: OpenSans, Open San;
+    font-family: 'Open Sans', sans-serif;
     display: block;
     position: absolute;
     float: right;
@@ -54,7 +54,7 @@ body {
 
 #origin {
     background-color: #D8D8D8;
-    font-family: 'OpenSans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     height: 36px;
     width: 100%;
     font-size: 12px;

@@ -19,7 +19,10 @@ class ProfileContainer extends Component {
 
     static propTypes = {
         componentName: PropTypes.string,
-        externalComponent: PropTypes.object,
+        externalComponent: PropTypes.oneOfType([
+            PropTypes.object,
+            PropTypes.string
+        ]),
         versionName: PropTypes.string
     };
 
@@ -39,12 +42,12 @@ class ProfileContainer extends Component {
     }
 
     render() {
-        const { componentName, versionName } = this.props;
+        const { componentName, versionName, componentUrl } = this.props;
         return (
             <div className={block}>
-                <PanelHeader componentName={componentName} versionName={versionName} />
-                <LicensesContainer />
+                <PanelHeader componentName={componentName} versionName={versionName} componentUrl={componentUrl}/>
                 <OperationalRiskContainer />
+                <LicensesContainer />
                 <VulnerabilitiesContainer />
                 <PoliciesContainer />
                 <ProjectsContainer />
@@ -56,17 +59,16 @@ class ProfileContainer extends Component {
 const mapStateToProps = ({ hubConnectionState = {}, hubExternalComponentMap = {} }) => {
     const tabId = Tab.getId();
     const externalComponent = hubExternalComponentMap[tabId];
-    const { componentName, versionName } = externalComponent || {};
+    const { componentName, versionName, version: componentUrl } = externalComponent || {};
     const { isHubConnected } = hubConnectionState;
 
     return {
         externalComponent,
+        componentUrl,
         componentName,
         versionName,
         isHubConnected
     };
 };
 
-const mapDispatchToProps = () => { };
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer);
+export default connect(mapStateToProps)(ProfileContainer);

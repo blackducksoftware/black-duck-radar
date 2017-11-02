@@ -7,17 +7,16 @@
 .taglineText {
     color: #FFFFFF;
     font-size: 12px;
-    margin-left: 0px;
+    margin-left: 0;
     margin-right: 10px;
-    margin-top: 5px;
-    font-family: 'OpenSans', sans-serif;
-    font-weight: normal;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
 }
 
 .logoBlock {
     height: 42px;
     padding: 10px;
-    font-family: 'OpenSans-Bold', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: bold;
     font-size: 19px;
     background-color: #000000;

@@ -13,11 +13,14 @@ import {
 
 class Section extends Component {
     static propTypes = {
-        vulnerabilityList: PropTypes.object
+        vulnerabilityList: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.object),
+            PropTypes.string
+        ])
     };
 
     static defaultProps = {
-        vulnerabilityList: undefined
+        vulnerabilityList: []
     };
 
     constructor(props) {
@@ -34,8 +37,7 @@ class Section extends Component {
         }
 
         const { vulnerabilityList } = this.props;
-        const keyList = Object.keys(vulnerabilityList);
-        const filteredList = keyList.filter(key => vulnerabilityList[key].severity === targetSeverity.toUpperCase());
+        const filteredList = vulnerabilityList.filter(vuln => vuln.severity === targetSeverity.toUpperCase());
         const count = filteredList.length;
 
         if (!count) {
@@ -46,15 +48,14 @@ class Section extends Component {
 
         return [
             <RowHeader severity={targetSeverity} count={count} key={targetSeverity} />,
-            filteredList.map((key) => {
-                const {
-                    vulnerabilityName,
-                    severity,
-                    source,
-                    detailsUrl,
-                    vulnerabilityPublishedDate,
-                    vulnerabilityUpdatedDate
-                } = vulnerabilityList[key];
+            filteredList.map(({
+                vulnerabilityName,
+                severity,
+                source,
+                detailsUrl,
+                vulnerabilityPublishedDate,
+                vulnerabilityUpdatedDate
+            }) => {
                 return (
                     <Vulnerability
                         name={vulnerabilityName}
@@ -77,7 +78,7 @@ class Section extends Component {
     render() {
         const { isExpanded } = this.state;
         const { vulnerabilityList } = this.props;
-        const count = vulnerabilityList ? vulnerabilityList.length : 0;
+        const count = Array.isArray(vulnerabilityList) ? vulnerabilityList.length : 0;
         const collapsibleState = isExpanded && count ? expandedBlock : collapsedBlock;
 
         return (

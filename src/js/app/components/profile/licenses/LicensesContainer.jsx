@@ -13,13 +13,19 @@ class LicenseContainer extends Component {
     };
 
     static propTypes = {
-        licenses: PropTypes.arrayOf(PropTypes.object),
-        componentVersion: PropTypes.object,
+        licenses: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.object),
+            PropTypes.string
+        ]),
+        componentVersion: PropTypes.oneOfType([
+            PropTypes.object,
+            PropTypes.string
+        ]),
         hubOrigin: PropTypes.string
     };
 
     static defaultProps = {
-        licenses: null,
+        licenses: undefined,
         componentVersion: undefined,
         hubOrigin: undefined
     };
@@ -35,7 +41,7 @@ class LicenseContainer extends Component {
         const { hubOrigin } = this.props;
         const licenseId = apiUrl.split('/').pop();
         const url = new URL(hubOrigin);
-        url.pathname = `ui/licenses/id:${licenseId}`;
+        url.pathname = `api/licenses/${licenseId}/text`;
         return url;
     }
 
@@ -90,6 +96,4 @@ const mapStateToProps = ({ hubOrigin, hubComponentVersionMap }) => {
     };
 };
 
-const mapDispatchToProps = () => { };
-
-export default connect(mapStateToProps, mapDispatchToProps)(LicenseContainer);
+export default connect(mapStateToProps)(LicenseContainer);

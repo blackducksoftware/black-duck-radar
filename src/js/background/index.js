@@ -23,6 +23,7 @@ import { clearStore } from './store/actions/app';
         let componentKeys = getState('forgeComponentKeysMap', tabId);
         let externalComponent = getState('hubExternalComponentMap', tabId);
         const hasComponentKeys = Boolean(componentKeys);
+
         if (isUrlHashUpdate) {
             // The browser URL has changed but the document hasn't reloaded,
             // probably because of navigating to a hash url. Unload the app because
@@ -49,6 +50,7 @@ import { clearStore } from './store/actions/app';
             isEnabled: false,
             tabId
         });
+
         if (hasComponentKeys === false) {
             const forgeComponent = new ForgeComponent();
             // This could be synchronous if we're parsing the keys from the url, but in cases
@@ -59,16 +61,11 @@ import { clearStore } from './store/actions/app';
             });
 
             if (componentKeys) {
-                Button.enable(tabId);
                 dispatch(setForgeComponentKeys({
                     tabId,
                     componentKeys
                 }));
-            } else {
-                Button.disable(tabId);
             }
-        } else {
-            Button.enable(tabId);
         }
 
         const { isHubConnected } = getState('hubConnectionState');

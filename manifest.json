@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Black Duck Radar",
   "description": "This extension shows license, vulnerability, and Black Duck Hub information about a component.",
   "version": "0.0.1",
@@ -7,18 +7,18 @@
     "scripts": ["background.min.js"],
     "persistent" : false
   },
-  "page_action": {
+  "browser_action": {
     "default_icon": {
-      "16":"img/Ducky-80.png",
-      "48":"img/Ducky-80.png",
-      "128": "img/Ducky-80.png"
+      "16":"img/duck.png",
+      "48":"img/duck.png",
+      "128": "img/duck.png"
     },
-    "default_title": "Component Information"
+    "default_title": "Black Duck Radar"
   },
   "icons" : {
-    "16":"img/Ducky-80.png",
-    "48":"img/Ducky-80.png",
-    "128": "img/Ducky-80.png"
+    "16":"img/duck.png",
+    "48":"img/duck.png",
+    "128": "img/duck.png"
   },
   "permissions": [
     "declarativeContent",

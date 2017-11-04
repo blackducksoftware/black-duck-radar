@@ -36,7 +36,9 @@
     font-family: 'Open Sans', sans-serif;
     cursor: pointer;
     font-size: 14px;
-    color: #1B2855;
+    color: #000;
+    position: relative;
+    top: -4px;
 }
 
 .loginForm {
@@ -122,12 +124,9 @@
     right: 0;
 }
 
-.logoutButton:hover {
-    border-bottom:1px solid transparent;
-}
-
 .logoutButtonText {
-    margin-bottom: 6px;
+    position: relative;
+    bottom: 1px;
 }
 
 .profileImage {
@@ -136,4 +135,6 @@
     border-radius: 10px;
     margin-right: 6px;
     margin-left: 2px;
+    position: relative;
+    top: 6px;
 }

@@ -40,7 +40,7 @@ class VulnerabilityContainer extends Component {
             return (new Date(date)).getTime();
         };
 
-        return vulnerabilityList && vulnerabilityList
+        return !Array.isArray(vulnerabilityList) ? [] : vulnerabilityList
             .sort((a, b) => {
                 const aTime = getTime(a);
                 const bTime = getTime(b);

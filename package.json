@@ -66,6 +66,7 @@
     "onchange": "3.2.1",
     "style-loader": "^0.17.0",
     "uglify-js": "2.8.18",
+    "uglifyjs-webpack-plugin": "^1.0.1",
     "webpack": "^2.5.1",
     "yargs": "7.1.0"
   }

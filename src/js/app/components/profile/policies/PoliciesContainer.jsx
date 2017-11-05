@@ -17,10 +17,22 @@ class PoliciesContainer extends Component {
     };
 
     static propTypes = {
-        policyList: PropTypes.arrayOf(PropTypes.object),
-        bomComponents: PropTypes.arrayOf(PropTypes.object),
-        externalComponent: PropTypes.object,
-        referenceProjects: PropTypes.arrayOf(PropTypes.object),
+        policyList: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.object),
+            PropTypes.string
+        ]),
+        bomComponents: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.object),
+            PropTypes.string
+        ]),
+        externalComponent: PropTypes.oneOfType([
+            PropTypes.object,
+            PropTypes.string
+        ]),
+        referenceProjects: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.object),
+            PropTypes.string
+        ]),
         syncHubComponentPolicyRules: PropTypes.func.isRequired,
         syncHubProjectVersionComponents: PropTypes.func.isRequired,
         updateExtensionIcon: PropTypes.func.isRequired

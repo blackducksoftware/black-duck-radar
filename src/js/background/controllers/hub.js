@@ -46,7 +46,7 @@ class Hub {
     /*
      * @param {ComponentKeys}
      * */
-    async getExternalComponents({ forgeName, hubExternalId }) {
+    async getExternalComponents({ forgeName, hubExternalId } = {}) {
         const response = await this.get('/api/components', {
             queryMap: {
                 q: `${forgeName}:${hubExternalId}`
@@ -63,7 +63,7 @@ class Hub {
     /*
      * @param {ExternalComponent}
      * */
-    getComponentVersion({ version: versionUrl }) {
+    getComponentVersion({ version: versionUrl } = {}) {
         return this.get(versionUrl);
     }
 
@@ -73,7 +73,7 @@ class Hub {
      * */
     async getComponentVersionReferenceProjects(componentVersion) {
         const references = await this.getComponentVersionReferences(componentVersion);
-        return Promise.all(references.map(::this.getReferenceProjectVersion));
+        return Promise.all(references.map(this.getReferenceProjectVersion.bind(this)));
     }
 
     async getComponentVersionReferences(componentVersion) {
@@ -83,7 +83,7 @@ class Hub {
     /*
     * @param {ProjectReference}
     * */
-    async getReferenceProjectVersion({ projectName, projectVersionUrl }) {
+    async getReferenceProjectVersion({ projectName, projectVersionUrl } = {}) {
         const projectVersion = await this.get(projectVersionUrl)
             .catch(() => null);
 

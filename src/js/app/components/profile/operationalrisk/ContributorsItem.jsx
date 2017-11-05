@@ -1,28 +1,26 @@
 import React from 'react';
 import RiskItem from './RiskItem';
-import {
-    contributors
-} from 'css/risk/risk-item';
+import { contributorsIcon } from 'css/risk/risk-item';
 
 class ContributorsItem extends RiskItem {
     createIcon() {
-        const { riskProfile } = this.props;
-        if (riskProfile) {
-            if (riskProfile.activityData) {
-                const contributorCount = riskProfile.activityData.contributorCount12Month;
-                if (contributorCount) {
-                    const imageUrl = this.getImageUrl('img/contributors.png');
-                    return (
-                        <img className={contributors} src={imageUrl} />
-                    );
-                }
-            }
+        const { riskProfile = {} } = this.props;
+        const { activityData = {} } = riskProfile;
+        const { contributorCount12Month } = activityData;
+
+        if (contributorCount12Month === undefined) {
+            return null;
         }
-        return null;
+
+        const fgClasses = `fa fa-user-circle ${contributorsIcon}`;
+
+        return ([
+            <i className={fgClasses} key="contributors-fgicon" />
+        ]);
     }
 
     getName() {
-        return 'CONTRIBUTORS';
+        return 'Contributors';
     }
 
     getValue() {

@@ -31,17 +31,9 @@ module.exports = (env = {}) => {
     ];
 
     if (isProdBuild) {
+        const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
         plugins.push(
-            new webpack.optimize.UglifyJsPlugin({
-                beautify: false,
-                mangle: true,
-                compress: {
-                    warnings: false
-                },
-                output: {
-                    comments: false
-                }
-            })
+            new UglifyJSPlugin()
         )
     }
 

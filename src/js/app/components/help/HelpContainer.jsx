@@ -19,7 +19,7 @@ class HelpContainer extends Component {
             version: '',
             name: ''
         }
-    }
+    };
 
     shouldComponentUpdate({ chromeExtensionDetails: newChromeExtensionDetails }) {
         const { chromeExtensionDetails: oldChromeExtensionDetails } = this.props;
@@ -59,7 +59,7 @@ class HelpContainer extends Component {
                 </div>
                 <div className={copywriteBlock}>
                     <p className={copywrite}>
-                        (c) BlackDuck Software 2017
+                        (c) BLACKDUCK SOFTWARE 2017
                     </p>
                 </div>
             </div>
@@ -68,17 +68,7 @@ class HelpContainer extends Component {
 }
 
 const mapStateToProps = ({ chromeExtensionDetails = {} }) => {
-    if (chromeExtensionDetails) {
-        return { chromeExtensionDetails };
-    }
-    return {
-        chromeExtensionDetails: {
-            description: '',
-            version: '',
-            name: ''
-        }
-    };
+    return { chromeExtensionDetails };
 };
-const mapDispatchToProps = () => { };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HelpContainer);
+export default connect(mapStateToProps)(HelpContainer);

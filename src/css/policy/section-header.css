@@ -6,13 +6,13 @@
 .headerLabel {
     composes: headerText;
     padding-left: 24px;
-    font-size: 12px;
+    font-size: 16px;
 }
 
 .headerCount {
     composes: headerText;
     padding-left: 17px;
-    font-size: 12px;
+    font-size: 18px;
 }
 
 .headerChevron {
@@ -20,6 +20,6 @@
     font-size: 12px;
     opacity: 0.602128623;
     font-family: FontAwesome, sans-serif;
-    margin-left: 17px;
+    margin-left: 10px;
     width: 12px;
 }

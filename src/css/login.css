@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:normal,400,bold');
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
 html,
@@ -7,9 +6,15 @@ body {
     margin: 0;
     height: 100%;
     overflow: scroll;
-    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
-    color: #E6E93A;
-    background-color: #000;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: #000000;
+    background-color: #FFFFFF;
+}
+.header {
+    height: 62px;
+    width: 100%;
+    background-color: #000000;
 }
 
 .input {
@@ -24,22 +29,17 @@ body {
 
 .credential-input {
     background-color: transparent;
-    color: #FFF;
+    color: #000000;
     border-bottom: 2px gray solid;
     margin-top: -17px;
-    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    font-family: 'Open Sans', sans-serif;
     display: block;
     position: absolute;
     float: right;
 }
 
-.ready-player-title {
-    text-align: center;
-    margin: 44px 0 0 0;
-}
-
 .login-title {
-    color: #FFF;
+    color: #000000;
     text-align: center;
     margin: 41px 0 0 0;
 }
@@ -54,7 +54,7 @@ body {
 
 #origin {
     background-color: #D8D8D8;
-    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    font-family: 'Open Sans', sans-serif;
     height: 36px;
     width: 100%;
     font-size: 12px;
@@ -85,11 +85,11 @@ body {
 }
 
 .copywrite-block {
-    width: 100%;
+    width: 500px;
     display: block;
     position: absolute;
     bottom: 24px;
-    color: #FFF;
+    color: #000000;
 }
 
 .copywrite {
@@ -97,13 +97,13 @@ body {
 }
 
 #password {
-    margin-left: 109px;
-    width: 290px;
+    margin-left: 121px;
+    width: 279px;
 }
 
 .submit-link {
     text-decoration: none;
-    color: #E6E93A;
+    color: #000000;
     float: right;
     margin-top: 49px;
 }
@@ -118,7 +118,7 @@ body {
     margin-top: 27px;
     text-align: center;
     line-height: 75px;
-    color: #000;
+    color: #FFFFFF;
     background-color: #FF0000;
     transition: height 0.1s ease;
 }
@@ -126,4 +126,9 @@ body {
 #error.active {
     height: 75px;
     border: 1px #FF0000 solid;
+}
+
+.input-container {
+    width: 500px;
+    margin: auto;
 }

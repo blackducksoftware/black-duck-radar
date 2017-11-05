@@ -66,7 +66,7 @@ export const clearStore = ({ tabId }) => {
 export const unload = ({ tabId }) => {
     return async (dispatch) => {
         dispatch(setLoadState(tabId, loadEnum.UNLOADING));
-        Tabs.unmountFrame(tabId);
+        Tabs.unmountFrame(tabId).catch(() => {});
         dispatch(clearStore({ tabId }));
     };
 };
@@ -76,11 +76,12 @@ export const updateExtensionIcon = ({ tabId }) => {
         const externalComponent = store.getState('hubExternalComponentMap', tabId);
         const vulnerabilities = store.getState('hubComponentVulnerabilitiesMap', tabId);
         const policyList = store.getState('hubComponentPolicyRulesMap', tabId);
+
         Button.toggleGlow({
             tabId,
             isEnabled: Boolean(externalComponent),
-            isDangerous: Boolean(vulnerabilities && vulnerabilities.length && vulnerabilities.length > 0),
-            isPolicyViolated: Boolean(policyList && policyList.length && policyList.length > 0)
+            isDangerous: Boolean(vulnerabilities && vulnerabilities.length),
+            isPolicyViolated: Boolean(policyList && policyList.length)
         });
     };
 };

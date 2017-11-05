@@ -1,0 +1,66 @@
+.splashBlock {
+    composes: block from './common/blocks.css';
+    font-family: 'Open Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: #5598D6;
+}
+
+.headerText {
+    font-weight: 300;
+    font-size: 20px;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    line-height: 62px;
+}
+
+.duckRadar {
+    height: 202px;
+    width: 202px;
+    margin: auto;
+}
+
+.introText {
+    width: 370px;
+    padding-top: 35px;
+    padding-bottom: 15px;
+    margin: auto;
+}
+
+.stepNumber {
+    background-color: #5598D6;
+    width: 32px;
+    float: left;
+    height: 32px;
+    color: #F7F7F8;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 32px;
+    margin-left: 10px;
+}
+
+.stepDirection {
+    color: #5598D6;
+    line-height: 32px;
+    margin-left: 57px;
+    margin-bottom: 29px;
+    margin-right: 20px;
+}
+
+.stepDirection a {
+    text-decoration: none;
+    color: #5598D6;
+}
+
+.stepDirection:last-child {
+    padding-bottom: 20px;
+}
+
+.instructions {
+    background-color: #FAFAFA;
+    margin-top: 26px;
+}
+
+.instructionsHeader {
+    padding-left: 12px;
+    padding-top: 20px;
+}

@@ -6,15 +6,18 @@
 
 .taglineText {
     color: #FFFFFF;
-    font-size: 11px;
-    margin-left: 0px;
-    margin-top: 13px;
+    font-size: 12px;
+    margin-left: 0;
     margin-right: 10px;
-    vertical-align: bottom;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
 }
 
 .logoBlock {
     height: 42px;
-    margin: 10px;
-    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    padding: 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    font-size: 19px;
+    background-color: #000000;
 }

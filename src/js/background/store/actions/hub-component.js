@@ -274,12 +274,6 @@ export const deleteHubComponentRiskProfile = (tabId) => {
 export const syncHubExternalVulnerabilities = ({ tabId }) => {
     return async (dispatch) => {
         const externalComponent = await dispatch(syncHubExternalComponent({ tabId }));
-
-        Button.toggleGlow({
-            isEnabled: Boolean(externalComponent),
-            tabId
-        });
-
         const componentVersion = externalComponent && await dispatch(syncHubComponentVersion({
             tabId,
             externalComponent
@@ -288,6 +282,7 @@ export const syncHubExternalVulnerabilities = ({ tabId }) => {
             tabId,
             componentVersion
         }));
+
         Button.toggleGlow({
             isEnabled: Boolean(externalComponent),
             isDangerous: Boolean(vulnerabilities && vulnerabilities.length),

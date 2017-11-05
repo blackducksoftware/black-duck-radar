@@ -6,6 +6,7 @@ import LicensesContainer from './licenses/LicensesContainer';
 import VulnerabilitiesContainer from './vulnerabilities/VulnerabilitiesContainer';
 import PoliciesContainer from './policies/PoliciesContainer';
 import ProjectsContainer from './projects/ProjectsContainer';
+import Splash from './splash/Splash';
 import OperationalRiskContainer from './operationalrisk/OperationalRiskContainer';
 import Tab from 'app/models/tab';
 import { block } from 'css/common/blocks';
@@ -19,7 +20,10 @@ class ProfileContainer extends Component {
 
     static propTypes = {
         componentName: PropTypes.string,
-        externalComponent: PropTypes.object,
+        externalComponent: PropTypes.oneOfType([
+            PropTypes.object,
+            PropTypes.string
+        ]),
         versionName: PropTypes.string
     };
 
@@ -39,12 +43,28 @@ class ProfileContainer extends Component {
     }
 
     render() {
-        const { componentName, versionName } = this.props;
+        const {
+            componentName,
+            versionName,
+            componentUrl,
+            isComponentIdentified,
+            isComponentPage
+        } = this.props;
+
+        if (!isComponentIdentified || !isComponentPage) {
+            return (
+                <Splash
+                    isComponentIdentified={isComponentIdentified}
+                    isComponentPage={isComponentPage}
+                />
+            )
+        }
+
         return (
             <div className={block}>
-                <PanelHeader componentName={componentName} versionName={versionName} />
-                <LicensesContainer />
+                <PanelHeader componentName={componentName} versionName={versionName} componentUrl={componentUrl}/>
                 <OperationalRiskContainer />
+                <LicensesContainer />
                 <VulnerabilitiesContainer />
                 <PoliciesContainer />
                 <ProjectsContainer />
@@ -53,20 +73,25 @@ class ProfileContainer extends Component {
     }
 }
 
-const mapStateToProps = ({ hubConnectionState = {}, hubExternalComponentMap = {} }) => {
+const mapStateToProps = ({
+    hubConnectionState = {},
+    hubExternalComponentMap = {},
+    forgeComponentKeysMap = {}
+}) => {
     const tabId = Tab.getId();
     const externalComponent = hubExternalComponentMap[tabId];
-    const { componentName, versionName } = externalComponent || {};
+    const { componentName, versionName, version: componentUrl } = externalComponent || {};
     const { isHubConnected } = hubConnectionState;
 
     return {
+        isComponentIdentified: Boolean(hubExternalComponentMap[tabId]),
+        isComponentPage: Boolean(forgeComponentKeysMap[tabId]),
         externalComponent,
+        componentUrl,
         componentName,
         versionName,
         isHubConnected
     };
 };
 
-const mapDispatchToProps = () => { };
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer);
+export default connect(mapStateToProps)(ProfileContainer);

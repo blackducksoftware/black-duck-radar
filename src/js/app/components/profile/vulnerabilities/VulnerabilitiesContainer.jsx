@@ -13,7 +13,10 @@ class VulnerabilityContainer extends Component {
     };
 
     static propTypes = {
-        vulnerabilityList: PropTypes.object
+        vulnerabilityList: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.object),
+            PropTypes.string
+        ])
     };
 
     static defaultProps = {
@@ -37,7 +40,7 @@ class VulnerabilityContainer extends Component {
             return (new Date(date)).getTime();
         };
 
-        return vulnerabilityList && vulnerabilityList
+        return !Array.isArray(vulnerabilityList) ? [] : vulnerabilityList
             .sort((a, b) => {
                 const aTime = getTime(a);
                 const bTime = getTime(b);

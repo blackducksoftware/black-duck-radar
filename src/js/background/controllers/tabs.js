@@ -70,8 +70,14 @@ export default class Tabs {
     static unmountFrame(tabId) {
         const file = 'unload.min.js';
 
-        return new Promise(resolve => {
-            chrome.tabs.executeScript(Number(tabId), { file }, resolve);
+        return new Promise((resolve, reject) => {
+            chrome.tabs.executeScript(Number(tabId), { file }, () => {
+                const { message } = chrome.runtime.lastError || {};
+                if (!message || message.includes('No tab with id')) {
+                    resolve();
+                }
+                reject();
+            });
         });
     }
 

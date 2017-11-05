@@ -11,14 +11,17 @@ import {
 
 class Section extends Component {
     static propTypes = {
-        projectList: PropTypes.arrayOf(PropTypes.object),
+        projectList: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.object),
+            PropTypes.string
+        ]),
         hubOrigin: PropTypes.string
     };
 
     static defaultProps = {
-        projectList: undefined,
+        projectList: [],
         hubOrigin: undefined
-    }
+    };
 
     constructor(props) {
         super(props);
@@ -64,13 +67,7 @@ class Section extends Component {
 
     render() {
         const { projectList } = this.props;
-
-        let count = 0;
-        if (projectList) {
-            const projectKeys = Object.keys(projectList);
-            count = projectList ? projectKeys.length : 0;
-        }
-
+        const count = Array.isArray(projectList) ? projectList.length : 0;
         const collapsibleState = this.state.isExpanded ? expandedBlock : collapsedBlock;
 
         return (

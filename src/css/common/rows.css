@@ -1,6 +1,6 @@
 .row {
-    background-color: #4A4A4A;
-    color: #FFFFFF;
+    background-color: #FAFAFA;
+    color: #4A4A4A;
     height: 36px;
     margin: 4px 0 4px 0;
 }
@@ -12,17 +12,12 @@
 
 .clickableRow:hover {
     background-color: #f6f6f6;
-    color: #000000;
 }
 
 .clickableRow a {
-    color: #FFFFFF;
+    color: #4A4A4A;
     transition: background-color 0.3s ease;
     text-decoration: none !important;
-}
-
-.clickableRow:hover a {
-    color: #000000;
 }
 
 .statusBar {

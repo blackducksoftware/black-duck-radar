@@ -1,14 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
-@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-
 .loginBlock {
-    width: 55%;
+    width: 76%;
     display: inline;
     float: right;
-    margin-right: 10px;
     vertical-align: top;
-    padding: 0px 5px 10px 0px;
+    padding: 0 5px 0 0;
 }
 
 .textBlock {
@@ -22,30 +17,28 @@
 .textItem {
     text-align: right;
     vertical-align: bottom;
-    line-height: 12px;
-    font-size: 10px;
+    line-height: 14px;
+    font-size: 14px;
     color: #1B2855;
     margin-bottom: 2px;
-    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .loginLink {
     background:none;
     float: right;
-    color:inherit;
     border:none;
     padding:0;
     margin-left: 2px;
     margin-right: 2px;
-    border-bottom:1px solid transparent;
+    border-bottom:3px solid transparent;
     outline:none;
-    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    font-family: 'Open Sans', sans-serif;
     cursor: pointer;
-    color: #00ACF2;
-}
-
-.loginLink:hover {
-    border-bottom:1px solid #00ACF2;
+    font-size: 14px;
+    color: #000;
+    position: relative;
+    top: -4px;
 }
 
 .loginForm {
@@ -90,7 +83,7 @@
 .loginFormControl {
     float: right;
     display: block;
-    margin: 6px 12px;
+    margin: 6px 14px;
     width: 100%;
     font-size: 10px;
     line-height: 1.42857143;
@@ -131,12 +124,9 @@
     right: 0;
 }
 
-.logoutButton:hover {
-    border-bottom:1px solid transparent;
-}
-
 .logoutButtonText {
-    margin-bottom: 6px;
+    position: relative;
+    bottom: 1px;
 }
 
 .profileImage {
@@ -145,4 +135,6 @@
     border-radius: 10px;
     margin-right: 6px;
     margin-left: 2px;
+    position: relative;
+    top: 6px;
 }

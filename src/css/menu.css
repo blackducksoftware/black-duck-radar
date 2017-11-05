@@ -1,38 +1,39 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
-@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-
 .menuBlock {
     height: 60px;
     display: flex;
-    width: 60%;
+    justify-content: space-between;
+    width: 21%;
+    margin-left: 10px;
 }
 
 .menuItem {
     height: 100%;
-    width: 84px;
     text-align: center;
     vertical-align: middle;
     line-height: 12px;
     font-size: 14px;
-    color: #1B2855;
-    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    color: black;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: normal;
     cursor: pointer;
 }
 
+.selectedBar .menuItem {
+    color: #5598D6;
+}
+
 .clickableMenuItem {
-    margin-top: 8%;
+    margin-top: 9%;
     margin-bottom: 1px;
 }
 
 .selectionBar {
     transition: background-color 0.3s ease;
-    width: 84px;
     height: 100%;
-    padding-top: 10px;
+    padding-top: 7px;
     display: inline-block;
     border-top-style: solid;
-    border-top-width: 10px;
+    border-top-width: 5px;
     border-top-color: #FFFFFF;
     cursor: pointer;
 }
@@ -40,8 +41,8 @@
 .selectedBar {
     composes: selectionBar;
     border-top-style: solid;
-    border-top-width: 10px;
-    border-top-color: #1194F6;
+    border-top-width: 5px;
+    border-top-color: #5598D6;
 }
 
 .unselectedBar {

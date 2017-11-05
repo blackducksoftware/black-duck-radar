@@ -1,25 +1,26 @@
 import React from 'react';
 import RiskItem from './RiskItem';
+import { versionsIcon } from 'css/risk/risk-item';
 
 class NewVersionsItem extends RiskItem {
     createIcon() {
-        const { riskProfile } = this.props;
-        if (riskProfile) {
-            if (riskProfile.versionData) {
-                const newReleaseCount = riskProfile.versionData.newerReleasesCount;
-                if (newReleaseCount) {
-                    const imageUrl = this.getImageUrl('img/new_version.png');
-                    return (
-                        <img src={imageUrl} />
-                    );
-                }
-            }
+        const { riskProfile = {} } = this.props;
+        const { versionData = {} } = riskProfile;
+        const { newerReleasesCount } = versionData;
+
+        if (newerReleasesCount === undefined) {
+            return null;
         }
-        return null;
+
+        const fgClasses = `fa fa-plus-circle ${versionsIcon}`;
+
+        return ([
+            <i className={fgClasses} key="versions-fgicon" />
+        ]);
     }
 
     getName() {
-        return 'NEWER VERSIONS';
+        return 'Newer Versions';
     }
 
     getValue() {

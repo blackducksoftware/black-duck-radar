@@ -1,20 +1,13 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
-@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-
 .panelHeader {
-    height: 38px;
-    background-color: black;
+    height: 62px;
+    background-color: #5598D6;
     color: #F7F7F8;
-    margin-top: 10px;
-    margin-bottom: 10px;
 }
 
 .sectionHeader {
-    transition: background-color 0.5s ease;
     height: 46px;
     width: 100%;
-    font-family: 'PressStart2P-Regular', 'Press Start 2P', cursive;
+    font-family: 'Open Sans', sans-serif;
     color: #F7F7F8;
     background-color: #CCCCCC;
     position: relative;
@@ -26,11 +19,11 @@
     background-color: #EF4823;
 }
 
-.sectionHeader:hover {
-    box-shadow: inset 0 0 0 0 grey, 2px 1px 3px 1px gray;
+.sectionHeaderWithData:hover {
+    cursor: pointer;
 }
 
-.sectionHeader:active {
+.sectionHeaderWithData:active {
     box-shadow: inset 4px 4px 8px 0 rgba(23, 23, 23, 0.31), 0 0 0 0 rgba(62, 62, 62, 0.27);
     background-color: #d53410;
 }

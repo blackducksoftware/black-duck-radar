@@ -1,22 +1,8 @@
 import Tabs from './tabs';
 
 export default class Button {
-    static async disable(tabId) {
-        const tab = await Tabs.get(tabId);
-        if (tab) {
-            chrome.pageAction.hide(tabId);
-        }
-    }
-
-    static async enable(tabId) {
-        const tab = await Tabs.get(tabId);
-        if (tab) {
-            chrome.pageAction.show(tabId);
-        }
-    }
-
     static async toggleGlow({ isEnabled, isDangerous, isPolicyViolated, tabId }) {
-        const tab = await Tabs.get(tabId);
+        const tab = await Tabs.get(Number(tabId));
 
         if (tab) {
             let iconName;
@@ -31,7 +17,7 @@ export default class Button {
                 iconName = 'duck';
             }
 
-            chrome.pageAction.setIcon({
+            chrome.browserAction.setIcon({
                 tabId: Number(tabId),
                 path: `img/${iconName}.png`
             });
@@ -39,6 +25,6 @@ export default class Button {
     }
 
     static addOnClickListener(fn) {
-        chrome.pageAction.onClicked.addListener(fn);
+        chrome.browserAction.onClicked.addListener(fn);
     }
 }

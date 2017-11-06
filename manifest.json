@@ -1,5 +1,5 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "Black Duck Radar",
   "description": "This extension shows license, vulnerability, and Black Duck Hub information about a component.",
   "version": "0.0.2",

@@ -8,7 +8,7 @@ This is a chrome extension to display component information including operationa
 `npm run build`
 
 #### Development: ####
-`npm run build-dev`
+`npm run dev-build`
 or
 `npm run build -- --dev`
 

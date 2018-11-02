@@ -14,3 +14,6 @@ or
 
 ## Where can I get the latest release? ##
 You can download the latest source from GitHub: https://github.com/blackducksoftware/black-duck-radar
+
+## Documentation ##
+Public [Confluence] (https://synopsys.atlassian.net/wiki/spaces/INTDOCS/pages/622927/Black+Duck+Radar)

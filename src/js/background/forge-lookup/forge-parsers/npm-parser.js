@@ -9,8 +9,8 @@ class NpmParser extends DomForgeParser {
                 forgeName: 'npmjs',
                 forgeSeparator: '/',
                 hubSeparator: '/',
-                nameQuery: 'div.content-column h1.package-name a',
-                versionQuery: 'div.sidebar ul.box li:nth-child(2) strong'
+                nameQuery: 'div.w-100.ph0-l.ph3.ph4-m h2.package__packageName___30_rF.flex.flex-column.w-100.fw6.mt3.black.dib.ma0.tracked-tight.no-underline.hover-black.f3-ns span',
+                versionQuery: 'div.package__sidebarSection___2_OuR.dib.w-50.bb.b--black-10 p'
             }
         );
 

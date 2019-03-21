@@ -7,7 +7,8 @@ const distDir = path.resolve(__dirname, 'dist');
 const srcDir = path.resolve(__dirname, 'src');
 const jsDir = path.resolve(srcDir, 'js');
 
-module.exports = (env = {}) => {
+module.exports = (env = {}) =>
+{
     const isProdBuild = Boolean(env.prod);
     const isAjaxDebugBuild = Boolean(env['debug-ajax']);
     const isReduxDebugBuild = Boolean(env['debug-redux']);
@@ -24,6 +25,7 @@ module.exports = (env = {}) => {
         new CopyWebpackPlugin([
             { from: 'src/img/*', to: 'img', flatten: true },
             { from: 'manifest.json', to: 'manifest.json' },
+            { from: 'src/html/options.html', to: 'options.html' },
             { from: 'src/html/login.html', to: 'login.html' },
             { from: 'src/css/login.css', to: 'login.css' },
             { from: 'src/css/logo.css', to: 'logo.css' }
@@ -43,7 +45,8 @@ module.exports = (env = {}) => {
             app: path.resolve(jsDir, 'app', 'index.jsx'),
             background: path.resolve(jsDir, 'background', 'index.js'),
             unload: path.resolve(jsDir, 'scripts', 'unload.js'),
-            login: path.resolve(jsDir, 'scripts', 'login.js')
+            login: path.resolve(jsDir, 'scripts', 'login.js'),
+            options: path.resolve(jsDir, 'scripts', 'options.js')
         },
         output: {
             path: distDir,
@@ -92,4 +95,5 @@ module.exports = (env = {}) => {
         },
         plugins
     };
-};
+}
+;

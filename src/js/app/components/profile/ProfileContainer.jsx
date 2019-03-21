@@ -74,14 +74,14 @@ class ProfileContainer extends Component {
 }
 
 const mapStateToProps = ({
-    hubConnectionState = {},
+    blackduckConfiguredState = {},
     hubExternalComponentMap = {},
     forgeComponentKeysMap = {}
 }) => {
     const tabId = Tab.getId();
     const externalComponent = hubExternalComponentMap[tabId];
     const { componentName, versionName, version: componentUrl } = externalComponent || {};
-    const { isHubConnected } = hubConnectionState;
+    const { isBlackduckConfigured } = blackduckConfiguredState;
 
     return {
         isComponentIdentified: Boolean(hubExternalComponentMap[tabId]),
@@ -90,7 +90,7 @@ const mapStateToProps = ({
         componentUrl,
         componentName,
         versionName,
-        isHubConnected
+        isBlackduckConfigured
     };
 };
 

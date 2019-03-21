@@ -19,7 +19,7 @@ export const hubUsername = (state = '', action) => {
     }
 };
 
-export const hubOrigin = (state = '', action) => {
+export const blackduckOrigin = (state = '', action) => {
     const { origin, type } = action;
 
     switch (type) {
@@ -31,14 +31,14 @@ export const hubOrigin = (state = '', action) => {
     }
 };
 
-export const hubConnectionState = (state = {}, action) => {
+export const blackduckConfiguredState = (state = {}, action) => {
     const { type, status } = action;
 
     switch (type) {
         case HUB_AUTH_STATE_SET:
             return {
                 status,
-                isHubConnected: status === loginEnum.CONNECTED
+                isBlackduckConfigured: status === loginEnum.CONNECTED
             };
 
         default:

@@ -21,13 +21,13 @@ class LicenseContainer extends Component {
             PropTypes.object,
             PropTypes.string
         ]),
-        hubOrigin: PropTypes.string
+        blackduckOrigin: PropTypes.string
     };
 
     static defaultProps = {
         licenses: undefined,
         componentVersion: undefined,
-        hubOrigin: undefined
+        blackduckOrigin: undefined
     };
 
     shouldComponentUpdate({ componentVersion: newComponentVersion }) {
@@ -38,16 +38,16 @@ class LicenseContainer extends Component {
     }
 
     getUiUrl(apiUrl) {
-        const { hubOrigin } = this.props;
+        const { blackduckOrigin } = this.props;
         const licenseId = apiUrl.split('/').pop();
-        const url = new URL(hubOrigin);
+        const url = new URL(blackduckOrigin);
         url.pathname = `api/licenses/${licenseId}/text`;
         return url;
     }
 
     getLicenseTypeUrl() {
-        const { hubOrigin } = this.props;
-        return `${hubOrigin}/doc/Welcome.htm#licenses/licenseriskvalues.htm`;
+        const { blackduckOrigin } = this.props;
+        return `${blackduckOrigin}/doc/Welcome.htm#licenses/licenseriskvalues.htm`;
     }
 
     getLicenses() {
@@ -77,7 +77,7 @@ class LicenseContainer extends Component {
     }
 }
 
-const mapStateToProps = ({ hubOrigin, hubComponentVersionMap }) => {
+const mapStateToProps = ({ blackduckOrigin, hubComponentVersionMap }) => {
     const tabId = Tab.getId();
     const componentVersion = hubComponentVersionMap[tabId];
 
@@ -90,7 +90,7 @@ const mapStateToProps = ({ hubOrigin, hubComponentVersionMap }) => {
     }
 
     return {
-        hubOrigin,
+        blackduckOrigin,
         componentVersion,
         licenses
     };

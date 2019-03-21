@@ -17,7 +17,7 @@ class OperationalRiskContainer extends Component {
     };
 
     static propTypes = {
-        isHubConnected: PropTypes.bool.isRequired,
+        isBlackduckConfigured: PropTypes.bool.isRequired,
         riskProfile: PropTypes.oneOfType([
             PropTypes.object,
             PropTypes.string
@@ -31,7 +31,7 @@ class OperationalRiskContainer extends Component {
 
     static defaultProps = {
         riskProfile: undefined,
-        isHubConnected: false,
+        isBlackduckConfigured: false,
         componentVersion: undefined
     };
 
@@ -72,31 +72,31 @@ class OperationalRiskContainer extends Component {
     }
 
     render() {
-        const { riskProfile, isHubConnected } = this.props;
+        const { riskProfile, isBlackduckConfigured } = this.props;
         return (
             <div className={riskContainer}>
                 <div className={riskContainerHeader}>Operational Risk for the last 12 Months</div>
                 <div className={riskItemsContainer}>
-                    <CommitsItem riskProfile={riskProfile} isHubConnected={isHubConnected} />
-                    <NewVersionsItem riskProfile={riskProfile} isHubConnected={isHubConnected} />
-                    <ContributorsItem riskProfile={riskProfile} isHubConnected={isHubConnected} />
-                    <ActivityItem riskProfile={riskProfile} isHubConnected={isHubConnected} isBottomItem />
+                    <CommitsItem riskProfile={riskProfile} isBlackduckConfigured={isBlackduckConfigured} />
+                    <NewVersionsItem riskProfile={riskProfile} isBlackduckConfigured={isBlackduckConfigured} />
+                    <ContributorsItem riskProfile={riskProfile} isBlackduckConfigured={isBlackduckConfigured} />
+                    <ActivityItem riskProfile={riskProfile} isBlackduckConfigured={isBlackduckConfigured} isBottomItem />
                 </div>
             </div>
         );
     }
 }
 
-const mapStateToProps = ({ hubComponentRiskProfileMap = {}, hubComponentVersionMap = {}, hubConnectionState }) => {
+const mapStateToProps = ({ hubComponentRiskProfileMap = {}, hubComponentVersionMap = {}, blackduckConfiguredState }) => {
     const tabId = Tab.getId();
-    const { isHubConnected } = hubConnectionState;
+    const { isBlackduckConfigured } = blackduckConfiguredState;
     const componentVersion = hubComponentVersionMap[tabId];
     const riskProfile = hubComponentRiskProfileMap[tabId];
 
     return {
         componentVersion,
         riskProfile,
-        isHubConnected
+        isBlackduckConfigured
     };
 };
 

@@ -15,12 +15,12 @@ class Section extends Component {
             PropTypes.arrayOf(PropTypes.object),
             PropTypes.string
         ]),
-        hubOrigin: PropTypes.string
+        blackduckOrigin: PropTypes.string
     };
 
     static defaultProps = {
         projectList: [],
-        hubOrigin: undefined
+        blackduckOrigin: undefined
     };
 
     constructor(props) {
@@ -32,9 +32,9 @@ class Section extends Component {
     }
 
     getUiUrl(apiUrl) {
-        const { hubOrigin } = this.props;
+        const { blackduckOrigin } = this.props;
         const versionId = apiUrl.split('/').pop();
-        const url = new URL(hubOrigin);
+        const url = new URL(blackduckOrigin);
         url.pathname = `ui/versions/id:${versionId}`;
         return url;
     }

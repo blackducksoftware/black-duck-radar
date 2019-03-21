@@ -19,7 +19,7 @@ function saveOptions() {
 // Restores select box and checkbox state using the preferences
 // stored in chrome.storage.
 function restoreOptions() {
-    chrome.storage.sync.get({
+    chrome.storage.local.get({
         blackduckUrl: '',
         blackduckApiToken: ''
     }, function (items) {

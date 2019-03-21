@@ -12,9 +12,9 @@ import {
 } from './app-state';
 
 import {
-    hubOrigin,
+    blackduckOrigin,
     hubUsername,
-    hubConnectionState,
+    blackduckConfiguredState,
     isHubLoginOpen
 } from './hub/auth';
 
@@ -32,11 +32,11 @@ import {
 // It's important to delete each tab's state on navigation or close
 const rootReducer = combineReducers({
     // Hub url origin
-    hubOrigin,
+    blackduckOrigin,
     // Hub login username
     hubUsername,
     // Hub connection status
-    hubConnectionState,
+    blackduckConfiguredState,
     // Is the Hub login window open
     isHubLoginOpen,
     // map from tabId to parsed component keys

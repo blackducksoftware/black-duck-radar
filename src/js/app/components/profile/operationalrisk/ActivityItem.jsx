@@ -38,7 +38,7 @@ class ActivityItem extends RiskItem {
     }
 
     getName() {
-        const { riskProfile, isHubConnected } = this.props;
+        const { riskProfile, isBlackduckConfigured } = this.props;
         let activityLabel = 'Activity';
         if (riskProfile) {
             if (riskProfile.activityData) {
@@ -52,7 +52,7 @@ class ActivityItem extends RiskItem {
             } else {
                 activityLabel = 'Stable Activity';
             }
-        } else if (isHubConnected) {
+        } else if (isBlackduckConfigured) {
             activityLabel = 'Stable Activity';
         }
 

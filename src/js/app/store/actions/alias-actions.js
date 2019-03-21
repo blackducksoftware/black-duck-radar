@@ -14,10 +14,10 @@ import {
     UPDATE_EXTENSION_ICON
 } from 'shared/actions/types';
 
-export const performHubLoginAlias = ({ hubOrigin, hubUserName, hubPassword }) => {
+export const performHubLoginAlias = ({ blackduckOrigin, hubUserName, hubPassword }) => {
     return {
         type: HUB_LOGIN,
-        origin: hubOrigin,
+        origin: blackduckOrigin,
         username: hubUserName,
         password: hubPassword
     };

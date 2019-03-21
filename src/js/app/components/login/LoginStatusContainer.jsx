@@ -18,16 +18,16 @@ class LoginStatusContainer extends Component {
 
     static propTypes = {
         hubUsername: PropTypes.string,
-        isHubConnected: PropTypes.bool,
+        isBlackduckConfigured: PropTypes.bool,
         performHubLogout: PropTypes.func.isRequired,
         selectItem: PropTypes.func.isRequired,
         openHubLoginWindow: PropTypes.func.isRequired
     };
 
     static defaultProps = {
-        hubOrigin: '',
+        blackduckOrigin: '',
         hubUsername: '',
-        isHubConnected: false,
+        isBlackduckConfigured: false,
         selectItem: () => {}
     };
 
@@ -43,8 +43,8 @@ class LoginStatusContainer extends Component {
 
     componentWillUpdate(nextProps) {
         // check if a login or logout has occurred.
-        if ((!this.props.isHubConnected && nextProps.isHubConnected)
-           || (this.props.isHubConnected && !nextProps.isHubConnected)) {
+        if ((!this.props.isBlackduckConfigured && nextProps.isBlackduckConfigured)
+           || (this.props.isBlackduckConfigured && !nextProps.isBlackduckConfigured)) {
             //changing to logged in go to profile screen
             this.context.router.history.push('/profile');
             this.props.selectItem(Profile.itemName);
@@ -67,8 +67,8 @@ class LoginStatusContainer extends Component {
     }
 
     render() {
-        const { isHubConnected, hubUsername } = this.props;
-        if (isHubConnected) {
+        const { isBlackduckConfigured, hubUsername } = this.props;
+        if (isBlackduckConfigured) {
             return (
                 <div className={styles.loginBlock}>
                     <div className={styles.logoutInputContainer}>
@@ -98,13 +98,13 @@ class LoginStatusContainer extends Component {
     }
 }
 
-const mapStateToProps = ({ hubOrigin, hubUsername, hubConnectionState }) => {
-    const { isHubConnected } = hubConnectionState;
+const mapStateToProps = ({ blackduckOrigin, hubUsername, blackduckConfiguredState }) => {
+    const { isBlackduckConfigured } = blackduckConfiguredState;
 
     return {
-        hubOrigin,
+        blackduckOrigin,
         hubUsername,
-        isHubConnected
+        isBlackduckConfigured
     };
 };
 

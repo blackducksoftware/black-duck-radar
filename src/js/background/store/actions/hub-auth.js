@@ -16,7 +16,7 @@ import Button from 'background/controllers/button';
 
 const hubController = new Hub();
 
-export const setHubOrigin = (origin) => {
+export const setBlackduckOrigin = (origin) => {
     const type = HUB_ORIGIN_SET;
     return {
         type,
@@ -32,7 +32,7 @@ export const setHubUsername = (username) => {
     };
 };
 
-export const setHubConnectionState = (status) => {
+export const setBlackduckConfiguredState = (status) => {
     const type = HUB_AUTH_STATE_SET;
     return {
         type,
@@ -50,12 +50,12 @@ export const setHubWindowOpen = (isOpen) => {
 
 export const performHubLogin = ({ origin, username, password, parentId }) => {
     return async (dispatch) => {
-        dispatch(setHubOrigin(origin));
+        dispatch(setBlackduckOrigin(origin));
         dispatch(setHubUsername(username));
-        dispatch(setHubConnectionState(loginEnum.CONNECTION_PENDING));
+        dispatch(setBlackduckConfiguredState(loginEnum.CONNECTION_PENDING));
 
         PersistentStorage.setState({
-            hubOrigin: origin,
+            blackduckOrigin: origin,
             hubUsername: username
         });
 
@@ -66,7 +66,7 @@ export const performHubLogin = ({ origin, username, password, parentId }) => {
             });
             dispatch(syncHubExternalVulnerabilities({ tabId: parentId }));
         } catch (err) {
-            dispatch(setHubConnectionState(loginEnum.DISCONNECTED));
+            dispatch(setBlackduckConfiguredState(loginEnum.DISCONNECTED));
             throw err;
         }
 
@@ -80,15 +80,15 @@ export const performHubLogin = ({ origin, username, password, parentId }) => {
             }
         }
 
-        dispatch(setHubConnectionState(loginEnum.CONNECTED));
+        dispatch(setBlackduckConfiguredState(loginEnum.CONNECTED));
     };
 };
 
 export const performHubLogout = () => {
     return async (dispatch) => {
-        dispatch(setHubConnectionState(loginEnum.DISCONNECTION_PENDING));
+        dispatch(setBlackduckConfiguredState(loginEnum.DISCONNECTION_PENDING));
         await hubController.logout();
-        dispatch(setHubConnectionState(loginEnum.DISCONNECTED));
+        dispatch(setBlackduckConfiguredState(loginEnum.DISCONNECTED));
         chrome.windows.getAll({ populate: true }, (windows) => {
             windows.forEach((window) => {
                 window.tabs.forEach((tab) => {
@@ -131,7 +131,7 @@ export const openHubLoginWindow = ({ parentWindow }) => {
 
         const width = 500;
         const height = 768;
-        const origin = store.getState('hubOrigin');
+        const origin = store.getState('blackduckOrigin');
         const username = store.getState('hubUsername');
         const { parentId } = parentWindow;
         const dimensions = {

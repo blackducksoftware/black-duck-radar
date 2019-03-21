@@ -6,7 +6,7 @@ import PhoneHomeClient from '../phone-home/client';
 
 class Hub {
     getOrigin() {
-        return store.getState('hubOrigin') || '';
+        return store.getState('blackduckOrigin') || '';
     }
 
     async login({ username, password }) {
@@ -223,9 +223,12 @@ class Hub {
     }
 
     async fetch(url, _opts) {
-        const opts = Object.assign({
-            credentials: 'include'
-        }, _opts);
+        const apiToken = '';
+        const headers = Object.assign({}, _opts.headers, {
+                'Authorization': `Bearer ${apiToken}`
+            });
+
+        const opts = Object.assign({}, _opts, headers);
 
         if (DEBUG_AJAX) {
             console.log(`Make Hub ${opts.method} request:`, url.toString());

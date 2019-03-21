@@ -21,14 +21,14 @@ class ProjectsContainer extends Component {
             PropTypes.object,
             PropTypes.string
         ]),
-        hubOrigin: PropTypes.string,
+        blackduckOrigin: PropTypes.string,
         syncHubComponentVersionReferenceProjects: PropTypes.func.isRequired
     };
 
     static defaultProps = {
         projectList: undefined,
         componentVersion: undefined,
-        hubOrigin: undefined
+        blackduckOrigin: undefined
     };
 
     componentDidMount() {
@@ -71,17 +71,17 @@ class ProjectsContainer extends Component {
     }
 
     render() {
-        const { projectList, hubOrigin } = this.props;
+        const { projectList, blackduckOrigin } = this.props;
         return (
             <Section
                 projectList={projectList}
-                hubOrigin={hubOrigin}
+                blackduckOrigin={blackduckOrigin}
             />
         );
     }
 }
 
-const mapStateToProps = ({ hubOrigin, hubComponentVersionReferenceProjectsMap = {}, hubComponentVersionMap = {} }) => {
+const mapStateToProps = ({ blackduckOrigin, hubComponentVersionReferenceProjectsMap = {}, hubComponentVersionMap = {} }) => {
     const tabId = Tab.getId();
     const projectList = hubComponentVersionReferenceProjectsMap[tabId];
     const componentVersion = hubComponentVersionMap[tabId];
@@ -89,7 +89,7 @@ const mapStateToProps = ({ hubOrigin, hubComponentVersionReferenceProjectsMap = 
     return {
         projectList,
         componentVersion,
-        hubOrigin
+        blackduckOrigin
     };
 };
 

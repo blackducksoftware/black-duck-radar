@@ -68,9 +68,9 @@ import { clearStore } from './store/actions/app';
             }
         }
 
-        const { isHubConnected } = getState('hubConnectionState');
+        const { isBlackduckConfigured } = getState('blackduckConfiguredState');
 
-        if (!isHubConnected || !componentKeys) {
+        if (!isBlackduckConfigured || !componentKeys) {
             return;
         }
 

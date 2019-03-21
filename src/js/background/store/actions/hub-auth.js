@@ -1,6 +1,7 @@
 import PersistentStorage from '../persistent-storage';
 import * as store from '../index';
 import {
+    BLACKDUCK_TOKEN_SET,
     HUB_AUTH_STATE_SET,
     HUB_USERNAME_SET,
     HUB_ORIGIN_SET,
@@ -21,6 +22,14 @@ export const setBlackduckOrigin = (origin) => {
     return {
         type,
         origin
+    };
+};
+
+export const setBlackduckToken = (token) => {
+    const type = BLACKDUCK_TOKEN_SET;
+    return {
+        type,
+        token
     };
 };
 
@@ -45,6 +54,34 @@ export const setHubWindowOpen = (isOpen) => {
     return {
         type,
         isOpen
+    };
+};
+
+export const performBlackduckConfiguredCheck = () => {
+    return async (dispatch) => {
+        chrome.storage.sync.get({
+            blackduckUrl: null,
+            blackduckApiToken: null
+        }, (items) => {
+            const { blackduckUrl, blackduckApiToken } = items;
+            if (blackduckUrl) {
+                dispatch(setBlackduckOrigin(blackduckUrl));
+            }
+
+            if (blackduckApiToken) {
+                dispatch(setBlackduckToken(blackduckApiToken));
+            }
+
+            if (blackduckUrl && blackduckApiToken) {
+                if (blackduckUrl.length > 0 && blackduckApiToken.length > 0) {
+                    dispatch(setBlackduckConfiguredState(loginEnum.CONNECTED));
+                } else {
+                    dispatch(setBlackduckConfiguredState(loginEnum.DISCONNECTED));
+                }
+            } else {
+                dispatch(setBlackduckConfiguredState(loginEnum.DISCONNECTED));
+            }
+        });
     };
 };
 

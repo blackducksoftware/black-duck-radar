@@ -9,6 +9,10 @@ class Hub {
         return store.getState('blackduckOrigin') || '';
     }
 
+    getToken() {
+        return store.getState('blackduckToken') || '';
+    }
+
     async login({ username, password }) {
         const origin = this.getOrigin();
 
@@ -184,8 +188,8 @@ class Hub {
     getRequestUrl(baseUrl, queryMap = {}) {
         const origin = this.getOrigin();
         let url = null;
-
-        if (baseUrl.startsWith('/')) {
+        console.log("getRequestUrl", origin);
+        if (baseUrl.startsWith('/') && origin) {
             // relative path
             url = new URL(origin);
             url.pathname = baseUrl;
@@ -223,10 +227,10 @@ class Hub {
     }
 
     async fetch(url, _opts) {
-        const apiToken = '';
+        const apiToken = this.getToken();
         const headers = Object.assign({}, _opts.headers, {
-                'Authorization': `Bearer ${apiToken}`
-            });
+            Authorization: `Bearer ${apiToken}`
+        });
 
         const opts = Object.assign({}, _opts, headers);
 

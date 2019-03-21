@@ -1,4 +1,5 @@
 import {
+    BLACKDUCK_TOKEN_SET,
     HUB_ORIGIN_SET,
     HUB_USERNAME_SET,
     HUB_AUTH_STATE_SET,
@@ -25,6 +26,18 @@ export const blackduckOrigin = (state = '', action) => {
     switch (type) {
         case HUB_ORIGIN_SET:
             return origin;
+
+        default:
+            return state;
+    }
+};
+
+export const blackduckToken = (state = '', action) => {
+    const { token, type } = action;
+
+    switch (type) {
+        case BLACKDUCK_TOKEN_SET:
+            return token;
 
         default:
             return state;

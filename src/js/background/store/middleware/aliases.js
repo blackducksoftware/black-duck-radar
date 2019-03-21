@@ -10,6 +10,7 @@ import {
 } from '../actions/hub-component';
 
 import {
+    performBlackduckConfiguredCheck,
     performHubLogin,
     performHubLogout,
     openHubLoginWindow
@@ -19,6 +20,7 @@ import { unload, updateExtensionIcon } from '../actions/app';
 
 import {
     APP_UNLOAD,
+    BLACKDUCK_CONFIGURED_CHECK,
     HUB_LOGIN,
     HUB_LOGOUT,
     HUB_EXTERNAL_COMPONENT_SYNC,
@@ -36,6 +38,7 @@ import {
 // Action aliases allow the client-side app to trigger actions in the background
 export default {
     [APP_UNLOAD]: unload,
+    [BLACKDUCK_CONFIGURED_CHECK]: performBlackduckConfiguredCheck,
     [HUB_LOGIN]: performHubLogin,
     [HUB_LOGOUT]: performHubLogout,
     [HUB_EXTERNAL_COMPONENT_SYNC]: syncHubExternalComponent,

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
+    checkBlackduckConfigured,
     performHubLogoutAlias,
     openHubLoginWindowAlias
 } from 'app/store/actions/alias-actions';
@@ -19,6 +20,7 @@ class LoginStatusContainer extends Component {
     static propTypes = {
         hubUsername: PropTypes.string,
         isBlackduckConfigured: PropTypes.bool,
+        checkBlackduckConfigured: PropTypes.func.isRequired,
         performHubLogout: PropTypes.func.isRequired,
         selectItem: PropTypes.func.isRequired,
         openHubLoginWindow: PropTypes.func.isRequired
@@ -35,6 +37,10 @@ class LoginStatusContainer extends Component {
         super(props);
         this.displayLogin = this.displayLogin.bind(this);
         this.performLogout = this.performLogout.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.checkBlackduckConfigured();
     }
 
     shouldComponentUpdate() {
@@ -71,17 +77,10 @@ class LoginStatusContainer extends Component {
         if (isBlackduckConfigured) {
             return (
                 <div className={styles.loginBlock}>
-                    <div className={styles.logoutInputContainer}>
-                        <button className={styles.logoutButton} onClick={this.performLogout}>
-                            <img
-                                className={styles.profileImage}
-                                src='https://avatars2.githubusercontent.com/u/431461?v=3&amp;s=20'
-                                width='20'
-                                height='20'
-                                alt='Profile Image for user'
-                            />
-                            <span className={styles.logoutButtonText}> { hubUsername } </span>
-                        </button>
+                    <div className={styles.textBlock}>
+                        <div className={styles.textItem}>
+                            <button className={styles.loginLink} onClick={this.displayLogin}>Connected</button>
+                        </div>
                     </div>
                 </div>
             );
@@ -90,7 +89,7 @@ class LoginStatusContainer extends Component {
             <div className={styles.loginBlock}>
                 <div className={styles.textBlock}>
                     <div className={styles.textItem}>
-                        <button className={styles.loginLink} onClick={this.displayLogin}>LOG IN</button>
+                        <button className={styles.loginLink} onClick={this.displayLogin}>Disconnected</button>
                     </div>
                 </div>
             </div>
@@ -110,6 +109,7 @@ const mapStateToProps = ({ blackduckOrigin, hubUsername, blackduckConfiguredStat
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        checkBlackduckConfigured: () => { dispatch(checkBlackduckConfigured()); },
         performHubLogout: () => { dispatch(performHubLogoutAlias()); },
         openHubLoginWindow: (parentDimensions) => { dispatch(openHubLoginWindowAlias(parentDimensions)); },
         selectItem: (itemName) => { dispatch(selectMenuItem(itemName)); }

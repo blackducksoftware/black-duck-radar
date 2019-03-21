@@ -1,5 +1,6 @@
 import {
     APP_UNLOAD,
+    BLACKDUCK_CONFIGURED_CHECK,
     HUB_LOGIN,
     HUB_LOGOUT,
     HUB_EXTERNAL_VULNERABILITIES_SYNC,
@@ -13,6 +14,12 @@ import {
     HUB_LOGIN_WINDOW_OPEN,
     UPDATE_EXTENSION_ICON
 } from 'shared/actions/types';
+
+export const checkBlackduckConfigured = () => {
+    return {
+        type: BLACKDUCK_CONFIGURED_CHECK
+    };
+};
 
 export const performHubLoginAlias = ({ blackduckOrigin, hubUserName, hubPassword }) => {
     return {

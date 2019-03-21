@@ -44,12 +44,12 @@ const Splash = ({ isComponentPage, isComponentIdentified }) => {
                 Welcome to Radar
             </div>
             <div className={introText}>
-                Connect to Hub to check if this package has known vulnerabilities or violates your team’s open source policies.
+                Connect to BlackDuck to check if this package has known vulnerabilities or violates your team’s open source policies.
             </div>
             <DuckRadar />
             <div className={instructions}>
                 <p className={instructionsHeader}>
-                    After you login in to Radar with your Hub credentials..
+                    After you configure Radar with your BlackDuck credentials..
                 </p>
                 <div className={stepNumber}>
                     1

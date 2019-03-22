@@ -138,3 +138,13 @@
     position: relative;
     top: 6px;
 }
+
+.configurationConnected {
+    color: green;
+    margin-right: 5px;
+}
+
+.configurationDisconnected {
+    color: red;
+    margin-right: 5px;
+}

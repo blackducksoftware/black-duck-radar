@@ -12,12 +12,13 @@ import {
     HUB_COMPONENT_VULNERABILITIES_SYNC,
     HUB_COMPONENT_RISK_PROFILE_SYNC,
     HUB_LOGIN_WINDOW_OPEN,
+    DISPLAY_OPTIONS_PAGE,
     UPDATE_EXTENSION_ICON
 } from 'shared/actions/types';
 
-export const checkBlackduckConfigured = () => {
+export const displayOptionsPage = () => {
     return {
-        type: BLACKDUCK_CONFIGURED_CHECK
+        type: DISPLAY_OPTIONS_PAGE
     };
 };
 

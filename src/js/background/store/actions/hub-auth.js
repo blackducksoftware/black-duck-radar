@@ -59,7 +59,8 @@ export const setHubWindowOpen = (isOpen) => {
 
 export const performBlackduckConfiguredCheck = () => {
     return async (dispatch) => {
-        chrome.storage.sync.get({
+        dispatch(setBlackduckConfiguredState(loginEnum.CONNECTION_PENDING));
+        chrome.storage.local.get({
             blackduckUrl: null,
             blackduckApiToken: null
         }, (items) => {

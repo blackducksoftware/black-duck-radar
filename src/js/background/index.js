@@ -5,6 +5,7 @@ import Button from './controllers/button';
 import ForgeComponent from './models/forge-component';
 import Frame from './models/frame';
 import { setForgeComponentKeys } from './store/actions/forge';
+import { performBlackduckConfiguredCheck } from './store/actions/hub-auth';
 import { syncHubExternalVulnerabilities } from './store/actions/hub-component';
 import { setChromeExtensionDetails } from './store/actions/extension';
 import { clearStore } from './store/actions/app';
@@ -45,7 +46,7 @@ import { clearStore } from './store/actions/app';
 
         const chromeExtensionDetails = chrome.app.getDetails();
         dispatch(setChromeExtensionDetails({ chromeExtensionDetails }));
-
+        dispatch(performBlackduckConfiguredCheck());
         Button.toggleGlow({
             isEnabled: false,
             tabId

@@ -18,9 +18,7 @@ import {
     deleteLoadState,
     deleteMenuState
 } from 'shared/actions/app';
-import {
-    deleteForgeComponentKeys
-} from './forge';
+import { deleteForgeComponentKeys } from './forge';
 
 export const load = ({ tabId, componentKeys }) => {
     return async (dispatch) => {
@@ -83,5 +81,11 @@ export const updateExtensionIcon = ({ tabId }) => {
             isDangerous: Boolean(vulnerabilities && vulnerabilities.length),
             isPolicyViolated: Boolean(policyList && policyList.length)
         });
+    };
+};
+
+export const displayOptionsPage = () => {
+    return () => {
+        chrome.runtime.openOptionsPage();
     };
 };

@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-    checkBlackduckConfigured,
+    displayOptionsPage,
     performHubLogoutAlias,
     openHubLoginWindowAlias
 } from 'app/store/actions/alias-actions';
+import { loginEnum } from 'shared/constants';
 import Tab from 'app/models/tab';
 import styles from 'css/login-button';
 import { selectMenuItem } from 'app/store/actions/menu';
@@ -18,16 +19,14 @@ class LoginStatusContainer extends Component {
     };
 
     static propTypes = {
-        hubUsername: PropTypes.string,
         isBlackduckConfigured: PropTypes.bool,
-        checkBlackduckConfigured: PropTypes.func.isRequired,
+        displayOptionsPage: PropTypes.func.isRequired,
         performHubLogout: PropTypes.func.isRequired,
         selectItem: PropTypes.func.isRequired,
         openHubLoginWindow: PropTypes.func.isRequired
     };
 
     static defaultProps = {
-        blackduckOrigin: '',
         hubUsername: '',
         isBlackduckConfigured: false,
         selectItem: () => {}
@@ -35,12 +34,9 @@ class LoginStatusContainer extends Component {
 
     constructor(props) {
         super(props);
+        this.displayConfiguration = this.displayConfiguration.bind(this);
         this.displayLogin = this.displayLogin.bind(this);
         this.performLogout = this.performLogout.bind(this);
-    }
-
-    componentDidMount() {
-        this.props.checkBlackduckConfigured();
     }
 
     shouldComponentUpdate() {
@@ -72,24 +68,24 @@ class LoginStatusContainer extends Component {
         });
     }
 
+    displayConfiguration() {
+        this.props.displayOptionsPage();
+    }
+
     render() {
-        const { isBlackduckConfigured, hubUsername } = this.props;
-        if (isBlackduckConfigured) {
-            return (
-                <div className={styles.loginBlock}>
-                    <div className={styles.textBlock}>
-                        <div className={styles.textItem}>
-                            <button className={styles.loginLink} onClick={this.displayLogin}>Connected</button>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
+        const { isBlackduckConfigured } = this.props;
+        const textClasses = isBlackduckConfigured ? styles.configurationConnected : styles.configurationDisconnected;
+        const buttonText = isBlackduckConfigured ? 'Configured' : 'Not Configured';
         return (
             <div className={styles.loginBlock}>
                 <div className={styles.textBlock}>
                     <div className={styles.textItem}>
-                        <button className={styles.loginLink} onClick={this.displayLogin}>Disconnected</button>
+                        <button className={styles.loginLink} onClick={this.displayConfiguration}>
+                            <span className={textClasses} aria-hidden='true'>
+                                {buttonText}
+                            </span>
+                            <span className='fa fa-cog' aria-hidden='true' />
+                        </button>
                     </div>
                 </div>
             </div>
@@ -109,7 +105,7 @@ const mapStateToProps = ({ blackduckOrigin, hubUsername, blackduckConfiguredStat
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        checkBlackduckConfigured: () => { dispatch(checkBlackduckConfigured()); },
+        displayOptionsPage: () => { dispatch(displayOptionsPage()); },
         performHubLogout: () => { dispatch(performHubLogoutAlias()); },
         openHubLoginWindow: (parentDimensions) => { dispatch(openHubLoginWindowAlias(parentDimensions)); },
         selectItem: (itemName) => { dispatch(selectMenuItem(itemName)); }

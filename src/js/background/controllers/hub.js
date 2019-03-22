@@ -37,6 +37,16 @@ class Hub {
         return this.get('/j_spring_security_logout');
     }
 
+    getBearerToken(blackduckToken) {
+        return this.post('/api/tokens/authenticate', {
+            fetchOpts: {
+                headers: {
+                    Authorization: `token ${blackduckToken}`
+                }
+            }
+        });
+    }
+
     async isConnected() {
         const response = await this.getCurrentUser();
         return Boolean(response);
@@ -188,7 +198,6 @@ class Hub {
     getRequestUrl(baseUrl, queryMap = {}) {
         const origin = this.getOrigin();
         let url = null;
-        console.log("getRequestUrl", origin);
         if (baseUrl.startsWith('/') && origin) {
             // relative path
             url = new URL(origin);
@@ -227,15 +236,20 @@ class Hub {
     }
 
     async fetch(url, _opts) {
-        const apiToken = this.getToken();
-        const headers = Object.assign({}, _opts.headers, {
-            Authorization: `Bearer ${apiToken}`
-        });
-
-        const opts = Object.assign({}, _opts, headers);
+        console.log("fetch param _opts", _opts);
+        const includesAuthorizationHeader = _opts.headers && _opts.headers.Authorization;
+        let headers = {};
+        if (!includesAuthorizationHeader) {
+            const bearerToken = this.getBearerToken(this.getToken());
+            headers = {
+                Authorization: `Bearer ${bearerToken}`
+            };
+        }
+        const opts =  Object.assign({ credentials: 'include' }, _opts, { headers });
 
         if (DEBUG_AJAX) {
             console.log(`Make Hub ${opts.method} request:`, url.toString());
+            console.log('opts: ', opts);
         }
 
         const response = await fetch(url, opts);

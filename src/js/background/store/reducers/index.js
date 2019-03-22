@@ -13,6 +13,7 @@ import {
 
 import {
     blackduckOrigin,
+    blackduckToken,
     hubUsername,
     blackduckConfiguredState,
     isHubLoginOpen
@@ -31,8 +32,10 @@ import {
 // Component data is mapped to tabId so that we can clean up memory once the tab has been closed
 // It's important to delete each tab's state on navigation or close
 const rootReducer = combineReducers({
-    // Hub url origin
+    // BlackDuck url origin
     blackduckOrigin,
+    // BlackDuck token
+    blackduckToken,
     // Hub login username
     hubUsername,
     // Hub connection status

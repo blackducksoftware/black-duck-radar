@@ -1,6 +1,7 @@
 import PersistentStorage from '../persistent-storage';
 import * as store from '../index';
 import {
+    BLACKDUCK_BEARER_TOKEN_SET,
     BLACKDUCK_TOKEN_SET,
     HUB_AUTH_STATE_SET,
     HUB_USERNAME_SET,
@@ -33,6 +34,14 @@ export const setBlackduckToken = (token) => {
     };
 };
 
+export const setBearerToken = (token) => {
+    const type = BLACKDUCK_BEARER_TOKEN_SET;
+    return {
+        type,
+        token
+    };
+};
+
 export const setHubUsername = (username) => {
     const type = HUB_USERNAME_SET;
     return {
@@ -57,6 +66,19 @@ export const setHubWindowOpen = (isOpen) => {
     };
 };
 
+export const performBearerTokenRequest = ({ blackduckApiToken, tabId }) => {
+    return async (dispatch) => {
+        const token = await hubController.requestBearerToken({ blackduckToken: blackduckApiToken });
+        dispatch(setBearerToken(token));
+        if (token) {
+            dispatch(setBlackduckConfiguredState(loginEnum.CONNECTED));
+            dispatch(syncHubExternalVulnerabilities({ tabId }));
+        } else {
+            dispatch(setBlackduckConfiguredState(loginEnum.DISCONNECTED));
+        }
+    };
+};
+
 export const performBlackduckConfiguredCheck = ({ tabId }) => {
     return async (dispatch) => {
         dispatch(setBlackduckConfiguredState(loginEnum.CONNECTION_PENDING));
@@ -75,8 +97,10 @@ export const performBlackduckConfiguredCheck = ({ tabId }) => {
 
             if (blackduckUrl && blackduckApiToken) {
                 if (blackduckUrl.length > 0 && blackduckApiToken.length > 0) {
-                    dispatch(setBlackduckConfiguredState(loginEnum.CONNECTED));
-                    dispatch(syncHubExternalVulnerabilities({ tabId }));
+                    dispatch(performBearerTokenRequest({
+                        blackduckApiToken,
+                        tabId
+                    }));
                 } else {
                     dispatch(setBlackduckConfiguredState(loginEnum.DISCONNECTED));
                 }
@@ -86,6 +110,8 @@ export const performBlackduckConfiguredCheck = ({ tabId }) => {
         });
     };
 };
+
+
 
 export const performHubLogin = ({ origin, username, password, parentId }) => {
     return async (dispatch) => {

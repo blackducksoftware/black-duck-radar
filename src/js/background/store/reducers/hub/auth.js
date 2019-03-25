@@ -1,4 +1,5 @@
 import {
+    BLACKDUCK_BEARER_TOKEN_SET,
     BLACKDUCK_TOKEN_SET,
     HUB_ORIGIN_SET,
     HUB_USERNAME_SET,
@@ -37,6 +38,18 @@ export const blackduckToken = (state = '', action) => {
 
     switch (type) {
         case BLACKDUCK_TOKEN_SET:
+            return token;
+
+        default:
+            return state;
+    }
+};
+
+export const blackduckBearerToken = (state = '', action) => {
+    const { token, type } = action;
+
+    switch (type) {
+        case BLACKDUCK_BEARER_TOKEN_SET:
             return token;
 
         default:

@@ -46,7 +46,7 @@ import { clearStore } from './store/actions/app';
 
         const chromeExtensionDetails = chrome.app.getDetails();
         dispatch(setChromeExtensionDetails({ chromeExtensionDetails }));
-        dispatch(performBlackduckConfiguredCheck({ tabId }));
+
         Button.toggleGlow({
             isEnabled: false,
             tabId
@@ -68,14 +68,7 @@ import { clearStore } from './store/actions/app';
                 }));
             }
         }
-
-        const { isBlackduckConfigured } = getState('blackduckConfiguredState');
-
-        if (!isBlackduckConfigured || !componentKeys) {
-            return;
-        }
-
-        dispatch(syncHubExternalVulnerabilities({ tabId }));
+        dispatch(performBlackduckConfiguredCheck({ tabId }));
     };
 
     Tabs.addActivationListener(processTabUpdate);

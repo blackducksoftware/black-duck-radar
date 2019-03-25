@@ -13,6 +13,10 @@ class Hub {
         return store.getState('blackduckToken') || '';
     }
 
+    getBearerToken() {
+        return store.getState('blackduckBearerToken') || '';
+    }
+
     async login({ username, password }) {
         const origin = this.getOrigin();
 
@@ -38,10 +42,10 @@ class Hub {
     }
 
     async tokenAuthentication() {
-        return this.getBearerToken({ blackduckToken: this.getToken() });
+        return this.requestBearerToken({ blackduckToken: this.getToken() });
     }
 
-    async getBearerToken({ blackduckToken }) {
+    async requestBearerToken({ blackduckToken }) {
         const url = this.getRequestUrl('/api/tokens/authenticate', {});
         const headers = {
             Authorization: `token ${blackduckToken}`
@@ -251,7 +255,7 @@ class Hub {
         const includesAuthorizationHeader = _opts.headers && _opts.headers.Authorization;
         const headers = Object.assign({}, _opts.headers);
         if (!includesAuthorizationHeader) {
-            const bearerToken = await this.tokenAuthentication();
+            const bearerToken = this.getBearerToken();
             headers.Authorization = `Bearer ${bearerToken}`;
         }
         const opts =  Object.assign({ credentials: 'include' }, _opts, { headers });

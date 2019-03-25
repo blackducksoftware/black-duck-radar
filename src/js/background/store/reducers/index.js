@@ -14,6 +14,7 @@ import {
 import {
     blackduckOrigin,
     blackduckToken,
+    blackduckBearerToken,
     hubUsername,
     blackduckConfiguredState,
     isHubLoginOpen
@@ -36,6 +37,8 @@ const rootReducer = combineReducers({
     blackduckOrigin,
     // BlackDuck token
     blackduckToken,
+    // BlackDuck Bearer token
+    blackduckBearerToken,
     // Hub login username
     hubUsername,
     // Hub connection status

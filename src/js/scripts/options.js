@@ -12,6 +12,24 @@ function saveOptions() {
                 status.textContent = '';
             }, 750);
         });
+
+        const permissionUrl = new URL(blackduckUrl.value).href;
+        console.log("permission URL", permissionUrl);
+        chrome.permissions.request({
+            origins: [permissionUrl]
+        }, (granted) => {
+            console.log("granted", granted)
+            if (granted) {
+                const status = document.getElementById('status');
+                status.textContent = 'Options saved.';
+                setTimeout(() => {
+                    status.textContent = '';
+                }, 750);
+            } else {
+                const status = document.getElementById('status');
+                status.textContent = 'Url is not permitted';
+            }
+        });
     }
 }
 

@@ -37,14 +37,26 @@ class Hub {
         return this.get('/j_spring_security_logout');
     }
 
-    getBearerToken(blackduckToken) {
-        return this.post('/api/tokens/authenticate', {
-            fetchOpts: {
-                headers: {
-                    Authorization: `token ${blackduckToken}`
-                }
-            }
-        });
+    async tokenAuthentication() {
+        return this.getBearerToken({ blackduckToken: this.getToken() });
+    }
+
+    async getBearerToken({ blackduckToken }) {
+        const url = this.getRequestUrl('/api/tokens/authenticate', {});
+        const headers = {
+            Authorization: `token ${blackduckToken}`
+        };
+        const opts = {
+            credentials: 'include',
+            method: 'POST',
+            headers
+        };
+        const response = await fetch(url, opts);
+        const body = await response.json().catch(() => null);
+        if (body) {
+            return body.bearerToken;
+        }
+        return null;
     }
 
     async isConnected() {
@@ -236,14 +248,11 @@ class Hub {
     }
 
     async fetch(url, _opts) {
-        console.log("fetch param _opts", _opts);
         const includesAuthorizationHeader = _opts.headers && _opts.headers.Authorization;
-        let headers = {};
+        const headers = Object.assign({}, _opts.headers);
         if (!includesAuthorizationHeader) {
-            const bearerToken = this.getBearerToken(this.getToken());
-            headers = {
-                Authorization: `Bearer ${bearerToken}`
-            };
+            const bearerToken = await this.tokenAuthentication();
+            headers.Authorization = `Bearer ${bearerToken}`;
         }
         const opts =  Object.assign({ credentials: 'include' }, _opts, { headers });
 

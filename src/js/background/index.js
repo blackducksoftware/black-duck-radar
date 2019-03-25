@@ -46,7 +46,7 @@ import { clearStore } from './store/actions/app';
 
         const chromeExtensionDetails = chrome.app.getDetails();
         dispatch(setChromeExtensionDetails({ chromeExtensionDetails }));
-        dispatch(performBlackduckConfiguredCheck());
+        dispatch(performBlackduckConfiguredCheck({ tabId }));
         Button.toggleGlow({
             isEnabled: false,
             tabId

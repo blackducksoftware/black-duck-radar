@@ -57,7 +57,7 @@ export const setHubWindowOpen = (isOpen) => {
     };
 };
 
-export const performBlackduckConfiguredCheck = () => {
+export const performBlackduckConfiguredCheck = ({ tabId }) => {
     return async (dispatch) => {
         dispatch(setBlackduckConfiguredState(loginEnum.CONNECTION_PENDING));
         chrome.storage.local.get({
@@ -76,6 +76,7 @@ export const performBlackduckConfiguredCheck = () => {
             if (blackduckUrl && blackduckApiToken) {
                 if (blackduckUrl.length > 0 && blackduckApiToken.length > 0) {
                     dispatch(setBlackduckConfiguredState(loginEnum.CONNECTED));
+                    dispatch(syncHubExternalVulnerabilities({ tabId }));
                 } else {
                     dispatch(setBlackduckConfiguredState(loginEnum.DISCONNECTED));
                 }

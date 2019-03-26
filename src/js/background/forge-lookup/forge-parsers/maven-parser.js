@@ -7,10 +7,12 @@ class MavenParser extends ForgeParser {
             forgeSeparator: ':',
             hubSeparator: ':'
         }));
-        this.artifactComponent = opts.artifactComponent;
+        this.artifactComponent = '/artifact/';
     }
 
-    getComponentKeys(urlFragment = []) {
+    getComponentKeys() {
+        const { pathname = '' } = this.forgeUrl;
+        const urlFragment = decodeURI(pathname);
         if (urlFragment.includes(this.artifactComponent)) {
             return this.findGavByArtifactDetails(urlFragment.replace(this.artifactComponent, ''));
         }
@@ -18,9 +20,21 @@ class MavenParser extends ForgeParser {
         return false;
     }
 
-    findGavByArtifactDetails() {
-        console.warn('findGavByArtifactDetails should be overridden');
-        return null;
+    findGavByArtifactDetails(urlFragment) {
+        const [group, artifact, version] = urlFragment.split('/');
+        const name = [group, artifact].join(this.forgeSeparator);
+        if (!name || !version) {
+            return false;
+        }
+
+        const kbReleaseForgeId = [name, version].join(this.forgeSeparator);
+        const hubExternalId = encodeURI([group, artifact, version].join(this.hubSeparator));
+        return this.createComponentKeys({
+            name,
+            version,
+            kbReleaseForgeId,
+            hubExternalId
+        });
     }
 }
 

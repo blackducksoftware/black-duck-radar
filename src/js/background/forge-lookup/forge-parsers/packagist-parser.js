@@ -10,7 +10,7 @@ class PackagistParser extends DomForgeParser {
                 forgeSeparator: ':',
                 hubSeparator: ':',
                 nameQuery: 'h2.title',
-                versionQuery: 'span.version-number'
+                versionQuery: 'div.version-details span.version-number'
             }
         );
 

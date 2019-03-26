@@ -1,5 +1,4 @@
-import MavenCentralParser from './maven-central-parser';
-import MvnRepositoryParser from './mvn-repository-parser';
+import MavenParser from './maven-parser';
 import NugetParser from './nuget-parser';
 import PypiParser from './pypi-parser';
 import RubyGemsParser from './ruby-gems-parser';
@@ -11,9 +10,9 @@ import PackagistParser from './packagist-parser';
 import PypiOrgParser from './pypi-org-parser';
 
 export default {
-    'search.maven.org': MavenCentralParser,
+    'search.maven.org': MavenParser,
     'www.nuget.org': NugetParser,
-    'mvnrepository.com': MvnRepositoryParser,
+    'mvnrepository.com': MavenParser,
     'pypi.python.org': PypiParser,
     'rubygems.org': RubyGemsParser,
     'repo1.maven.org': RepoMavenCentralParser,

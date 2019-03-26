@@ -43,7 +43,7 @@ class HelpContainer extends Component {
 
     render() {
         const { chromeExtensionDetails } = this.props;
-        const docUrl = 'https://blackducksoftware.atlassian.net/wiki/spaces/INTDOCS/overview';
+        const docUrl = 'https://synopsys.atlassian.net/wiki/spaces/INTDOCS/overview';
         const feedbackUrl = 'https://github.com/blackducksoftware/black-duck-radar/issues';
         return (
             <div className={helpContainer}>

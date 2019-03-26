@@ -156,6 +156,8 @@ class Hub {
                 detailsUrl = `https://web.nvd.nist.gov/view/vuln/search-results?query=${vulnerability.vulnerabilityName}&search_type=all&cves=on`;
             } else if (vulnerability.source === 'VULNDB') {
                 detailsUrl = `${this.getOrigin()}/#vulnerabilities/id:${vulnerability.vulnerabilityName}/view:overview`;
+            } else if (vulnerability.source === 'BDSA') {
+                detailsUrl = `${this.getOrigin()}/api/vulnerabilities/${vulnerability.vulnerabilityName}/overview`
             }
 
             return Object.assign(vulnerability, {

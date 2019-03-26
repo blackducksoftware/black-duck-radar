@@ -77,11 +77,14 @@ class Hub {
      * @param {ComponentKeys}
      * */
     async getExternalComponents({ forgeName, hubExternalId } = {}) {
-        const response = await this.get('/api/components', {
-            queryMap: {
-                q: `${forgeName}:${hubExternalId}`
-            }
-        }).catch(() => null);
+        let response = null;
+        if (forgeName && hubExternalId) {
+            response = await this.get('/api/components', {
+                queryMap: {
+                    q: `${forgeName}:${hubExternalId}`
+                }
+            }).catch(() => null);
+        }
 
         if (response) {
             return response.items;

@@ -179,22 +179,26 @@ class Hub {
     }
 
     async phoneHome(thirdPartyName, thirdPartyVersion, pluginVersion) {
-        const registrationObject = await this.getRegistrationId();
-        const { registrationId } = registrationObject;
-        const hubVersion = await this.getHubVersion();
-        const builder = new PhoneHomeRequestBodyBuilder();
-        builder.registrationId = registrationId;
-        builder.blackDuckName = 'Hub';
-        builder.blackDuckVersion = hubVersion;
-        builder.pluginVersion = pluginVersion;
-        builder.thirdPartyName = thirdPartyName;
-        builder.thirdPartyVersion = thirdPartyVersion;
-        const phoneHomeRequestBody = builder.build();
-        const phoneHomeClient = new PhoneHomeClient();
-        phoneHomeClient.phoneHome(phoneHomeRequestBody);
+        const origin = this.getOrigin();
+        if (origin) {
+            const registrationObject = await this.getRegistrationId();
+            const { registrationId } = registrationObject;
+            const hubVersion = await this.getHubVersion();
+            const builder = new PhoneHomeRequestBodyBuilder();
+            builder.registrationId = registrationId;
+            builder.blackDuckName = 'Hub';
+            builder.blackDuckVersion = hubVersion;
+            builder.pluginVersion = pluginVersion;
+            builder.thirdPartyName = thirdPartyName;
+            builder.thirdPartyVersion = thirdPartyVersion;
+            const phoneHomeRequestBody = builder.build();
+            const phoneHomeClient = new PhoneHomeClient();
+            phoneHomeClient.phoneHome(phoneHomeRequestBody);
+        }
     }
 
     async getRegistrationId() {
+        // TODO use non-v1 apis
         return this.get('/api/v1/registrations');
     }
 
@@ -224,7 +228,14 @@ class Hub {
             url = new URL(origin);
             url.pathname = baseUrl;
         } else {
-            url = new URL(baseUrl);
+            try {
+                url = new URL(baseUrl);
+            } catch(err) {
+                if (DEBUG_AJAX) {
+                    console.log('getRequestUrl error', err);
+                }
+                return null;
+            }
         }
 
         Object.keys(queryMap).forEach(key => {
@@ -257,6 +268,9 @@ class Hub {
     }
 
     async fetch(url, _opts) {
+        if (!url) {
+            return null;
+        }
         const includesAuthorizationHeader = _opts.headers && _opts.headers.Authorization;
         const headers = Object.assign({}, _opts.headers);
         if (!includesAuthorizationHeader) {

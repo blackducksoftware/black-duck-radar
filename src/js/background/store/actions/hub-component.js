@@ -1,3 +1,4 @@
+import PersistentStorage from '../persistent-storage';
 import * as store from 'background/store';
 import Hub from 'background/controllers/hub';
 import Button from 'background/controllers/button';
@@ -294,5 +295,57 @@ export const syncHubExternalVulnerabilities = ({ tabId }) => {
 export const refreshComponent = ({ tabId }) => {
     return async (dispatch) => {
         dispatch(syncHubExternalVulnerabilities({ tabId }));
+    };
+};
+
+export const checkPhoneHomeDate = (currentPhoneHomeData) => {
+    if (!currentPhoneHomeData) {
+        return true;
+    }
+
+    const { lastUpdated } = currentPhoneHomeData;
+
+    if (!lastUpdated) {
+        return true;
+    }
+    const currentDate = Date.now();
+    const lastUpdatedDate = Date.parse(lastUpdated);
+    return currentDate.year !== lastUpdatedDate.year
+        && currentDate.monthIndex !== lastUpdatedDate.monthIndex
+        && currentDate.day !== lastUpdatedDate.day;
+};
+
+export const checkForgeMap = (tabId) => {
+    const forgeComponentKeysMap = store.getState('forgeComponentKeysMap');
+    if (tabId && tabId.toString() in forgeComponentKeysMap) {
+        return true;
+    }
+    return false;
+};
+
+export const performPhoneHome = ({ visitedUrl, tabId }) => {
+    return async () => {
+        try {
+            const { phoneHomeData } = await PersistentStorage.getState();
+            const shouldPhoneHome = checkPhoneHomeDate(phoneHomeData) && checkForgeMap(tabId);
+            if (shouldPhoneHome) {
+                const extensionDetails = store.getState('chromeExtensionDetails');
+                const { version } = extensionDetails;
+                const visitedOrigin = new URL(visitedUrl).origin;
+                console.log("visitedUrl ", visitedOrigin);
+                await hubController.phoneHome('Radar', version, version);
+                const newPhoneHomeData = {
+                    phoneHomeData: {
+                        lastUpdated: Date.now().toString()
+                    }
+                };
+                console.log("phone home data to save ", newPhoneHomeData);
+                PersistentStorage.setState(newPhoneHomeData);
+            }
+        } catch (err) {
+            if (DEBUG_AJAX) {
+                console.log('Phone home failed: ', err);
+            }
+        }
     };
 };

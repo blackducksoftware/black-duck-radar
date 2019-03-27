@@ -111,8 +111,6 @@ export const performBlackduckConfiguredCheck = ({ tabId }) => {
     };
 };
 
-
-
 export const performHubLogin = ({ origin, username, password, parentId }) => {
     return async (dispatch) => {
         dispatch(setBlackduckOrigin(origin));

@@ -298,16 +298,21 @@ export const refreshComponent = ({ tabId }) => {
     };
 };
 
-export const checkPhoneHomeDate = (currentPhoneHomeData) => {
+export const checkPerformPhoneHome = (currentPhoneHomeData) => {
     if (!currentPhoneHomeData) {
-        return true;
+        return false;
     }
 
-    const { lastUpdated } = currentPhoneHomeData;
+    const { lastUpdated, forgeNames } = currentPhoneHomeData;
 
     if (!lastUpdated) {
-        return true;
+        return false;
     }
+
+    if (!forgeNames) {
+        return false;
+    }
+
     const currentDate = Date.now();
     const lastUpdatedDate = Date.parse(lastUpdated);
     return currentDate.year !== lastUpdatedDate.year
@@ -315,33 +320,73 @@ export const checkPhoneHomeDate = (currentPhoneHomeData) => {
         && currentDate.day !== lastUpdatedDate.day;
 };
 
-export const checkForgeMap = (tabId) => {
-    const forgeComponentKeysMap = store.getState('forgeComponentKeysMap');
-    if (tabId && tabId.toString() in forgeComponentKeysMap) {
+export const isForgeToBeAdded = (phoneHomeData, forgeName) => {
+    if (!phoneHomeData) {
         return true;
     }
-    return false;
+    const lastForgeNames = phoneHomeData.forgeNames;
+    if (!lastForgeNames) {
+        return true;
+    }
+    return lastForgeNames.indexOf(forgeName) < 0;
 };
 
-export const performPhoneHome = ({ visitedUrl, tabId }) => {
+export const getForgeName = (tabId, forgeComponentKeysMap) => {
+    if (tabId && tabId.toString() in forgeComponentKeysMap) {
+        return forgeComponentKeysMap[tabId].forgeName;
+    }
+    return null;
+};
+
+export const collectForgeData = (tabId, phoneHomeData) => {
+    const forgeComponentKeysMap = store.getState('forgeComponentKeysMap');
+    const currentForgeName = getForgeName(tabId, forgeComponentKeysMap);
+    const phoneHomeDataChanged = currentForgeName !== null
+        && isForgeToBeAdded(phoneHomeData, currentForgeName);
+    if (phoneHomeDataChanged) {
+        let forges = [];
+        forges.push(currentForgeName);
+        let lastUpdated;
+        if (phoneHomeData) {
+            forges = forges.concat(phoneHomeData.forgeNames);
+            lastUpdated = phoneHomeData.lastUpdated;
+        }
+        const newPhoneHomeData = {
+            phoneHomeData: {
+                lastUpdated,
+                forgeNames: forges
+            }
+        };
+        PersistentStorage.setState(newPhoneHomeData);
+    }
+}
+
+export const performPhoneHome = ({ tabId }) => {
     return async () => {
         try {
             const { phoneHomeData } = await PersistentStorage.getState();
-            const shouldPhoneHome = checkPhoneHomeDate(phoneHomeData) && checkForgeMap(tabId);
+            const shouldPhoneHome = checkPerformPhoneHome(phoneHomeData);
             if (shouldPhoneHome) {
                 const extensionDetails = store.getState('chromeExtensionDetails');
                 const { version } = extensionDetails;
-                const visitedOrigin = new URL(visitedUrl).origin;
-                console.log("visitedUrl ", visitedOrigin);
-                await hubController.phoneHome('Radar', version, version);
-                const newPhoneHomeData = {
-                    phoneHomeData: {
-                        lastUpdated: Date.now().toString()
-                    }
+                const metaData = {
+                    forges: phoneHomeData.forgeNames
                 };
-                console.log("phone home data to save ", newPhoneHomeData);
-                PersistentStorage.setState(newPhoneHomeData);
+                if (hubController.getOrigin() && hubController.getOrigin() !== ''
+                    && hubController.getToken() && hubController.getToken() !== '') {
+                    await hubController.phoneHome(version, metaData);
+                    const newPhoneHomeData = {
+                        phoneHomeData: {
+                            lastUpdated: Date.now().toString(),
+                            forgeNames: phoneHomeData.forgeNames
+                        }
+                    };
+                    PersistentStorage.setState(newPhoneHomeData);
+                }
             }
+
+            collectForgeData(tabId, phoneHomeData);
+
         } catch (err) {
             if (DEBUG_AJAX) {
                 console.log('Phone home failed: ', err);

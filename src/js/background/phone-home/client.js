@@ -1,6 +1,6 @@
 class PhoneHomeClient {
     phoneHome(phoneHomeRequestBody) {
-        return this.post('https://collect.blackducksoftware.com/', {
+        return this.post('https://www.google-analytics.com/collect', {
             fetchOpts: {
                 headers: {
                     'Content-type': 'application/json'

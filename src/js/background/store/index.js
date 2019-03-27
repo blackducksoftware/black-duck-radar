@@ -7,13 +7,8 @@ import PersistentStorage from './persistent-storage';
 
 let store;
 
-const getInitialState = async () => {
-    const persistedState = await PersistentStorage.getState();
-    return Object.assign({}, persistedState);
-};
-
 export const createStore = async () => {
-    const initialState = await getInitialState();
+    const initialState = {};
     store = createReduxStore(
         rootReducer,
         initialState,

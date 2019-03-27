@@ -69,10 +69,7 @@ import { clearStore } from './store/actions/app';
             }
         }
         dispatch(performBlackduckConfiguredCheck({ tabId }));
-        dispatch(performPhoneHome({
-            visitedUrl: url,
-            tabId
-        }));
+        dispatch(performPhoneHome({ tabId }));
     };
 
     Tabs.addActivationListener(processTabUpdate);

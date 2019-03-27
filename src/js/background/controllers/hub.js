@@ -3,6 +3,7 @@ import HateoasModel from '../models/hateoas-model';
 import Permissions from './permissions';
 import PhoneHomeRequestBodyBuilder from '../phone-home/builder';
 import PhoneHomeClient from '../phone-home/client';
+import { PHONE_HOME_PRODUCT_ENUM } from '../../shared/constants';
 
 class Hub {
     getOrigin() {
@@ -178,19 +179,19 @@ class Hub {
         return response ? response.items : [];
     }
 
-    async phoneHome(thirdPartyName, thirdPartyVersion, pluginVersion) {
+    async phoneHome(artifactVersion, metaData) {
         const origin = this.getOrigin();
         if (origin) {
             const registrationObject = await this.getRegistrationId();
             const { registrationId } = registrationObject;
             const hubVersion = await this.getHubVersion();
             const builder = new PhoneHomeRequestBodyBuilder();
-            builder.registrationId = registrationId;
-            builder.blackDuckName = 'Hub';
-            builder.blackDuckVersion = hubVersion;
-            builder.pluginVersion = pluginVersion;
-            builder.thirdPartyName = thirdPartyName;
-            builder.thirdPartyVersion = thirdPartyVersion;
+            builder.customerId = registrationId;
+            builder.artifactId = 'Radar';
+            builder.artifactVersion = artifactVersion;
+            builder.productId = PHONE_HOME_PRODUCT_ENUM.BLACK_DUCK.toString();
+            builder.productVersion = hubVersion;
+            builder.metaData = metaData;
             const phoneHomeRequestBody = builder.build();
             const phoneHomeClient = new PhoneHomeClient();
             phoneHomeClient.phoneHome(phoneHomeRequestBody);

@@ -139,12 +139,17 @@
     top: 6px;
 }
 
+.configurationStatus {
+    border-radius: 15px;
+    color: white;
+    padding: 5px;
+}
 .configurationConnected {
-    color: green;
-    margin-right: 5px;
+    composes: configurationStatus;
+    background-color: green;
 }
 
 .configurationDisconnected {
-    color: red;
-    margin-right: 5px;
+    composes: configurationStatus;
+    background-color: red;
 }

@@ -84,7 +84,6 @@ class LoginStatusContainer extends Component {
                             <span className={textClasses} aria-hidden='true'>
                                 {buttonText}
                             </span>
-                            <span className='fa fa-cog' aria-hidden='true' />
                         </button>
                     </div>
                 </div>

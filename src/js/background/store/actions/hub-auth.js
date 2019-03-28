@@ -8,7 +8,7 @@ import {
     HUB_ORIGIN_SET,
     HUB_LOGIN_WINDOW_SET
 } from 'shared/actions/types';
-import { syncHubExternalVulnerabilities } from './hub-component';
+import { performPhoneHomeIfNeeded, syncHubExternalVulnerabilities } from './hub-component';
 import { loginEnum } from 'shared/constants';
 import Hub from 'background/controllers/hub';
 import Tabs from 'background/controllers/tabs';
@@ -68,13 +68,19 @@ export const setHubWindowOpen = (isOpen) => {
 
 export const performBearerTokenRequest = ({ blackduckApiToken, tabId }) => {
     return async (dispatch) => {
-        const token = await hubController.requestBearerToken({ blackduckToken: blackduckApiToken });
-        dispatch(setBearerToken(token));
-        if (token) {
-            dispatch(setBlackduckConfiguredState(loginEnum.CONNECTED));
-            dispatch(syncHubExternalVulnerabilities({ tabId }));
-        } else {
-            dispatch(setBlackduckConfiguredState(loginEnum.DISCONNECTED));
+        const componentKeys = store.getState('forgeComponentKeysMap');
+        // check if there is data for the tab in the extension
+        // this is a tab the extension should display data.
+        if (componentKeys && tabId && tabId.toString() in componentKeys) {
+            const token = await hubController.requestBearerToken({ blackduckToken: blackduckApiToken });
+            dispatch(setBearerToken(token));
+            if (token) {
+                dispatch(performPhoneHomeIfNeeded());
+                dispatch(setBlackduckConfiguredState(loginEnum.CONNECTED));
+                dispatch(syncHubExternalVulnerabilities({ tabId }));
+            } else {
+                dispatch(setBlackduckConfiguredState(loginEnum.DISCONNECTED));
+            }
         }
     };
 };
@@ -166,6 +172,8 @@ export const performHubLogout = () => {
         });
     };
 };
+
+
 
 export const openHubLoginWindow = ({ parentWindow }) => {
     return async (dispatch) => {

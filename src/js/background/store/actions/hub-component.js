@@ -309,12 +309,14 @@ export const isPhoneHomeNeeded = (currentPhoneHomeData) => {
     if (!forgeNames) {
         return false;
     }
+    const origin = hubController.getOrigin();
+    const token = hubController.getToken();
     // extension not configured can't get blackduck version data
-    if (!hubController.getOrigin() || hubController.getOrigin() === '') {
+    if (!origin || origin === '') {
         return false;
     }
 
-    if (!hubController.getToken() || hubController.getToken() !== '') {
+    if (!token || token === '') {
         return false;
     }
     // data collected but never sent
@@ -371,7 +373,7 @@ export const collectForgeData = (tabId, phoneHomeData) => {
     }
 };
 
-export const collectUsageData = ({ tabId }) => {
+export const performPhoneHomeIfNeeded = () => {
     return async () => {
         try {
             const { phoneHomeData } = await PersistentStorage.getState();
@@ -392,9 +394,19 @@ export const collectUsageData = ({ tabId }) => {
                 };
                 await PersistentStorage.setState(newPhoneHomeData);
             }
+        } catch (err) {
+            if (DEBUG_AJAX) {
+                console.log('Phone home failed: ', err);
+            }
+        }
+    };
+};
 
+export const collectUsageData = ({ tabId }) => {
+    return async () => {
+        try {
+            const { phoneHomeData } = await PersistentStorage.getState();
             collectForgeData(tabId, phoneHomeData);
-
         } catch (err) {
             if (DEBUG_AJAX) {
                 console.log('Phone home failed: ', err);

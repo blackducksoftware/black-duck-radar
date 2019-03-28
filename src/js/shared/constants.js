@@ -28,10 +28,10 @@ export const SYNC_PENDING = 'SYNC_PENDING';
 export const PHONE_HOME_MAX_META_DATA_CHARACTERS = 1536;
 // matches: https://github.com/blackducksoftware/phone-home-client/blob/master/src/main/java/com/synopsys/integration/phonehome/enums/ProductIdEnum.java
 export const PHONE_HOME_PRODUCT_ENUM = Object.freeze({
-    BLACK_DUCK: 0,
-    CODE_CENTER: 1,
-    COVERITY: 2,
-    PROTEX: 3
+    BLACK_DUCK: 'BLACK_DUCK',
+    CODE_CENTER: 'CODE_CENTER',
+    COVERITY: 'COVERITY',
+    PROTEX: 'PROTEX'
 });
 // DO NOT CHANGE PHONE HOME GUID for CLIENT ID
 export const PHONE_HOME_CLIENT_ID_NAMESPACE = Object.freeze('5d8343f2-8940-4911-8243-ad2b60a1ae28');

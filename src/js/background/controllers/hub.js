@@ -47,21 +47,32 @@ class Hub {
     }
 
     async requestBearerToken({ blackduckToken }) {
-        const url = this.getRequestUrl('/api/tokens/authenticate', {});
-        const headers = {
-            Authorization: `token ${blackduckToken}`
-        };
-        const opts = {
-            credentials: 'include',
-            method: 'POST',
-            headers
-        };
-        const response = await fetch(url, opts);
-        const body = await response.json().catch(() => null);
-        if (body) {
-            return body.bearerToken;
+        let currentBearerToken = this.getBearerToken();
+        if (currentBearerToken) {
+            try {
+                await this.getHubVersion()
+            } catch (err) {
+                currentBearerToken = null;
+            }
         }
-        return null;
+
+        if (!currentBearerToken) {
+            const url = this.getRequestUrl('/api/tokens/authenticate', {});
+            const headers = {
+                Authorization: `token ${blackduckToken}`
+            };
+            const opts = {
+                credentials: 'include',
+                method: 'POST',
+                headers
+            };
+            const response = await fetch(url, opts);
+            const body = await response.json().catch(() => null);
+            if (body) {
+                currentBearerToken = body.bearerToken;
+            }
+        }
+        return currentBearerToken;
     }
 
     async isConnected() {
@@ -194,8 +205,7 @@ class Hub {
             builder.metaData = metaData;
             const phoneHomeRequestBody = builder.build();
             const phoneHomeClient = new PhoneHomeClient();
-            console.log("phone home request: ", phoneHomeRequestBody);
-            //phoneHomeClient.phoneHome(phoneHomeRequestBody);
+            phoneHomeClient.phoneHome(phoneHomeRequestBody);
         }
     }
 

@@ -3,21 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Black Duck Radar Options</title>
+    <style>
+        .input-container {
+            display: block;
+        }
+        .label {
+            margin: 5px;
+            height: 36px;
+            width: 100%;
+            font-size: 12px;
+        }
+        .input {
+            margin: 5px;
+            padding: 5px;
+            width: 350px;
+        }
+        .submit {
+            margin: 5px;
+            padding: 5px;
+        }
+        .status {
+            margin: 5px;
+        }
+    </style>
 </head>
 <body>
 <div class="input-container">
-    <div id="status">
+    <div id="status" class="status">
     </div>
-    <form class="login-form">
-        <label class="origin-label">BlackDuck Server Address:</label>
-        <br/>
+    <form>
+        <label class="label">BlackDuck Server Address:</label>
         <input class="input" id="blackduckUrl" />
-        <br/>
-        <label class="password-label">API Token:</label>
-        <br/>
-        <input class="input credential-input" id="blackduckApiToken" type="password" />
-        <br/>
-        <button class="submit-link" id="submit">Save</button>
+        <label class="label">API Token:</label>
+        <input class="input" id="blackduckApiToken" type="password" />
+        <button class="submit" id="submit">Save</button>
     </form>
 </div>
 <script src="options.min.js"></script>

@@ -198,10 +198,10 @@ class Hub {
             const hubVersion = await this.getHubVersion();
             const builder = new PhoneHomeRequestBodyBuilder();
             builder.customerId = registrationId;
-            builder.artifactId = 'Radar';
+            builder.artifactId = 'blackduck-radar';
             builder.artifactVersion = artifactVersion;
             builder.productId = PHONE_HOME_PRODUCT_ENUM.BLACK_DUCK.toString();
-            builder.productVersion = hubVersion;
+            builder.productVersion = hubVersion.version;
             builder.metaData = metaData;
             const phoneHomeRequestBody = builder.build();
             const phoneHomeClient = new PhoneHomeClient();
@@ -211,11 +211,11 @@ class Hub {
 
     async getRegistrationId() {
         // TODO use non-v1 apis
-        return this.get('/api/v1/registrations');
+        return this.get('/api/registration');
     }
 
     async getHubVersion() {
-        return this.get('/api/v1/current-version');
+        return this.get('/api/current-version');
     }
 
     getRelation(model, relationship) {

@@ -1,13 +1,24 @@
 class PhoneHomeClient {
     phoneHome(phoneHomeRequestBody) {
+        const parameters = this.createQueryParameters(phoneHomeRequestBody);
         return this.post('https://www.google-analytics.com/collect', {
             fetchOpts: {
                 headers: {
-                    'Content-type': 'application/json'
+                    'Content-type': 'application/x-www-form-urlencoded'
                 },
-                body: JSON.stringify(phoneHomeRequestBody)
+                body: parameters
             }
         });
+    }
+
+    createQueryParameters(phoneHomeRequestBody) {
+        const keys = Object.keys(phoneHomeRequestBody);
+        const params = [];
+        keys.forEach(key => {
+            const parameter = `${encodeURI(key)}=${encodeURI(phoneHomeRequestBody[key])}`;
+            params.push(parameter);
+        });
+        return params.join('&');
     }
 
     post(baseUrl, { fetchOpts } = {}) {

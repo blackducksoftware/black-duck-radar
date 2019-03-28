@@ -46,9 +46,9 @@ class PhoneHomeRequestBodyBuilder {
         this.validateRequiredParam(this.productId);
         this.validateRequiredParam(this.productVersion);
         const data = Object.assign({}, {
-            v: 1,
+            v: '1',
             t: 'pageview',
-            cid: this.generateClientId(),
+            cid: `${this.generateClientId()}`,
             tid: 'UA-116682967-1',
             dp: 'phone-home',
             cd1: this.customerId,
@@ -56,7 +56,7 @@ class PhoneHomeRequestBodyBuilder {
             cd3: this.artifactVersion,
             cd4: this.productId,
             cd5: this.productVersion,
-            cd6: this.metaData,
+            cd6: JSON.stringify(this.metaData),
             cd7: this.hostName
         });
         return data;

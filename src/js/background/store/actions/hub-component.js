@@ -298,21 +298,31 @@ export const refreshComponent = ({ tabId }) => {
     };
 };
 
-export const checkPerformPhoneHome = (currentPhoneHomeData) => {
+export const isPhoneHomeNeeded = (currentPhoneHomeData) => {
+    // no data collected
     if (!currentPhoneHomeData) {
         return false;
     }
 
     const { lastUpdated, forgeNames } = currentPhoneHomeData;
-
-    if (!lastUpdated) {
-        return false;
-    }
-
+    // no forge data collected
     if (!forgeNames) {
         return false;
     }
+    // extension not configured can't get blackduck version data
+    if (!hubController.getOrigin() || hubController.getOrigin() === '') {
+        return false;
+    }
 
+    if (!hubController.getToken() || hubController.getToken() !== '') {
+        return false;
+    }
+    // data collected but never sent
+    if (!lastUpdated) {
+        return true;
+    }
+    // data collected and previously sent.
+    // Is it a new day to send data again? Only send once a day.
     const currentDate = Date.now();
     const lastUpdatedDate = Date.parse(lastUpdated);
     return currentDate.year !== lastUpdatedDate.year
@@ -359,30 +369,28 @@ export const collectForgeData = (tabId, phoneHomeData) => {
         };
         PersistentStorage.setState(newPhoneHomeData);
     }
-}
+};
 
-export const performPhoneHome = ({ tabId }) => {
+export const collectUsageData = ({ tabId }) => {
     return async () => {
         try {
             const { phoneHomeData } = await PersistentStorage.getState();
-            const shouldPhoneHome = checkPerformPhoneHome(phoneHomeData);
+            const shouldPhoneHome = isPhoneHomeNeeded(phoneHomeData);
             if (shouldPhoneHome) {
                 const extensionDetails = store.getState('chromeExtensionDetails');
                 const { version } = extensionDetails;
                 const metaData = {
                     forges: phoneHomeData.forgeNames
                 };
-                if (hubController.getOrigin() && hubController.getOrigin() !== ''
-                    && hubController.getToken() && hubController.getToken() !== '') {
-                    await hubController.phoneHome(version, metaData);
-                    const newPhoneHomeData = {
-                        phoneHomeData: {
-                            lastUpdated: Date.now().toString(),
-                            forgeNames: phoneHomeData.forgeNames
-                        }
-                    };
-                    PersistentStorage.setState(newPhoneHomeData);
-                }
+                await hubController.phoneHome(version, metaData);
+                // update the last update time and reset the forge data.
+                const newPhoneHomeData = {
+                    phoneHomeData: {
+                        lastUpdated: Date.now().toString(),
+                        forgeNames: []
+                    }
+                };
+                await PersistentStorage.setState(newPhoneHomeData);
             }
 
             collectForgeData(tabId, phoneHomeData);

@@ -194,7 +194,8 @@ class Hub {
             builder.metaData = metaData;
             const phoneHomeRequestBody = builder.build();
             const phoneHomeClient = new PhoneHomeClient();
-            phoneHomeClient.phoneHome(phoneHomeRequestBody);
+            console.log("phone home request: ", phoneHomeRequestBody);
+            //phoneHomeClient.phoneHome(phoneHomeRequestBody);
         }
     }
 

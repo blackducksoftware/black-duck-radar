@@ -72,14 +72,18 @@ export const performBearerTokenRequest = ({ blackduckApiToken, tabId }) => {
         // check if there is data for the tab in the extension
         // this is a tab the extension should display data.
         if (componentKeys && tabId && tabId.toString() in componentKeys) {
-            const token = await hubController.requestBearerToken({ blackduckToken: blackduckApiToken });
-            dispatch(setBearerToken(token));
-            if (token) {
-                dispatch(performPhoneHomeIfNeeded());
-                dispatch(setBlackduckConfiguredState(loginEnum.CONNECTED));
-                dispatch(syncHubExternalVulnerabilities({ tabId }));
-            } else {
-                dispatch(setBlackduckConfiguredState(loginEnum.DISCONNECTED));
+            try {
+                const token = await hubController.requestBearerToken({ blackduckToken: blackduckApiToken });
+                dispatch(setBearerToken(token));
+                if (token) {
+                    dispatch(performPhoneHomeIfNeeded());
+                    dispatch(setBlackduckConfiguredState(loginEnum.CONNECTED));
+                    dispatch(syncHubExternalVulnerabilities({ tabId }));
+                } else {
+                    dispatch(setBlackduckConfiguredState(loginEnum.DISCONNECTED));
+                }
+            } catch (err) {
+                dispatch(setBlackduckConfiguredState(loginEnum.INVALID_CONFIG));
             }
         }
     };

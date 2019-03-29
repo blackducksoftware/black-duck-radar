@@ -38,14 +38,14 @@ import { clearStore } from './store/actions/app';
             externalComponent = null;
             componentKeys = null;
         }
+        dispatch(performBlackduckConfiguredCheck({ tabId }));
+        const chromeExtensionDetails = chrome.app.getDetails();
+        dispatch(setChromeExtensionDetails({ chromeExtensionDetails }));
 
         if (externalComponent) {
             // We've already fetched an external component for this tab
             return;
         }
-
-        const chromeExtensionDetails = chrome.app.getDetails();
-        dispatch(setChromeExtensionDetails({ chromeExtensionDetails }));
 
         Button.toggleGlow({
             isEnabled: false,
@@ -68,7 +68,6 @@ import { clearStore } from './store/actions/app';
                 }));
             }
         }
-        dispatch(performBlackduckConfiguredCheck({ tabId }));
         dispatch(collectUsageData({ tabId }));
     };
 

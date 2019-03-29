@@ -153,3 +153,9 @@
     composes: configurationStatus;
     background-color: red;
 }
+
+.configurationInvalid {
+    composes: configurationStatus;
+    color: black;
+    background-color: yellow;
+}

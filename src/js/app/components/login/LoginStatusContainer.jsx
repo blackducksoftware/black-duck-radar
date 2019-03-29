@@ -23,13 +23,14 @@ class LoginStatusContainer extends Component {
         displayOptionsPage: PropTypes.func.isRequired,
         performHubLogout: PropTypes.func.isRequired,
         selectItem: PropTypes.func.isRequired,
+        status: PropTypes.number,
         openHubLoginWindow: PropTypes.func.isRequired
     };
 
     static defaultProps = {
-        hubUsername: '',
         isBlackduckConfigured: false,
-        selectItem: () => {}
+        selectItem: () => {},
+        status: loginEnum.DISCONNECTED
     };
 
     constructor(props) {
@@ -71,11 +72,41 @@ class LoginStatusContainer extends Component {
     displayConfiguration() {
         this.props.displayOptionsPage();
     }
+    getTextClass() {
+        const { status } = this.props;
+        switch (status) {
+            case loginEnum.CONNECTED: {
+                return styles.configurationConnected;
+            }
+            case loginEnum.INVALID_CONFIG: {
+                return styles.configurationInvalid;
+            }
+            case loginEnum.DISCONNECTED:
+            default: {
+                return styles.configurationDisconnected;
+            }
+        }
+    }
+
+    getButtonText() {
+        const { status } = this.props;
+        switch (status) {
+            case loginEnum.CONNECTED: {
+                return 'Configured';
+            }
+            case loginEnum.INVALID_CONFIG: {
+                return 'Invalid Configuration';
+            }
+            case loginEnum.DISCONNECTED:
+            default: {
+                return 'Not Configured'
+            }
+        }
+    }
 
     render() {
-        const { isBlackduckConfigured } = this.props;
-        const textClasses = isBlackduckConfigured ? styles.configurationConnected : styles.configurationDisconnected;
-        const buttonText = isBlackduckConfigured ? 'Configured' : 'Not Configured';
+        const textClasses = this.getTextClass();
+        const buttonText = this.getButtonText();
         return (
             <div className={styles.loginBlock}>
                 <div className={styles.textBlock}>
@@ -92,12 +123,11 @@ class LoginStatusContainer extends Component {
     }
 }
 
-const mapStateToProps = ({ blackduckOrigin, hubUsername, blackduckConfiguredState }) => {
-    const { isBlackduckConfigured } = blackduckConfiguredState;
+const mapStateToProps = ({ blackduckConfiguredState }) => {
+    const { isBlackduckConfigured, status } = blackduckConfiguredState;
 
     return {
-        blackduckOrigin,
-        hubUsername,
+        status,
         isBlackduckConfigured
     };
 };

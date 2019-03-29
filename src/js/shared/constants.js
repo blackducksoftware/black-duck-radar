@@ -16,7 +16,8 @@ export const loginEnum = {
     DISCONNECTED: 0,
     CONNECTED: 1,
     DISCONNECTION_PENDING: 2,
-    CONNECTION_PENDING: 3
+    CONNECTION_PENDING: 3,
+    INVALID_CONFIG: 4
 };
 export const loadEnum = {
     UNLOADED: 0,

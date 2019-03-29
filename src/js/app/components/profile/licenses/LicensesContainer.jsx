@@ -1,3 +1,26 @@
+/*
+ *  black-duck-radar
+ *
+ *  Copyright (c) 2019 Synopsys, Inc.
+ *
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements. See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership. The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License. You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied. See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -39,7 +62,8 @@ class LicenseContainer extends Component {
 
     getUiUrl(apiUrl) {
         const { blackduckOrigin } = this.props;
-        const licenseId = apiUrl.split('/').pop();
+        const licenseId = apiUrl.split('/')
+            .pop();
         const url = new URL(blackduckOrigin);
         url.pathname = `api/licenses/${licenseId}/text`;
         return url;
@@ -71,7 +95,7 @@ class LicenseContainer extends Component {
     render() {
         return (
             <div className={block}>
-                { this.getLicenses() }
+                {this.getLicenses()}
             </div>
         );
     }
@@ -83,7 +107,7 @@ const mapStateToProps = ({ blackduckOrigin, hubComponentVersionMap }) => {
 
     let licenses = [];
     if (componentVersion && typeof componentVersion === 'object') {
-        const { license } =  componentVersion;
+        const { license } = componentVersion;
         // This bit of ugliness is because the API returns the license fields on the top level object
         // if their is only a single license
         licenses = license.licenses.length ? license.licenses : [license];

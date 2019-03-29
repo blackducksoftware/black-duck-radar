@@ -1,3 +1,26 @@
+/*
+ *  black-duck-radar
+ *
+ *  Copyright (c) 2019 Synopsys, Inc.
+ *
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements. See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership. The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License. You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied. See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
+
 import * as store from '../store';
 import HateoasModel from '../models/hateoas-model';
 import Permissions from './permissions';
@@ -50,7 +73,7 @@ class Hub {
         let currentBearerToken = this.getBearerToken();
         if (currentBearerToken) {
             try {
-                await this.getHubVersion()
+                await this.getHubVersion();
             } catch (err) {
                 currentBearerToken = null;
             }
@@ -67,7 +90,8 @@ class Hub {
                 headers
             };
             const response = await fetch(url, opts);
-            const body = await response.json().catch(() => null);
+            const body = await response.json()
+                .catch(() => null);
             if (body) {
                 currentBearerToken = body.bearerToken;
             }
@@ -95,7 +119,8 @@ class Hub {
                 queryMap: {
                     q: `${forgeName}:${hubExternalId}`
                 }
-            }).catch(() => null);
+            })
+                .catch(() => null);
         }
 
         if (response) {
@@ -148,7 +173,8 @@ class Hub {
         return Promise.all(projectVersions.map(async (projectVersion) => {
             const bomComponents = await this.getProjectVersionComponents(projectVersion);
             return bomComponents.filter(({ componentVersion }) => componentVersion === version);
-        })).then(componentArrays => Array.prototype.concat.apply([], componentArrays));
+        }))
+            .then(componentArrays => Array.prototype.concat.apply([], componentArrays));
     }
 
     getComponentPolicyViolations(bomComponent) {
@@ -172,7 +198,7 @@ class Hub {
             } else if (vulnerability.source === 'VULNDB') {
                 detailsUrl = `${this.getOrigin()}/#vulnerabilities/id:${vulnerability.vulnerabilityName}/view:overview`;
             } else if (vulnerability.source === 'BDSA') {
-                detailsUrl = `${this.getOrigin()}/api/vulnerabilities/${vulnerability.vulnerabilityName}/overview`
+                detailsUrl = `${this.getOrigin()}/api/vulnerabilities/${vulnerability.vulnerabilityName}/overview`;
             }
 
             return Object.assign(vulnerability, {
@@ -225,7 +251,8 @@ class Hub {
             queryMap: {
                 limit: 10000
             }
-        }).catch(() => null);
+        })
+            .catch(() => null);
     }
 
     /*
@@ -242,7 +269,7 @@ class Hub {
         } else {
             try {
                 url = new URL(baseUrl);
-            } catch(err) {
+            } catch (err) {
                 if (DEBUG_AJAX) {
                     console.log('getRequestUrl error', err);
                 }
@@ -250,9 +277,10 @@ class Hub {
             }
         }
 
-        Object.keys(queryMap).forEach(key => {
-            url.searchParams.append(key, queryMap[key]);
-        });
+        Object.keys(queryMap)
+            .forEach(key => {
+                url.searchParams.append(key, queryMap[key]);
+            });
 
         return url;
     }
@@ -289,7 +317,7 @@ class Hub {
             const bearerToken = this.getBearerToken();
             headers.Authorization = `Bearer ${bearerToken}`;
         }
-        const opts =  Object.assign({ credentials: 'include' }, _opts, { headers });
+        const opts = Object.assign({ credentials: 'include' }, _opts, { headers });
 
         if (DEBUG_AJAX) {
             console.log(`Make Hub ${opts.method} request:`, url.toString());
@@ -297,7 +325,8 @@ class Hub {
         }
 
         const response = await fetch(url, opts);
-        const body = await response.json().catch(() => null);
+        const body = await response.json()
+            .catch(() => null);
 
         if (!response.ok) {
             if (DEBUG_AJAX) {

@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-    displayOptionsPage,
-    performHubLogoutAlias,
-    openHubLoginWindowAlias
-} from 'app/store/actions/alias-actions';
+import { displayOptionsPage, openHubLoginWindowAlias, performHubLogoutAlias } from 'app/store/actions/alias-actions';
 import { loginEnum } from 'shared/constants';
 import Tab from 'app/models/tab';
 import styles from 'css/login-button';
@@ -29,8 +25,9 @@ class LoginStatusContainer extends Component {
 
     static defaultProps = {
         isBlackduckConfigured: false,
-        selectItem: () => {},
-        status: loginEnum.DISCONNECTED
+        selectItem: () => {
+        },
+        status: loginEnum.NOT_CONFIGURED
     };
 
     constructor(props) {
@@ -47,7 +44,7 @@ class LoginStatusContainer extends Component {
     componentWillUpdate(nextProps) {
         // check if a login or logout has occurred.
         if ((!this.props.isBlackduckConfigured && nextProps.isBlackduckConfigured)
-           || (this.props.isBlackduckConfigured && !nextProps.isBlackduckConfigured)) {
+            || (this.props.isBlackduckConfigured && !nextProps.isBlackduckConfigured)) {
             //changing to logged in go to profile screen
             this.context.router.history.push('/profile');
             this.props.selectItem(Profile.itemName);
@@ -72,16 +69,17 @@ class LoginStatusContainer extends Component {
     displayConfiguration() {
         this.props.displayOptionsPage();
     }
+
     getTextClass() {
         const { status } = this.props;
         switch (status) {
-            case loginEnum.CONNECTED: {
+            case loginEnum.CONFIGURED: {
                 return styles.configurationConnected;
             }
             case loginEnum.INVALID_CONFIG: {
                 return styles.configurationInvalid;
             }
-            case loginEnum.DISCONNECTED:
+            case loginEnum.NOT_CONFIGURED:
             default: {
                 return styles.configurationDisconnected;
             }
@@ -91,15 +89,15 @@ class LoginStatusContainer extends Component {
     getButtonText() {
         const { status } = this.props;
         switch (status) {
-            case loginEnum.CONNECTED: {
+            case loginEnum.CONFIGURED: {
                 return 'Configured';
             }
             case loginEnum.INVALID_CONFIG: {
                 return 'Invalid Configuration';
             }
-            case loginEnum.DISCONNECTED:
+            case loginEnum.NOT_CONFIGURED:
             default: {
-                return 'Not Configured'
+                return 'Not Configured';
             }
         }
     }
@@ -134,10 +132,18 @@ const mapStateToProps = ({ blackduckConfiguredState }) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        displayOptionsPage: () => { dispatch(displayOptionsPage()); },
-        performHubLogout: () => { dispatch(performHubLogoutAlias()); },
-        openHubLoginWindow: (parentDimensions) => { dispatch(openHubLoginWindowAlias(parentDimensions)); },
-        selectItem: (itemName) => { dispatch(selectMenuItem(itemName)); }
+        displayOptionsPage: () => {
+            dispatch(displayOptionsPage());
+        },
+        performHubLogout: () => {
+            dispatch(performHubLogoutAlias());
+        },
+        openHubLoginWindow: (parentDimensions) => {
+            dispatch(openHubLoginWindowAlias(parentDimensions));
+        },
+        selectItem: (itemName) => {
+            dispatch(selectMenuItem(itemName));
+        }
     };
 };
 

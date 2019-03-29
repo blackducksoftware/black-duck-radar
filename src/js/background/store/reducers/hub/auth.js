@@ -1,10 +1,10 @@
 import {
     BLACKDUCK_BEARER_TOKEN_SET,
     BLACKDUCK_TOKEN_SET,
-    HUB_ORIGIN_SET,
-    HUB_USERNAME_SET,
     HUB_AUTH_STATE_SET,
-    HUB_LOGIN_WINDOW_SET
+    HUB_LOGIN_WINDOW_SET,
+    HUB_ORIGIN_SET,
+    HUB_USERNAME_SET
 } from 'shared/actions/types';
 
 import { loginEnum } from 'shared/constants';
@@ -64,7 +64,7 @@ export const blackduckConfiguredState = (state = {}, action) => {
         case HUB_AUTH_STATE_SET:
             return {
                 status,
-                isBlackduckConfigured: status === loginEnum.CONNECTED
+                isBlackduckConfigured: status === loginEnum.CONFIGURED
             };
 
         default:

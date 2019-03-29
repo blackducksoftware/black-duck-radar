@@ -4,9 +4,9 @@ import {
     BLACKDUCK_BEARER_TOKEN_SET,
     BLACKDUCK_TOKEN_SET,
     HUB_AUTH_STATE_SET,
-    HUB_USERNAME_SET,
+    HUB_LOGIN_WINDOW_SET,
     HUB_ORIGIN_SET,
-    HUB_LOGIN_WINDOW_SET
+    HUB_USERNAME_SET
 } from 'shared/actions/types';
 import { performPhoneHomeIfNeeded, syncHubExternalVulnerabilities } from './hub-component';
 import { loginEnum } from 'shared/constants';
@@ -69,29 +69,29 @@ export const setHubWindowOpen = (isOpen) => {
 export const performBearerTokenRequest = ({ blackduckApiToken, tabId }) => {
     return async (dispatch) => {
         const componentKeys = store.getState('forgeComponentKeysMap');
-        // check if there is data for the tab in the extension
-        // this is a tab the extension should display data.
-        if (componentKeys && tabId && tabId.toString() in componentKeys) {
-            try {
-                const token = await hubController.requestBearerToken({ blackduckToken: blackduckApiToken });
-                dispatch(setBearerToken(token));
-                if (token) {
+        try {
+            const token = await hubController.requestBearerToken({ blackduckToken: blackduckApiToken });
+            dispatch(setBearerToken(token));
+            if (token) {
+                dispatch(setBlackduckConfiguredState(loginEnum.CONFIGURED));
+                // check if there is data for the tab in the extension
+                // this is a tab the extension should display data.
+                if (componentKeys && tabId && tabId.toString() in componentKeys) {
                     dispatch(performPhoneHomeIfNeeded());
-                    dispatch(setBlackduckConfiguredState(loginEnum.CONNECTED));
                     dispatch(syncHubExternalVulnerabilities({ tabId }));
-                } else {
-                    dispatch(setBlackduckConfiguredState(loginEnum.DISCONNECTED));
                 }
-            } catch (err) {
+            } else {
                 dispatch(setBlackduckConfiguredState(loginEnum.INVALID_CONFIG));
             }
+        } catch (err) {
+            dispatch(setBlackduckConfiguredState(loginEnum.INVALID_CONFIG));
         }
     };
 };
 
 export const performBlackduckConfiguredCheck = ({ tabId }) => {
     return async (dispatch) => {
-        dispatch(setBlackduckConfiguredState(loginEnum.CONNECTION_PENDING));
+        dispatch(setBlackduckConfiguredState(loginEnum.CONFIGURATION_PENDING));
         chrome.storage.local.get({
             blackduckUrl: null,
             blackduckApiToken: null
@@ -104,18 +104,20 @@ export const performBlackduckConfiguredCheck = ({ tabId }) => {
             if (blackduckApiToken) {
                 dispatch(setBlackduckToken(blackduckApiToken));
             }
+            const urlMissing = !blackduckUrl || blackduckUrl.length <= 0;
+            const tokenMissing = !blackduckApiToken || blackduckApiToken.length <= 0;
+            const invalidConfig = (urlMissing && !tokenMissing)
+                || (!urlMissing && tokenMissing);
 
-            if (blackduckUrl && blackduckApiToken) {
-                if (blackduckUrl.length > 0 && blackduckApiToken.length > 0) {
-                    dispatch(performBearerTokenRequest({
-                        blackduckApiToken,
-                        tabId
-                    }));
-                } else {
-                    dispatch(setBlackduckConfiguredState(loginEnum.DISCONNECTED));
-                }
+            if (urlMissing && tokenMissing) {
+                dispatch(setBlackduckConfiguredState(loginEnum.NOT_CONFIGURED));
+            } else if (invalidConfig) {
+                dispatch(setBlackduckConfiguredState(loginEnum.INVALID_CONFIG));
             } else {
-                dispatch(setBlackduckConfiguredState(loginEnum.DISCONNECTED));
+                dispatch(performBearerTokenRequest({
+                    blackduckApiToken,
+                    tabId
+                }));
             }
         });
     };
@@ -125,7 +127,7 @@ export const performHubLogin = ({ origin, username, password, parentId }) => {
     return async (dispatch) => {
         dispatch(setBlackduckOrigin(origin));
         dispatch(setHubUsername(username));
-        dispatch(setBlackduckConfiguredState(loginEnum.CONNECTION_PENDING));
+        dispatch(setBlackduckConfiguredState(loginEnum.CONFIGURATION_PENDING));
 
         PersistentStorage.setState({
             blackduckOrigin: origin,
@@ -139,7 +141,7 @@ export const performHubLogin = ({ origin, username, password, parentId }) => {
             });
             dispatch(syncHubExternalVulnerabilities({ tabId: parentId }));
         } catch (err) {
-            dispatch(setBlackduckConfiguredState(loginEnum.DISCONNECTED));
+            dispatch(setBlackduckConfiguredState(loginEnum.NOT_CONFIGURED));
             throw err;
         }
 
@@ -153,7 +155,7 @@ export const performHubLogin = ({ origin, username, password, parentId }) => {
             }
         }
 
-        dispatch(setBlackduckConfiguredState(loginEnum.CONNECTED));
+        dispatch(setBlackduckConfiguredState(loginEnum.CONFIGURED));
     };
 };
 
@@ -161,7 +163,7 @@ export const performHubLogout = () => {
     return async (dispatch) => {
         dispatch(setBlackduckConfiguredState(loginEnum.DISCONNECTION_PENDING));
         await hubController.logout();
-        dispatch(setBlackduckConfiguredState(loginEnum.DISCONNECTED));
+        dispatch(setBlackduckConfiguredState(loginEnum.NOT_CONFIGURED));
         chrome.windows.getAll({ populate: true }, (windows) => {
             windows.forEach((window) => {
                 window.tabs.forEach((tab) => {
@@ -176,8 +178,6 @@ export const performHubLogout = () => {
         });
     };
 };
-
-
 
 export const openHubLoginWindow = ({ parentWindow }) => {
     return async (dispatch) => {

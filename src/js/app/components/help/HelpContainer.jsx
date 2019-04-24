@@ -82,7 +82,7 @@ class HelpContainer extends Component {
                 </div>
                 <div className={copywriteBlock}>
                     <p className={copywrite}>
-                        (c) BLACKDUCK SOFTWARE 2017
+                        (c) 2019 Synopsys, Inc
                     </p>
                 </div>
             </div>

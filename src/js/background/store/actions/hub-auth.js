@@ -31,7 +31,7 @@ import {
     HUB_ORIGIN_SET,
     HUB_USERNAME_SET
 } from 'shared/actions/types';
-import { performPhoneHomeIfNeeded, syncHubExternalVulnerabilities } from './hub-component';
+import { performPhoneHomeIfNeeded, refreshComponent } from './hub-component';
 import { loginEnum } from 'shared/constants';
 import Hub from 'background/controllers/hub';
 import Tabs from 'background/controllers/tabs';
@@ -101,7 +101,7 @@ export const performBearerTokenRequest = ({ blackduckApiToken, tabId }) => {
                 // this is a tab the extension should display data.
                 if (componentKeys && tabId && tabId.toString() in componentKeys) {
                     dispatch(performPhoneHomeIfNeeded());
-                    dispatch(syncHubExternalVulnerabilities({ tabId }));
+                    dispatch(refreshComponent({ tabId }));
                 }
             } else {
                 dispatch(setBlackduckConfiguredState(loginEnum.INVALID_CONFIG));
@@ -162,7 +162,7 @@ export const performHubLogin = ({ origin, username, password, parentId }) => {
                 username,
                 password
             });
-            dispatch(syncHubExternalVulnerabilities({ tabId: parentId }));
+            dispatch(refreshComponent({ tabId: parentId }));
         } catch (err) {
             dispatch(setBlackduckConfiguredState(loginEnum.NOT_CONFIGURED));
             throw err;

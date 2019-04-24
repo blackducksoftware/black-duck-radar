@@ -123,7 +123,6 @@ export const syncHubExternalComponent = ({ tabId }) => {
         const componentKeys = store.getState('forgeComponentKeysMap', tabId);
         const externalComponents = await hubController.getExternalComponents(componentKeys);
         const component = externalComponents.pop() || null;
-
         if (component) {
             const urlParts = component.version.split('/');
             component.releaseId = urlParts.pop();
@@ -132,7 +131,6 @@ export const syncHubExternalComponent = ({ tabId }) => {
         }
 
         dispatch(setHubExternalComponent(tabId, component));
-
         return component;
     };
 };
@@ -180,6 +178,7 @@ export const syncHubComponentVersionReferenceProjects = ({ tabId, componentVersi
         dispatch(setHubComponentVersionReferenceProjects(tabId, SYNC_PENDING));
         const referenceProjects = await hubController.getComponentVersionReferenceProjects(componentVersion);
         dispatch(setHubComponentVersionReferenceProjects(tabId, referenceProjects));
+        return referenceProjects;
     };
 };
 
@@ -198,10 +197,10 @@ export const syncHubProjectVersionComponents = ({ tabId, externalComponent, refe
             // We're currently syncing this value
             return;
         }
-
         dispatch(setHubProjectVersionComponents(tabId, SYNC_PENDING));
         const projectVersionComponents = await hubController.getMatchingBOMComponents(externalComponent, referenceProjects);
         dispatch(setHubProjectVersionComponents(tabId, projectVersionComponents));
+        return projectVersionComponents;
     };
 };
 
@@ -238,6 +237,7 @@ export const syncHubComponentPolicyRules = ({ tabId, projectVersionComponents })
         });
         // policies is an array of arrays, concat is just flattening them
         dispatch(setHubComponentPolicyRules(tabId, filteredPolicyList));
+        return filteredPolicyList;
     };
 };
 
@@ -306,18 +306,45 @@ export const syncHubExternalVulnerabilities = ({ tabId }) => {
             tabId,
             componentVersion
         }));
+        return vulnerabilities;
+    };
+};
 
-        Button.toggleGlow({
-            isEnabled: Boolean(externalComponent),
-            isDangerous: Boolean(vulnerabilities && vulnerabilities.length),
-            tabId
-        });
+export const syncHubExternalPolicyRules = ({ tabId }) => {
+    return async (dispatch) => {
+        const externalComponent = await dispatch(syncHubExternalComponent({ tabId }));
+        const componentVersion = externalComponent && await dispatch(syncHubComponentVersion({
+            tabId,
+            externalComponent
+        }));
+        const referenceProjects = componentVersion && await dispatch(syncHubComponentVersionReferenceProjects({
+            tabId,
+            componentVersion
+        }));
+        const projectVersionComponents = referenceProjects && await dispatch(syncHubProjectVersionComponents({
+            tabId,
+            externalComponent,
+            referenceProjects
+        }));
+        const policyList = projectVersionComponents && await dispatch(syncHubComponentPolicyRules({
+            tabId,
+            projectVersionComponents
+        }));
+        return policyList;
     };
 };
 
 export const refreshComponent = ({ tabId }) => {
     return async (dispatch) => {
-        dispatch(syncHubExternalVulnerabilities({ tabId }));
+        const externalComponent = await dispatch(syncHubExternalComponent({ tabId }));
+        const vulnerabilities = await dispatch(syncHubExternalVulnerabilities({ tabId }));
+        const policyList = await dispatch(syncHubExternalPolicyRules({ tabId }));
+        Button.toggleGlow({
+            isEnabled: Boolean(externalComponent),
+            isDangerous: Boolean(vulnerabilities && vulnerabilities.length),
+            isPolicyViolated: Boolean(policyList && policyList.length),
+            tabId
+        });
     };
 };
 

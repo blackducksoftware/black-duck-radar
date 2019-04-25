@@ -58,19 +58,46 @@ class LoginStatusContainer extends Component {
         this.displayConfiguration = this.displayConfiguration.bind(this);
         this.displayLogin = this.displayLogin.bind(this);
         this.performLogout = this.performLogout.bind(this);
+        const { status } = props;
+        const newStatus = this.getStatus({ status });
+        if (newStatus) {
+            this.state = { status: newStatus };
+        } else {
+            this.state = { status: loginEnum.NOT_CONFIGURED };
+        }
     }
 
     shouldComponentUpdate() {
         return true;
     }
 
-    componentWillUpdate(nextProps) {
+    componentDidUpdate() {
         // check if a login or logout has occurred.
-        if ((!this.props.isBlackduckConfigured && nextProps.isBlackduckConfigured)
-            || (this.props.isBlackduckConfigured && !nextProps.isBlackduckConfigured)) {
+        if (this.props.isBlackduckConfigured) {
             //changing to logged in go to profile screen
             this.context.router.history.push('/profile');
             this.props.selectItem(Profile.itemName);
+        }
+
+        const { status } = this.props;
+        if (this.state.status !== status) {
+            const newStatus = this.getStatus({ status });
+            if (newStatus) {
+                this.setState({ status: newStatus });
+            }
+        }
+    }
+
+    getStatus({ status }) {
+        switch (status) {
+            case loginEnum.CONFIGURED:
+            case loginEnum.INVALID_CONFIG:
+            case loginEnum.NOT_CONFIGURED: {
+                return status;
+            }
+            default: {
+                return null;
+            }
         }
     }
 
@@ -94,7 +121,7 @@ class LoginStatusContainer extends Component {
     }
 
     getTextClass() {
-        const { status } = this.props;
+        const { status } = this.state;
         switch (status) {
             case loginEnum.CONFIGURED: {
                 return styles.configurationConnected;
@@ -110,7 +137,7 @@ class LoginStatusContainer extends Component {
     }
 
     getButtonText() {
-        const { status } = this.props;
+        const { status } = this.state;
         switch (status) {
             case loginEnum.CONFIGURED: {
                 return 'Configured';

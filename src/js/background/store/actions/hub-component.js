@@ -295,7 +295,7 @@ export const deleteHubComponentRiskProfile = (tabId) => {
     };
 };
 
-export const syncHubExternalVulnerabilities = ({ tabId }) => {
+export const updateIcon = ({ tabId }) => {
     return async (dispatch) => {
         const externalComponent = await dispatch(syncHubExternalComponent({ tabId }));
         const componentVersion = externalComponent && await dispatch(syncHubComponentVersion({
@@ -306,45 +306,41 @@ export const syncHubExternalVulnerabilities = ({ tabId }) => {
             tabId,
             componentVersion
         }));
-        return vulnerabilities;
-    };
-};
 
-export const syncHubExternalPolicyRules = ({ tabId }) => {
-    return async (dispatch) => {
-        const externalComponent = await dispatch(syncHubExternalComponent({ tabId }));
-        const componentVersion = externalComponent && await dispatch(syncHubComponentVersion({
-            tabId,
-            externalComponent
-        }));
-        const referenceProjects = componentVersion && await dispatch(syncHubComponentVersionReferenceProjects({
-            tabId,
-            componentVersion
-        }));
-        const projectVersionComponents = referenceProjects && await dispatch(syncHubProjectVersionComponents({
-            tabId,
-            externalComponent,
-            referenceProjects
-        }));
-        const policyList = projectVersionComponents && await dispatch(syncHubComponentPolicyRules({
-            tabId,
-            projectVersionComponents
-        }));
-        return policyList;
+        if (vulnerabilities && vulnerabilities.length) {
+            Button.toggleGlow({
+                isEnabled: Boolean(externalComponent),
+                isDangerous: true,
+                tabId
+            });
+        } else {
+            const referenceProjects = componentVersion && await dispatch(syncHubComponentVersionReferenceProjects({
+                tabId,
+                componentVersion
+            }));
+            const projectVersionComponents = referenceProjects && await dispatch(syncHubProjectVersionComponents({
+                tabId,
+                externalComponent,
+                referenceProjects
+            }));
+            const policyList = projectVersionComponents && await dispatch(syncHubComponentPolicyRules({
+                tabId,
+                projectVersionComponents
+            }));
+
+            Button.toggleGlow({
+                isEnabled: Boolean(externalComponent),
+                isDangerous: false,
+                isPolicyViolated: Boolean(policyList && policyList.length),
+                tabId
+            });
+        }
     };
 };
 
 export const refreshComponent = ({ tabId }) => {
     return async (dispatch) => {
-        const externalComponent = await dispatch(syncHubExternalComponent({ tabId }));
-        const vulnerabilities = await dispatch(syncHubExternalVulnerabilities({ tabId }));
-        const policyList = await dispatch(syncHubExternalPolicyRules({ tabId }));
-        Button.toggleGlow({
-            isEnabled: Boolean(externalComponent),
-            isDangerous: Boolean(vulnerabilities && vulnerabilities.length),
-            isPolicyViolated: Boolean(policyList && policyList.length),
-            tabId
-        });
+        dispatch(updateIcon({ tabId }));
     };
 };
 

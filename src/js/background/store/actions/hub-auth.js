@@ -91,15 +91,19 @@ export const setHubWindowOpen = (isOpen) => {
 
 export const performBearerTokenRequest = ({ blackduckApiToken, tabId }) => {
     return async (dispatch) => {
-        const componentKeys = store.getState('forgeComponentKeysMap');
+        const forgeComponentKeysMap = store.getState('forgeComponentKeysMap');
         try {
-            const token = await hubController.requestBearerToken({ blackduckToken: blackduckApiToken });
-            dispatch(setBearerToken(token));
+            const componentKeys = forgeComponentKeysMap[tabId];
+            const token = await hubController.requestBearerToken({
+                blackduckToken: blackduckApiToken,
+                componentKeys
+            });
+            await dispatch(setBearerToken(token));
             if (token) {
                 dispatch(setBlackduckConfiguredState(loginEnum.CONFIGURED));
                 // check if there is data for the tab in the extension
                 // this is a tab the extension should display data.
-                if (componentKeys && tabId && tabId.toString() in componentKeys) {
+                if (forgeComponentKeysMap && tabId && tabId.toString() in forgeComponentKeysMap) {
                     dispatch(performPhoneHomeIfNeeded());
                     dispatch(refreshComponent({ tabId }));
                 }

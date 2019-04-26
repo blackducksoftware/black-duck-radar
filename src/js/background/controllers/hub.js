@@ -65,20 +65,51 @@ class Hub {
         return this.get('/j_spring_security_logout');
     }
 
-    async tokenAuthentication() {
-        return this.requestBearerToken({ blackduckToken: this.getToken() });
+    async isTokenValid({ forgeName, hubExternalId } = {}) {
+        const promise = this.createExternalComponentsPromise({
+            forgeName,
+            hubExternalId
+        });
+        if (promise) {
+            if (DEBUG_AJAX) {
+                console.log('execute request to validate authentication token');
+            }
+            const response = await promise
+                .catch((error) => {
+                    if (DEBUG_AJAX) {
+                        console.log('error getting token is invalid. cause: ', error);
+                    }
+                    return error;
+                });
+            // error occurred make sure it isn't 401 or 403.
+            let tokenResponse = false;
+            if (response.status_code) {
+                tokenResponse = response.status_code !== 401 && response.status_code !== 403;
+            } else if (response.items) {
+                // response does not contain status_code it is a valid request
+                tokenResponse = true;
+            }
+            return tokenResponse;
+        }
+        if (DEBUG_AJAX) {
+            console.log('forgename and external id missing this is valid for this tab');
+        }
+        // if a promise is null then the forgename and hubExternal id is missing so the current token saved in state is fine
+        // this is because the current page we cannot parse the component information.
+        return true;
     }
 
-    async requestBearerToken({ blackduckToken }) {
+    async requestBearerToken({ blackduckToken, componentKeys }) {
         let currentBearerToken = this.getBearerToken();
         if (currentBearerToken) {
-            try {
-                await this.getHubVersion();
-            } catch (err) {
+            const tokenValid = await this.isTokenValid(componentKeys);
+            if (DEBUG_AJAX) {
+                console.log(' is the token valid ', tokenValid);
+            }
+            if (!tokenValid) {
                 currentBearerToken = null;
             }
         }
-
         if (!currentBearerToken) {
             const url = this.getRequestUrl('/api/tokens/authenticate', {});
             const headers = {
@@ -109,18 +140,28 @@ class Hub {
             .catch(() => null);
     }
 
+    createExternalComponentsPromise({ forgeName, hubExternalId } = {}) {
+        if (forgeName && hubExternalId) {
+            return this.get('/api/components', {
+                queryMap: {
+                    q: `${forgeName}:${hubExternalId}`
+                }
+            });
+        }
+        return null;
+    }
+
     /*
      * @param {ComponentKeys}
      * */
     async getExternalComponents({ forgeName, hubExternalId } = {}) {
         let response = null;
-        if (forgeName && hubExternalId) {
-            response = await this.get('/api/components', {
-                queryMap: {
-                    q: `${forgeName}:${hubExternalId}`
-                }
-            })
-                .catch(() => null);
+        const promise = this.createExternalComponentsPromise({
+            forgeName,
+            hubExternalId
+        });
+        if (promise) {
+            response = await promise.catch(() => null);
         }
 
         if (response) {
@@ -333,8 +374,12 @@ class Hub {
                 console.warn(`Hub ${opts.method} request failed:`, url.toString());
                 console.log('\n');
             }
-
-            throw new Error(body.errorMessage);
+            throw {
+                status: response.ok,
+                status_code: response.status,
+                status_text: response.statusText,
+                errorMessage: body.errorMessage
+            };
         }
 
         if (DEBUG_AJAX) {

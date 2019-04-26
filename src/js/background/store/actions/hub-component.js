@@ -340,7 +340,11 @@ export const updateIcon = ({ tabId }) => {
 
 export const refreshComponent = ({ tabId }) => {
     return async (dispatch) => {
-        dispatch(updateIcon({ tabId }));
+        try {
+            dispatch(updateIcon({ tabId }));
+        } catch (err) {
+
+        }
     };
 };
 

@@ -65,26 +65,26 @@ const Splash = ({ isComponentPage, isComponentIdentified }) => {
             <DuckRadar />
             <div className={instructions}>
                 <p className={instructionsHeader}>
-                    After you configure Radar with your Black Duck credentials..
+                    After you configure Radar with your Black Duck credentials;
                 </p>
                 <div className={stepNumber}>
                     1
                 </div>
                 <p className={stepDirection}>
                     Go to a supported package repository:
-                    {getRepositories()}
+                    {getRepositories()}.
                 </p>
                 <div className={stepNumber}>
                     2
                 </div>
                 <p className={stepDirection}>
-                    Find a package
+                    Find a package.
                 </p>
                 <div className={stepNumber}>
                     3
                 </div>
                 <p className={stepDirection}>
-                    Click the Radar extension icon to see a break down of the package's operational, licensing and vulnerability risks
+                    Click the Radar extension icon to see a break down of the package's operational, licensing and vulnerability risks.
                 </p>
             </div>
         </div>

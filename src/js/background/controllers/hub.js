@@ -77,7 +77,7 @@ class Hub {
             const response = await promise
                 .catch((error) => {
                     if (DEBUG_AJAX) {
-                        console.log('error getting token is invalid. cause: ', error);
+                        console.log('error token is invalid. cause: ', error);
                     }
                     return error;
                 });

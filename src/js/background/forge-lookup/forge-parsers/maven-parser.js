@@ -30,7 +30,7 @@ class MavenParser extends ForgeParser {
             forgeSeparator: ':',
             hubSeparator: ':'
         }));
-        this.artifactComponent = '/artifact/';
+        this.artifactComponent = opts.artifactComponent;
     }
 
     getComponentKeys() {

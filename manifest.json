@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Black Duck Radar",
   "description": "This extension shows license, vulnerability, and Black Duck information about a component.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "background": {
     "scripts": [
       "background.min.js"

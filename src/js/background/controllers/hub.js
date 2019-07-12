@@ -265,6 +265,7 @@ class Hub {
             const hubVersion = await this.getHubVersion();
             const builder = new PhoneHomeRequestBodyBuilder();
             builder.customerId = registrationId;
+            builder.hostName = origin;
             builder.artifactId = 'blackduck-radar';
             builder.artifactVersion = artifactVersion;
             builder.productId = PHONE_HOME_PRODUCT_ENUM.BLACK_DUCK.toString();
@@ -277,7 +278,6 @@ class Hub {
     }
 
     async getRegistrationId() {
-        // TODO use non-v1 apis
         return this.get('/api/registration');
     }
 

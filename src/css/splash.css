@@ -87,3 +87,8 @@
     padding-left: 12px;
     padding-top: 20px;
 }
+
+.warningIcon {
+    margin-right: 5px;
+    color: orange;
+}

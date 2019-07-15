@@ -57,7 +57,7 @@ class MavenParser extends ForgeParser {
         }
 
         const kbReleaseForgeId = [name, version].join(this.forgeSeparator);
-        const hubExternalId = encodeURI([group, artifact, version].join(this.hubSeparator));
+        const hubExternalId = encodeURI([group, artifact, version].join(this.blackDuckSeparator));
         return this.createComponentKeys({
             name,
             version,

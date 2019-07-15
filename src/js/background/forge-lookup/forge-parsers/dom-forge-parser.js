@@ -27,9 +27,12 @@ import { buildParserScript } from 'scripts/parser';
 class DomForgeParser extends ForgeParser {
     constructor(opts) {
         super(opts);
+        this.nameHasVersion = opts.nameHasVersion;
+        this.nameVersionDelimeter = opts.nameVersionDelimeter;
         this.nameQuery = opts.nameQuery;
         this.versionQuery = opts.versionQuery;
         this.tabId = opts.tabId;
+
     }
 
     getComponentText() {
@@ -73,6 +76,35 @@ class DomForgeParser extends ForgeParser {
             chrome.runtime.onMessage.addListener(listener);
             chrome.tabs.executeScript(Number(this.tabId), { code });
         });
+    }
+
+    async getComponentKeys() {
+        const componentText = await this.getComponentText();
+        if (DEBUG_AJAX) {
+            console.log('DOM FORGE PARSER: %s - parsed component text %s', this.forgeName, componentText);
+        }
+        let name = componentText.nameText;
+        let version = componentText.versionText;
+        if (name) {
+            if (this.nameHasVersion) {
+                const nameVersionArray = componentText.nameText.split(this.nameVersionDelimeter);
+                const [artifactName, artifactVersion] = nameVersionArray;
+                name = artifactName.trim();
+                version = artifactVersion.trim();
+            }
+
+            const kbReleaseForgeId = [name, version].join(this.forgeSeparator);
+            const hubExternalId = encodeURI([name, version].join(this.blackDuckSeparator));
+            if (DEBUG_AJAX) {
+                console.log('DOM FORGE PARSER: %s - name: %s, version: %s, kbID: %s, externalID: %s', this.forgeName, componentText);
+            }
+            return this.createComponentKeys({
+                name,
+                version,
+                kbReleaseForgeId,
+                hubExternalId
+            });
+        }
     }
 }
 

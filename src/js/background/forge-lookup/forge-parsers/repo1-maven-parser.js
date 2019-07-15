@@ -34,6 +34,7 @@ class RepoMavenCentralParser extends MavenParser {
     }
 
     findGavByArtifactDetails(urlFragment) {
+        console.log('repo maven', urlFragment);
         const fragmentArray = urlFragment.split('/');
         if (fragmentArray && fragmentArray.length > 3) {
             const length = fragmentArray.length;
@@ -53,7 +54,7 @@ class RepoMavenCentralParser extends MavenParser {
                 }
 
                 const kbReleaseForgeId = [name, version].join(this.forgeSeparator);
-                const hubExternalId = encodeURI([group, artifact, version].join(this.hubSeparator));
+                const hubExternalId = encodeURI([group, artifact, version].join(this.blackDuckSeparator));
 
                 return this.createComponentKeys({
                     name,

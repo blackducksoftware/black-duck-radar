@@ -22,11 +22,12 @@
  */
 
 class ForgeParser {
-    constructor({ forgeName, forgeSeparator, hubSeparator, url }) {
+    constructor({ forgeName, url, type, forgeSeparator, blackDuckSeparator }) {
         this.forgeName = forgeName;
         this.forgeSeparator = forgeSeparator;
-        this.hubSeparator = hubSeparator;
+        this.blackDuckSeparator = blackDuckSeparator;
         this.forgeUrl = url;
+        this.type = type;
     }
 
     getComponentKeys() {

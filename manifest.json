@@ -39,7 +39,8 @@
     "https://packagist.org/",
     "https://pypi.org/",
     "https://www.nuget.org/",
-    "https://rubygems.org/"
+    "https://rubygems.org/",
+    "https://search.maven.org/"
   ],
   "optional_permissions": [
     "http://*/",

@@ -64,7 +64,7 @@ const Splash = ({ isComponentPage, isComponentIdentified, isBlackduckConfigured 
                 Connect to Black Duck to check if this package has known vulnerabilities or violates your team’s open source policies.
             </div>
             }
-            {isComponentPage && !isComponentIdentified &&
+            {isBlackduckConfigured && isComponentPage && !isComponentIdentified &&
             <div className={introText}>
                 <span className={`fa fa-exclamation-triangle ${warningIcon}`}></span>
                 Radar supports this repository, but could not find any
@@ -72,7 +72,7 @@ const Splash = ({ isComponentPage, isComponentIdentified, isBlackduckConfigured 
             </div>
             }
             <DuckRadar />
-            {!isBlackduckConfigured || (!isComponentPage && !isComponentIdentified) &&
+            {!isBlackduckConfigured &&
             <div className={instructions}>
                 <p className={instructionsHeader}>
                     After you configure Radar with your Black Duck credentials:

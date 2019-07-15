@@ -31,19 +31,19 @@ class MavenParser extends ForgeParser {
             hubSeparator: ':'
         }));
 
-        this.artifactComponent = '/artifact/';
-        const param_artifactComponent = opts.artifactComponent;
+        this.artifactPrefixPath = '/artifact/';
+        const param_artifactPrefixPath = opts.artifactPrefixPath;
 
-        if (param_artifactComponent) {
-            this.artifactComponent = param_artifactComponent;
+        if (param_artifactPrefixPath) {
+            this.artifactPrefixPath = param_artifactPrefixPath;
         }
     }
 
     getComponentKeys() {
         const { pathname = '' } = this.forgeUrl;
         const urlFragment = decodeURI(pathname);
-        if (urlFragment.includes(this.artifactComponent)) {
-            return this.findGavByArtifactDetails(urlFragment.replace(this.artifactComponent, ''));
+        if (urlFragment.includes(this.artifactPrefixPath)) {
+            return this.findGavByArtifactDetails(urlFragment.replace(this.artifactPrefixPath, ''));
         }
 
         return false;

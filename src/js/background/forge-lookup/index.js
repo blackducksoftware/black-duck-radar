@@ -21,9 +21,10 @@
  *  under the License.
  */
 
-import parserMap from './forge-parsers/parser-map';
 import parserDefinitions from './parser-definitions';
 import DomForgeParser from './forge-parsers/dom-forge-parser';
+import WebFilePathParser from './forge-parsers/web-path-parser';
+import MavenParser from './forge-parsers/maven-parser';
 
 class ForgeLookup {
     constructor() {
@@ -31,20 +32,27 @@ class ForgeLookup {
     }
 
     buildMap() {
-        const parserTuples = Object.keys(parserMap)
-            .map(key => [key, parserMap[key]]);
         const parserEntries = parserDefinitions.definitions.map(item => [item.url, item]);
-        this.parserMap = new Map(parserEntries.concat(parserTuples));
+        this.parserMap = new Map(parserEntries);
     }
 
     getForgeParser(opts) {
         const parsedUrl = new URL(opts.url);
         const { hostname } = parsedUrl;
         const definition = this.parserMap.get(hostname);
-        if (definition && definition.type === 'DOM') {
-            return new DomForgeParser(Object.assign({}, definition, opts, { url: parsedUrl }));
+        if (definition) {
+            const props = Object.assign({}, definition, opts, { url: parsedUrl });
+            switch (definition.type) {
+                case 'DOM':
+                    return new DomForgeParser(props);
+                case 'MAVEN':
+                    return new MavenParser(props);
+                case 'WEB_PATH':
+                    return new WebFilePathParser(props);
+                default:
+                    return null;
+            }
         }
-
         return null;
     }
 }

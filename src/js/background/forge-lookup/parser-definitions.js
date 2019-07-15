@@ -98,7 +98,32 @@ export default {
             'nameVersionDelimeter': null,
             'nameQuery': 'app-pom-dependency-information div.mat-card-header-text mat-card-title',
             'versionQuery': 'app-pom-dependency-information div.mat-card-header-text mat-card-subtitle'
+        },
+        {
+            'forgeName': 'maven',
+            'url': 'mvnrepository.com',
+            'type': 'MAVEN',
+            'forgeSeparator': ':',
+            'blackDuckSeparator': ':',
+            'artifactPrefixPath': '/artifact/'
+        },
+        {
+            'forgeName': 'maven',
+            'url': 'repo.maven.apache.org',
+            'type': 'WEB_PATH',
+            'forgeSeparator': ':',
+            'blackDuckSeparator': ':',
+            'artifactPrefixPath': '/maven2/',
+            'artifactPrefixDelimeter': '.'
+        },
+        {
+            'forgeName': 'maven',
+            'url': 'repo1.maven.org',
+            'type': 'WEB_PATH',
+            'forgeSeparator': ':',
+            'blackDuckSeparator': ':',
+            'artifactPrefixPath': '/maven2/',
+            'artifactPrefixDelimeter': '.'
         }
-
     ]
 };

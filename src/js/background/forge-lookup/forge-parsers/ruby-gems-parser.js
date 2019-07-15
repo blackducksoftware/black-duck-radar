@@ -21,44 +21,35 @@
  *  under the License.
  */
 
-import ForgeParser from './forge-parser';
+import DomForgeParser from './dom-forge-parser';
 
 const packagesPath = '/gems/';
 
-class RubyGemsParser extends ForgeParser {
+class RubyGemsParser extends DomForgeParser {
     constructor(opts) {
         super(Object.assign({}, opts, {
             forgeName: 'rubygems',
             forgeSeparator: '/',
-            hubSeparator: '/'
+            hubSeparator: '/',
+            nameQuery: 'div.l-wrap--b h1.t-display',
+            versionQuery: 'div.l-wrap--b h1.t-display i.page__subheading'
         }));
     }
 
-    getComponentKeys() {
-        const { pathname = '' } = this.forgeUrl;
-        const decodedPath = decodeURI(pathname);
-
-        if (!decodedPath || !decodedPath.includes(packagesPath)) {
-            return false;
+    async getComponentKeys() {
+        const componentText = await this.getComponentText();
+        if (componentText.nameText) {
+            const nameVersionArray = componentText.nameText.split(' ');
+            const [name, version] = nameVersionArray;
+            const kbReleaseForgeId = [name, version].join(this.forgeSeparator);
+            const hubExternalId = encodeURI(kbReleaseForgeId);
+            return this.createComponentKeys({
+                name,
+                version,
+                kbReleaseForgeId,
+                hubExternalId
+            });
         }
-
-        const kbReleaseForgeId = decodedPath
-            .replace(packagesPath, '')
-            .replace('/versions', '');
-        const [name, version] = kbReleaseForgeId.split(this.hubSeparator);
-
-        if (!name || !version) {
-            return false;
-        }
-
-        const hubExternalId = encodeURI(kbReleaseForgeId);
-
-        return this.createComponentKeys({
-            name,
-            version,
-            kbReleaseForgeId,
-            hubExternalId
-        });
     }
 }
 

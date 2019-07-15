@@ -71,14 +71,16 @@ class ProfileContainer extends Component {
             versionName,
             componentUrl,
             isComponentIdentified,
-            isComponentPage
+            isComponentPage,
+            isBlackduckConfigured
         } = this.props;
 
-        if (!isComponentIdentified || !isComponentPage) {
+        if (!isBlackduckConfigured || !isComponentIdentified || !isComponentPage) {
             return (
                 <Splash
                     isComponentIdentified={isComponentIdentified}
                     isComponentPage={isComponentPage}
+                    isBlackduckConfigured={isBlackduckConfigured}
                 />
             );
         }

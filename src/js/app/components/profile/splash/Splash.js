@@ -24,7 +24,7 @@
 import React from 'react';
 import DuckRadar from './DuckRadar';
 import { panelHeader } from 'css/common/headers';
-import { headerText, instructions, instructionsHeader, introText, splashBlock, stepDirection, stepNumber } from 'css/splash';
+import { headerText, instructions, instructionsHeader, introText, splashBlock, stepDirection, stepNumber, warningIcon } from 'css/splash';
 
 const getRepositories = () => {
     const repoMap = {
@@ -53,16 +53,26 @@ const getRepositories = () => {
         }, []);
 };
 
-const Splash = ({ isComponentPage, isComponentIdentified }) => {
+const Splash = ({ isComponentPage, isComponentIdentified, isBlackduckConfigured }) => {
     return (
         <div className={splashBlock}>
             <div className={[panelHeader, headerText].join(' ')}>
                 Welcome to Radar
             </div>
+            {!isBlackduckConfigured &&
             <div className={introText}>
                 Connect to Black Duck to check if this package has known vulnerabilities or violates your team’s open source policies.
             </div>
+            }
+            {isBlackduckConfigured && isComponentPage && !isComponentIdentified &&
+            <div className={introText}>
+                <span className={`fa fa-exclamation-triangle ${warningIcon}`}></span>
+                Radar supports this repository, but could not find any
+                information from the BlackDuck server for this package.
+            </div>
+            }
             <DuckRadar />
+            {!isBlackduckConfigured &&
             <div className={instructions}>
                 <p className={instructionsHeader}>
                     After you configure Radar with your Black Duck credentials:
@@ -87,6 +97,7 @@ const Splash = ({ isComponentPage, isComponentIdentified }) => {
                     Click the Radar extension icon to see a breakdown of the package's operational, licensing and vulnerability risks.
                 </p>
             </div>
+            }
         </div>
     );
 };

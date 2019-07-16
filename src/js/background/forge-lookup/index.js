@@ -39,7 +39,7 @@ class ForgeLookup {
         }
 
         const productionUrl = 'https://blackducksoftware.github.io/black-duck-radar/parser-definitions.json';
-        const response = await fetch(productionUrl);
+        const response = await fetch(productionUrl, {credentials: "include"});
         if (response.ok) {
             const body = await response.json()
                 .catch(err => {

@@ -18,6 +18,7 @@ module.exports = (env = {}) => {
             'process.env': {
                 'NODE_ENV': isProdBuild ? JSON.stringify('production') : JSON.stringify('development')
             },
+            USE_DEV_DEFINITIONS: !isProdBuild,
             DEBUG_AJAX: isAjaxDebugBuild,
             DEBUG_REDUX: isReduxDebugBuild
         }),

@@ -32,6 +32,9 @@ class ForgeComponent {
         // hub or kb data
         this.hubController = new Hub();
     }
+    async loadDefinitions() {
+        await forgeLookup.buildMap();
+    }
 
     async parseExternalKeys(opts) {
         const parser = forgeLookup.getForgeParser(opts);

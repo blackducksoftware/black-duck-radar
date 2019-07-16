@@ -81,7 +81,7 @@ class DomForgeParser extends ForgeParser {
     async getComponentKeys() {
         const componentText = await this.getComponentText();
         if (DEBUG_AJAX) {
-            console.log('DOM FORGE PARSER: %s - parsed component text %s', this.forgeName, componentText);
+            console.log('DOM FORGE PARSER: %s - parsed component text %s', this.forgeName, JSON.stringify(componentText));
         }
         let name = componentText.nameText;
         let version = componentText.versionText;
@@ -96,7 +96,7 @@ class DomForgeParser extends ForgeParser {
             const kbReleaseForgeId = [name, version].join(this.forgeSeparator);
             const hubExternalId = encodeURI([name, version].join(this.blackDuckSeparator));
             if (DEBUG_AJAX) {
-                console.log('DOM FORGE PARSER: %s - name: %s, version: %s, kbID: %s, externalID: %s', this.forgeName, componentText);
+                console.log('DOM FORGE PARSER: %s - name: %s, version: %s, kbID: %s, externalID: %s', this.forgeName, name, version, kbReleaseForgeId, hubExternalId);
             }
             return this.createComponentKeys({
                 name,

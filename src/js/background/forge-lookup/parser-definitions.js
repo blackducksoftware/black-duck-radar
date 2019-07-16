@@ -1,17 +1,6 @@
 export default {
     'definitions': [
         {
-            'forgeName': '',
-            'url': '',
-            'type': 'DOM',
-            'forgeSeparator': '',
-            'blackDuckSeparator': '',
-            'nameHasVersion': false,
-            'nameVersionDelimeter': null,
-            'nameQuery': '',
-            'versionQuery': ''
-        },
-        {
             'forgeName': 'cocoapods',
             'url': 'cocoapods.org',
             'type': 'DOM',

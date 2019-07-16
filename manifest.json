@@ -32,6 +32,7 @@
     "webNavigation",
     "activeTab",
     "https://ajax.googleapis.com/",
+    "https://blackducksoftware.github.io/black-duck-radar",
     "https://www.google-analytics.com/collect",
     "https://www.npmjs.com/",
     "https://cocoapods.org/",
@@ -39,7 +40,8 @@
     "https://packagist.org/",
     "https://pypi.org/",
     "https://www.nuget.org/",
-    "https://rubygems.org/"
+    "https://rubygems.org/",
+    "https://search.maven.org/"
   ],
   "optional_permissions": [
     "http://*/",

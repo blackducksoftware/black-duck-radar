@@ -54,6 +54,7 @@ const getRepositories = () => {
 };
 
 const Splash = ({ isComponentPage, isComponentIdentified, isBlackduckConfigured }) => {
+    console.log("isComponentPage: %s, isComponentIdentified: %s, isBlackduckConfigured: %s",isComponentPage, isComponentIdentified, isBlackduckConfigured );
     return (
         <div className={splashBlock}>
             <div className={[panelHeader, headerText].join(' ')}>
@@ -64,6 +65,12 @@ const Splash = ({ isComponentPage, isComponentIdentified, isBlackduckConfigured 
                 Connect to Black Duck to check if this package has known vulnerabilities or violates your team’s open source policies.
             </div>
             }
+            {isBlackduckConfigured && !isComponentPage && !isComponentIdentified &&
+            <div className={introText}>
+                <span className={`fa fa-exclamation-triangle ${warningIcon}`}></span>
+                Radar could not discover any package information on this page.
+            </div>
+            }
             {isBlackduckConfigured && isComponentPage && !isComponentIdentified &&
             <div className={introText}>
                 <span className={`fa fa-exclamation-triangle ${warningIcon}`}></span>
@@ -72,7 +79,7 @@ const Splash = ({ isComponentPage, isComponentIdentified, isBlackduckConfigured 
             </div>
             }
             <DuckRadar />
-            {!isBlackduckConfigured &&
+            {(!isComponentPage || !isComponentIdentified) &&
             <div className={instructions}>
                 <p className={instructionsHeader}>
                     After you configure Radar with your Black Duck credentials:

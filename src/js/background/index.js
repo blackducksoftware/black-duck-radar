@@ -38,6 +38,9 @@ import { clearStore } from './store/actions/app';
     // the store is initialized first, to isolate the asynchronicity of reading from persistent storage
     await createStore();
 
+    const forgeComponent = new ForgeComponent();
+    await forgeComponent.loadDefinitions();
+
     const processTabUpdate = async (tab, updateSummary = {}) => {
         const didNavigate = updateSummary.status === 'loading';
         const { url, id: tabId } = tab;
@@ -76,7 +79,6 @@ import { clearStore } from './store/actions/app';
         });
 
         if (hasComponentKeys === false) {
-            const forgeComponent = new ForgeComponent();
             // This could be synchronous if we're parsing the keys from the url, but in cases
             // like NPM where we need to parse them from the DOM, it may be asynchronous
             componentKeys = await forgeComponent.parseExternalKeys({

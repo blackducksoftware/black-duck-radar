@@ -21,20 +21,73 @@
  *  under the License.
  */
 
-import parserMap from './forge-parsers/parser-map';
+import parserDefinitions from './forge-parsers/parser-definitions';
+import DomForgeParser from './forge-parsers/dom-forge-parser';
+import WebFilePathParser from './forge-parsers/web-path-parser';
+import MavenParser from './forge-parsers/maven-parser';
 
 class ForgeLookup {
     constructor() {
-        const parserTuples = Object.keys(parserMap)
-            .map(key => [key, parserMap[key]]);
-        this.parserMap = new Map(parserTuples);
+    }
+
+    async loadData() {
+        if(USE_DEV_DEFINITIONS) {
+            if(DEBUG_AJAX) {
+                console.log("ForgeLookup.loadData() using development definitions");
+            }
+            return parserDefinitions;
+        }
+
+        const productionUrl = 'https://blackducksoftware.github.io/black-duck-radar/parser-definitions.json';
+        const response = await fetch(productionUrl, {credentials: "include"});
+        if (response.ok) {
+            const body = await response.json()
+                .catch(err => {
+                    console.warn("ForgeLookup.loadData() error getting definitions ", err);
+                    return parserDefinitions;
+                });
+            return body;
+        } else {
+            if(DEBUG_AJAX) {
+                console.log("ForgeLookup.loadData() failed to load definitions (%s) - %s", response.status, response.statusText);
+            }
+        }
+
+        if(DEBUG_AJAX) {
+            console.log("ForgeLookup.loadData() using development definitions");
+        }
+        return parserDefinitions;
+    }
+
+    async buildMap() {
+        const data = await this.loadData();
+        if(DEBUG_AJAX) {
+            console.log("ForgeLookup.buildMap() - Definitions Data: ", JSON.stringify(data, null, 2));
+        }
+        const parserEntries = data.definitions.map(item => [item.site, item]);
+        this.parserMap = new Map(parserEntries);
     }
 
     getForgeParser(opts) {
         const parsedUrl = new URL(opts.url);
         const { hostname } = parsedUrl;
-        const Parser = this.parserMap.get(hostname);
-        return Parser ? new Parser(Object.assign({}, opts, { url: parsedUrl })) : null;
+        if(this.parserMap) {
+            const definition = this.parserMap.get(hostname);
+            if (definition) {
+                const props = Object.assign({}, definition, opts, { url: parsedUrl });
+                switch (definition.type) {
+                    case 'DOM':
+                        return new DomForgeParser(props);
+                    case 'MAVEN':
+                        return new MavenParser(props);
+                    case 'WEB_PATH':
+                        return new WebFilePathParser(props);
+                    default:
+                        return null;
+                }
+            }
+        }
+        return null;
     }
 }
 

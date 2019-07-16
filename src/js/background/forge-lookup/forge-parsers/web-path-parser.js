@@ -21,20 +21,28 @@
  *  under the License.
  */
 
-import MavenParser from './maven-parser';
+import ForgeParser from './forge-parser';
 
-class RepoMavenCentralParser extends MavenParser {
+class WebFilePathParser extends ForgeParser {
     constructor(opts) {
-        super(Object.assign({}, opts, { artifactComponent: '/maven2/' }));
+        super(Object.assign({}, opts));
+        this.artifactPrefixPath = opts.artifactPrefixPath;
+        this.artifactPrefixDelimeter = opts.artifactPrefixDelimeter;
     }
 
     getComponentKeys() {
         const { pathname = '' } = this.forgeUrl;
-        return super.getComponentKeys(decodeURI(pathname));
+        const urlFragment = decodeURI(pathname);
+        if (urlFragment.includes(this.artifactPrefixPath)) {
+            return this.findArtifactDetails(urlFragment.replace(this.artifactPrefixPath, ''));
+        }
+
+        return null;
     }
 
-    findGavByArtifactDetails(urlFragment) {
+    findArtifactDetails(urlFragment) {
         const fragmentArray = urlFragment.split('/');
+        //expect ["artifact_prefix_1", "artifact_prefix_2", ..., "artifact_prefix_N", "artifact name","version",""]
         if (fragmentArray && fragmentArray.length > 3) {
             const length = fragmentArray.length;
             const version = fragmentArray[length - 2];
@@ -45,7 +53,7 @@ class RepoMavenCentralParser extends MavenParser {
                     group = fragmentArray[0];
                 } else {
                     group = fragmentArray.slice(0, length - 3)
-                        .join('.');
+                        .join(this.artifactPrefixDelimeter);
                 }
                 const name = [group, artifact].join(this.forgeSeparator);
                 if (!name || !version) {
@@ -53,7 +61,7 @@ class RepoMavenCentralParser extends MavenParser {
                 }
 
                 const kbReleaseForgeId = [name, version].join(this.forgeSeparator);
-                const hubExternalId = encodeURI([group, artifact, version].join(this.hubSeparator));
+                const hubExternalId = encodeURI([group, artifact, version].join(this.blackDuckSeparator));
 
                 return this.createComponentKeys({
                     name,
@@ -68,4 +76,4 @@ class RepoMavenCentralParser extends MavenParser {
     }
 }
 
-export default RepoMavenCentralParser;
+export default WebFilePathParser;

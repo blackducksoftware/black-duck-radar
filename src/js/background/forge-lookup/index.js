@@ -21,7 +21,7 @@
  *  under the License.
  */
 
-import parserDefinitions from './parser-definitions';
+import parserDefinitions from './forge-parsers/parser-definitions';
 import DomForgeParser from './forge-parsers/dom-forge-parser';
 import WebFilePathParser from './forge-parsers/web-path-parser';
 import MavenParser from './forge-parsers/maven-parser';
@@ -64,7 +64,7 @@ class ForgeLookup {
         if(DEBUG_AJAX) {
             console.log("ForgeLookup.buildMap() - Definitions Data: ", JSON.stringify(data, null, 2));
         }
-        const parserEntries = data.definitions.map(item => [item.url, item]);
+        const parserEntries = data.definitions.map(item => [item.site, item]);
         this.parserMap = new Map(parserEntries);
     }
 

@@ -1,8 +1,8 @@
 export default {
     "definitions": [
         {
+            "site": "cocoapods.org",
             "forgeName": "cocoapods",
-            "url": "cocoapods.org",
             "type": "DOM",
             "forgeSeparator": ":",
             "blackDuckSeparator": ":",
@@ -12,8 +12,9 @@ export default {
             "versionQuery": "div.inline-headline h1.hidden-xs span"
         },
         {
+
+            "site": "metacpan.org",
             "forgeName": "cpan",
-            "url": "metacpan.org",
             "type": "DOM",
             "forgeSeparator": "/",
             "blackDuckSeparator": "/",
@@ -23,8 +24,9 @@ export default {
             "versionQuery": "div.main-content ul.nav-list.slidepanel.sticky-panel-top span[itemprop=softwareVersion]"
         },
         {
+
+            "site": "www.npmjs.com",
             "forgeName": "npmjs",
-            "url": "www.npmjs.com",
             "type": "DOM",
             "forgeSeparator": "/",
             "blackDuckSeparator": "/",
@@ -34,8 +36,9 @@ export default {
             "versionQuery": "div._702d723c.dib.w-50.bb.b--black-10.pr2 p"
         },
         {
+
+            "site": "www.nuget.org",
             "forgeName": "nuget",
-            "url": "www.nuget.org",
             "type": "DOM",
             "forgeSeparator": "/",
             "blackDuckSeparator": "/",
@@ -45,8 +48,9 @@ export default {
             "versionQuery": "div.package-title h1 small"
         },
         {
+
+            "site": "packagist.org",
             "forgeName": "packagist",
-            "url": "packagist.org",
             "type": "DOM",
             "forgeSeparator": ":",
             "blackDuckSeparator": ":",
@@ -56,8 +60,9 @@ export default {
             "versionQuery": "div.version-details span.version-number"
         },
         {
+
+            "site": "pypi.org",
             "forgeName": "pypi",
-            "url": "pypi.org",
             "type": "DOM",
             "forgeSeparator": "/",
             "blackDuckSeparator": "/",
@@ -67,8 +72,9 @@ export default {
             "versionQuery": "div.package-header h1"
         },
         {
+
+            "site": "rubygems.org",
             "forgeName": "rubygems",
-            "url": "rubygems.org",
             "type": "DOM",
             "forgeSeparator": "/",
             "blackDuckSeparator": "/",
@@ -78,8 +84,9 @@ export default {
             "versionQuery": "div.l-wrap--b h1.t-display i.page__subheading"
         },
         {
+
+            "site": "search.maven.org",
             "forgeName": "maven",
-            "url": "search.maven.org",
             "type": "DOM",
             "forgeSeparator": ":",
             "blackDuckSeparator": ":",
@@ -89,16 +96,18 @@ export default {
             "versionQuery": "app-pom-dependency-information div.mat-card-header-text mat-card-subtitle"
         },
         {
+
+            "site": "mvnrepository.com",
             "forgeName": "maven",
-            "url": "mvnrepository.com",
             "type": "MAVEN",
             "forgeSeparator": ":",
             "blackDuckSeparator": ":",
             "artifactPrefixPath": "/artifact/"
         },
         {
+
+            "site": "repo.maven.apache.org",
             "forgeName": "maven",
-            "url": "repo.maven.apache.org",
             "type": "WEB_PATH",
             "forgeSeparator": ":",
             "blackDuckSeparator": ":",
@@ -106,8 +115,9 @@ export default {
             "artifactPrefixDelimeter": "."
         },
         {
+
+            "site": "repo1.maven.org",
             "forgeName": "maven",
-            "url": "repo1.maven.org",
             "type": "WEB_PATH",
             "forgeSeparator": ":",
             "blackDuckSeparator": ":",

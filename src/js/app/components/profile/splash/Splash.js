@@ -79,7 +79,7 @@ const Splash = ({ isComponentPage, isComponentIdentified, isBlackduckConfigured 
             </div>
             }
             <DuckRadar />
-            {!isComponentPage || !isComponentIdentified &&
+            {(!isComponentPage || !isComponentIdentified) &&
             <div className={instructions}>
                 <p className={instructionsHeader}>
                     After you configure Radar with your Black Duck credentials:

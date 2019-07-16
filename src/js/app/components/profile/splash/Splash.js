@@ -54,6 +54,7 @@ const getRepositories = () => {
 };
 
 const Splash = ({ isComponentPage, isComponentIdentified, isBlackduckConfigured }) => {
+    console.log("isComponentPage: %s, isComponentIdentified: %s, isBlackduckConfigured: %s",isComponentPage, isComponentIdentified, isBlackduckConfigured );
     return (
         <div className={splashBlock}>
             <div className={[panelHeader, headerText].join(' ')}>
@@ -78,7 +79,7 @@ const Splash = ({ isComponentPage, isComponentIdentified, isBlackduckConfigured 
             </div>
             }
             <DuckRadar />
-            {!isComponentPage && !isComponentIdentified &&
+            {!isComponentPage || !isComponentIdentified &&
             <div className={instructions}>
                 <p className={instructionsHeader}>
                     After you configure Radar with your Black Duck credentials:

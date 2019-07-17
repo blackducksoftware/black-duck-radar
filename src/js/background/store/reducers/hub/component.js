@@ -22,6 +22,7 @@
  */
 
 import {
+    FETCHING_DATA,
     HUB_COMPONENT_POLICIES_DELETE,
     HUB_COMPONENT_POLICIES_SET,
     HUB_COMPONENT_RISK_PROFILE_DELETE,
@@ -138,6 +139,15 @@ export const hubComponentRiskProfileMap = (state = {}, action) => {
             delete newState[tabId];
             return newState;
         }
+        default:
+            return state;
+    }
+};
+
+export const fetchingData = (state = {}, action) =>{
+    switch(action.type) {
+        case FETCHING_DATA:
+            return Object.assign({}, state, action.fetchingData);
         default:
             return state;
     }

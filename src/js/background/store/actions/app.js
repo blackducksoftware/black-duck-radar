@@ -93,12 +93,14 @@ export const updateExtensionIcon = ({ tabId }) => {
         const externalComponent = store.getState('hubExternalComponentMap', tabId);
         const vulnerabilities = store.getState('hubComponentVulnerabilitiesMap', tabId);
         const policyList = store.getState('hubComponentPolicyRulesMap', tabId);
+        const componentKeys = store.getState('forgeComponentKeysMap', tabId);
 
         Button.toggleGlow({
             tabId,
             isEnabled: Boolean(externalComponent),
             isDangerous: Boolean(vulnerabilities && vulnerabilities.length),
-            isPolicyViolated: Boolean(policyList && policyList.length)
+            isPolicyViolated: Boolean(policyList && policyList.length),
+            isComponentPage: Boolean(componentKeys)
         });
     };
 };

@@ -296,7 +296,7 @@ export const syncHubComponentRiskProfile = ({ tabId, componentVersion }) => {
             // We're currently syncing this value
             return;
         }
-        console.log("Sync component risk profile");
+
         dispatch(setFetchingData(tabId,true));
         dispatch(setHubComponentRiskProfile(tabId, SYNC_PENDING));
         const riskProfile = await hubController.getComponentRiskProfile(componentVersion);

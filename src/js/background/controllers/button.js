@@ -24,9 +24,8 @@
 import Tabs from './tabs';
 
 export default class Button {
-    static async toggleGlow({ isEnabled, isDangerous, isPolicyViolated, tabId }) {
+    static async toggleGlow({ isEnabled, isDangerous, isPolicyViolated, isComponentPage, tabId }) {
         const tab = await Tabs.get(Number(tabId));
-
         if (tab) {
             let iconName;
 
@@ -36,6 +35,8 @@ export default class Button {
                 iconName = 'duck_orange';
             } else if (isEnabled) {
                 iconName = 'duck_green';
+            } else if (isComponentPage) {
+                iconName = 'duck_unknown';
             } else {
                 iconName = 'duck';
             }

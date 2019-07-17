@@ -54,7 +54,6 @@ const getRepositories = () => {
 };
 
 const Splash = ({ isComponentPage, isComponentIdentified, isBlackduckConfigured }) => {
-    console.log("isComponentPage: %s, isComponentIdentified: %s, isBlackduckConfigured: %s",isComponentPage, isComponentIdentified, isBlackduckConfigured );
     return (
         <div className={splashBlock}>
             <div className={[panelHeader, headerText].join(' ')}>
@@ -75,7 +74,7 @@ const Splash = ({ isComponentPage, isComponentIdentified, isBlackduckConfigured 
             <div className={introText}>
                 <span className={`fa fa-exclamation-triangle ${warningIcon}`}></span>
                 Radar supports this repository, but could not find any
-                information from the BlackDuck server for this package.
+                information from the Black Duck server for this package.
             </div>
             }
             <DuckRadar />

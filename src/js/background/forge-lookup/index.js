@@ -25,6 +25,7 @@ import parserDefinitions from './forge-parsers/parser-definitions';
 import DomForgeParser from './forge-parsers/dom-forge-parser';
 import WebFilePathParser from './forge-parsers/web-path-parser';
 import MavenParser from './forge-parsers/maven-parser';
+import ArtifactoryForgeParser from "./forge-parsers/artifactory-parser";
 
 class ForgeLookup {
     constructor() {
@@ -82,6 +83,8 @@ class ForgeLookup {
                         return new MavenParser(props);
                     case 'WEB_PATH':
                         return new WebFilePathParser(props);
+                    case 'ARTIFACTORY':
+                        return new ArtifactoryForgeParser(props);
                     default:
                         return null;
                 }

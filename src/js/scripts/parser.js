@@ -21,22 +21,29 @@
  *  under the License.
  */
 
-export const buildParserScript = ({ nameQuery, versionQuery }) => {
+export const buildParserScript = ({ nameQuery, versionQuery, forgeQuery }) => {
     return `
         (() => {
             const nameElement = document.querySelector('${nameQuery}');
             const versionElement = document.querySelector('${versionQuery}');
+            const forgeElement = document.querySelector('${forgeQuery}');
             
             if (!nameElement || !versionElement) {
                 chrome.runtime.sendMessage({ error: true });
                 return;
             }
-
-             chrome.runtime.sendMessage({
+            const message = {
                  extensionId: '${chrome.runtime.id}',
                  nameText: nameElement.innerText,
-                 versionText: versionElement.innerText
-             });
+                 versionText: versionElement.innerText,
+                 forgeText: null
+             };
+             
+             if(forgeElement) {
+                message.forgeText = forgeElement.innerText;
+             }
+             
+             chrome.runtime.sendMessage(message);
         })();
     `;
 };

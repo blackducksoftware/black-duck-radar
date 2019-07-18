@@ -24,10 +24,12 @@
 function saveOptions() {
     const blackduckUrl = document.getElementById('blackduckUrl');
     const blackduckApiToken = document.getElementById('blackduckApiToken');
+    const artifactoryUrl = document.getElementById('artifactoryUrl');
     if (blackduckUrl && blackduckApiToken) {
         chrome.storage.local.set({
             blackduckUrl: blackduckUrl.value,
-            blackduckApiToken: blackduckApiToken.value
+            blackduckApiToken: blackduckApiToken.value,
+            artifactoryUrl: artifactoryUrl.value
         }, () => {
             const status = document.getElementById('status');
             status.textContent = 'Options saved.';
@@ -36,10 +38,16 @@ function saveOptions() {
             }, 750);
         });
 
-        const permissionUrl = new URL(blackduckUrl.value).href;
-        console.log('permission URL', permissionUrl);
+        const blackduckServerUrl = new URL(blackduckUrl.value).href;
+        const artifactoryServerString = artifactoryUrl.value;
+
+        let originArray = [blackduckServerUrl];
+        if(artifactoryServerString && artifactoryServerString.trim().length > 0) {
+            const artifactoryServerUrl = new URL(artifactoryServerString).href;
+            originArray.push(artifactoryServerUrl);
+        }
         chrome.permissions.request({
-            origins: [permissionUrl]
+            origins: originArray
         }, (granted) => {
             console.log('granted', granted);
             if (granted) {
@@ -61,7 +69,8 @@ function saveOptions() {
 function restoreOptions() {
     chrome.storage.local.get({
         blackduckUrl: '',
-        blackduckApiToken: ''
+        blackduckApiToken: '',
+        artifactoryUrl: ''
     }, (items) => {
         const urlElement = document.getElementById('blackduckUrl');
         if (urlElement) {
@@ -70,6 +79,10 @@ function restoreOptions() {
         const tokenElement = document.getElementById('blackduckApiToken');
         if (tokenElement) {
             tokenElement.value = items.blackduckApiToken;
+        }
+        const artifactoryUrlElement = document.getElementById('artifactoryUrl');
+        if (artifactoryUrlElement) {
+            artifactoryUrlElement.value = items.artifactoryUrl;
         }
     });
 }

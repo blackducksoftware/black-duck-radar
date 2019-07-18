@@ -153,12 +153,16 @@ class LoginStatusContainer extends Component {
     }
 
     render() {
+        const {fetchingData} = this.props;
         const textClasses = this.getTextClass();
         const buttonText = this.getButtonText();
         return (
             <div className={styles.loginBlock}>
                 <div className={styles.textBlock}>
                     <div className={styles.textItem}>
+                        {fetchingData &&
+                            <span className="fa fa-spinner fa-pulse" alt="Fetching Data..." aria-hidden='true'></span>
+                        }
                         <button className={styles.loginLink} onClick={this.displayConfiguration}>
                             <span className={textClasses} aria-hidden='true'>
                                 {buttonText}
@@ -171,10 +175,12 @@ class LoginStatusContainer extends Component {
     }
 }
 
-const mapStateToProps = ({ blackduckConfiguredState }) => {
+const mapStateToProps = ({ blackduckConfiguredState, fetchingData ={}}) => {
+    const tabId = Tab.getId();
     const { isBlackduckConfigured, status } = blackduckConfiguredState;
-
+    const fetchingDataForTab = fetchingData ? fetchingData[tabId] : false;
     return {
+        fetchingData: fetchingDataForTab,
         status,
         isBlackduckConfigured
     };

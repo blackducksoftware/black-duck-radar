@@ -36,7 +36,8 @@ import {
     hubComponentVersionReferenceProjectsMap,
     hubComponentVulnerabilitiesMap,
     hubExternalComponentMap,
-    hubProjectVersionComponentsMap
+    hubProjectVersionComponentsMap,
+    fetchingData
 } from './hub/component';
 
 // Component data is mapped to tabId so that we can clean up memory once the tab has been closed
@@ -77,7 +78,9 @@ const rootReducer = combineReducers({
     // map from tabId to component risk profile
     hubComponentRiskProfileMap,
     // chrome extension information
-    chromeExtensionDetails
+    chromeExtensionDetails,
+    // if there are outstanding requests for data
+    fetchingData
 });
 
 export default rootReducer;

@@ -87,13 +87,10 @@
 
             "site": "search.maven.org",
             "forgeName": "maven",
-            "type": "DOM",
+            "type": "MAVEN",
             "forgeSeparator": ":",
             "blackDuckSeparator": ":",
-            "nameHasVersion": false,
-            "nameVersionDelimeter": null,
-            "nameQuery": "app-pom-dependency-information div.mat-card-header-text mat-card-title",
-            "versionQuery": "app-pom-dependency-information div.mat-card-header-text mat-card-subtitle"
+            "artifactPrefixPath": "/artifact/"
         },
         {
 

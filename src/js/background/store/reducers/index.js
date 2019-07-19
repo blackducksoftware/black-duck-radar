@@ -27,7 +27,7 @@ import { forgeComponentKeysMap } from './background-state';
 
 import { chromeExtensionDetails, frameVisibilityMap, loadStateMap, menuStateMap } from './app-state';
 
-import { blackduckBearerToken, blackduckConfiguredState, blackduckOrigin, blackduckToken, hubUsername, isHubLoginOpen } from './hub/auth';
+import { blackduckBearerToken, blackduckConfiguredState, blackduckOrigin, blackduckToken, hubUsername, isHubLoginOpen, artifactoryUrl } from './hub/auth';
 
 import {
     hubComponentPolicyRulesMap,
@@ -49,6 +49,8 @@ const rootReducer = combineReducers({
     blackduckToken,
     // BlackDuck Bearer token
     blackduckBearerToken,
+    //Artifactory Server URL
+    artifactoryUrl,
     // Hub login username
     hubUsername,
     // Hub connection status

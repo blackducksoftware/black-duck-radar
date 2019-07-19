@@ -35,11 +35,8 @@ class DomForgeParser extends ForgeParser {
 
     }
 
-    getComponentText() {
-        const code = buildParserScript({
-            nameQuery: this.nameQuery,
-            versionQuery: this.versionQuery
-        });
+    getComponentText(queryObject) {
+        const code = buildParserScript(queryObject);
 
         return new Promise((resolve, reject) => {
             const listener = (request, sender) => {
@@ -50,7 +47,8 @@ class DomForgeParser extends ForgeParser {
                     error,
                     extensionId,
                     nameText,
-                    versionText
+                    versionText,
+                    forgeText
                 } = request;
 
                 if (id !== this.tabId) {
@@ -69,7 +67,8 @@ class DomForgeParser extends ForgeParser {
 
                 resolve({
                     nameText,
-                    versionText
+                    versionText,
+                    forgeText
                 });
             };
 
@@ -79,7 +78,11 @@ class DomForgeParser extends ForgeParser {
     }
 
     async getComponentKeys() {
-        const componentText = await this.getComponentText();
+        const queryObject = {
+            nameQuery: this.nameQuery,
+            versionQuery: this.versionQuery
+        };
+        const componentText = await this.getComponentText(queryObject);
         if (DEBUG_AJAX) {
             console.log('DOM FORGE PARSER: %s - parsed component text %s', this.forgeName, JSON.stringify(componentText));
         }

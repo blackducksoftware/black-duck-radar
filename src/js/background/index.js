@@ -39,7 +39,7 @@ import { clearStore } from './store/actions/app';
     await createStore();
 
     const forgeComponent = new ForgeComponent();
-    await forgeComponent.loadDefinitions();
+
 
     const processTabUpdate = async (tab, updateSummary = {}) => {
         const didNavigate = updateSummary.status === 'loading';
@@ -49,8 +49,9 @@ import { clearStore } from './store/actions/app';
         const isUrlHashUpdate = didNavigate && frame.isInserted();
         let componentKeys = getState('forgeComponentKeysMap', tabId);
         let externalComponent = getState('hubExternalComponentMap', tabId);
+        const artifactoryUrl = getState('artifactoryUrl');
         const hasComponentKeys = Boolean(componentKeys);
-
+        await forgeComponent.loadDefinitions({ artifactoryUrl });
         if (isUrlHashUpdate) {
             // The browser URL has changed but the document hasn't reloaded,
             // probably because of navigating to a hash url. Unload the app because

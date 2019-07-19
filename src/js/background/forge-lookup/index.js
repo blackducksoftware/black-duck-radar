@@ -60,12 +60,22 @@ class ForgeLookup {
         return parserDefinitions;
     }
 
-    async buildMap() {
+    async buildMap({artifactoryUrl}) {
         const data = await this.loadData();
         if(DEBUG_AJAX) {
             console.log("ForgeLookup.buildMap() - Definitions Data: ", JSON.stringify(data, null, 2));
         }
-        const parserEntries = data.definitions.map(item => [item.site, item]);
+        let parserEntries = data.definitions
+            .filter(definition => definition.type !== 'ARTIFACTORY')
+            .map(definition => [definition.site, definition]);
+        if(artifactoryUrl) {
+            const artifactoryServerUrl = new URL(artifactoryUrl);
+            const artifactoryDefinition = data.definitions
+                .filter(definition => definition.type === 'ARTIFACTORY')
+                .map(definition => [artifactoryServerUrl.hostname, definition]);
+            parserEntries = parserEntries.concat(artifactoryDefinition);
+        }
+
         this.parserMap = new Map(parserEntries);
     }
 

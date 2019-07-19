@@ -32,8 +32,8 @@ class ForgeComponent {
         // hub or kb data
         this.hubController = new Hub();
     }
-    async loadDefinitions() {
-        await forgeLookup.buildMap();
+    async loadDefinitions(loadMetaData) {
+        await forgeLookup.buildMap(loadMetaData);
     }
 
     async parseExternalKeys(opts) {

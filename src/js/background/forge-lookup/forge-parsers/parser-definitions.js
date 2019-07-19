@@ -120,6 +120,22 @@ export default {
             "blackDuckSeparator": ":",
             "artifactPrefixPath": "/maven2/",
             "artifactPrefixDelimeter": "."
+        },
+        {
+
+            "type": "ARTIFACTORY",
+            "forgeSeparator": ":",
+            "blackDuckSeparator": ":",
+            "nameQuery": "div.artifact-details-header div.pull-right.text-right div h2.artifact-name-heading",
+            "versionQuery": "div.artifact-details-header div.pull-right.text-right div h2.artifact-name-heading",
+            "forgeQuery": "ul.nav.nav-tabs",
+            "forgeMap": {
+                "RubyGems": "rubygems",
+                "PyPi Info": "pypi",
+                "NuPkg Info": "nuget",
+                "Composer Info": "packagist",
+                "Npm Info": "npmjs"
+            }
         }
     ]
 };

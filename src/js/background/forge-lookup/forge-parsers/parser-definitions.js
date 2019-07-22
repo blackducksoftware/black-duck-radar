@@ -126,15 +126,40 @@ export default {
             "type": "ARTIFACTORY",
             "forgeSeparator": ":",
             "blackDuckSeparator": ":",
-            "nameQuery": "div.artifact-details-header div.pull-right.text-right div h2.artifact-name-heading",
-            "versionQuery": "div.artifact-details-header div.pull-right.text-right div h2.artifact-name-heading",
-            "forgeQuery": "ul.nav.nav-tabs",
+            "nameQuery": "#jf-artifacts div.content-wrapper.ng-scope div div div div div.artifact-details-header div h2",
+            "versionQuery": "#jf-artifacts div.content-wrapper.ng-scope div div div div div.artifact-details-header div h2",
+            "forgeQuery": "#jf-artifacts div.content-wrapper.ng-scope div div div div jf-artifact-info div jf-tabs.ng-isolate-scope ul.nav.nav-tabs li a span",
+            "forgeTabIndex": 1,
             "forgeMap": {
-                "RubyGems": "rubygems",
-                "PyPi Info": "pypi",
-                "NuPkg Info": "nuget",
-                "Composer Info": "packagist",
-                "Npm Info": "npmjs"
+                "RubyGems": {
+                    "name": "rubygems",
+                    "forgeSeparator": "/",
+                    "blackDuckSeparator": "/",
+                    "nameVersionDelimeter": "-"
+                },
+                "PyPi Info": {
+                    "name": "pypi",
+                    "forgeSeparator": "/",
+                    "blackDuckSeparator": "/",
+                    "nameVersionDelimeter": "-"
+                },
+                "NuPkg Info": {
+                    "name": "nuget",
+                    "forgeSeparator": "/",
+                    "blackDuckSeparator": "/"
+                },
+                "Composer Info": {
+                    "name": "packagist",
+                    "forgeSeparator": ":",
+                    "blackDuckSeparator": ":",
+                    "nameVersionDelimeter": "-"
+                },
+                "Npm Info": {
+                    "name": "npmjs",
+                    "nameVersionDelimeter": "-",
+                    "forgeSeparator": "/",
+                    "blackDuckSeparator": "/"
+                }
             }
         }
     ]

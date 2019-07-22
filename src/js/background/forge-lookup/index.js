@@ -76,6 +76,10 @@ class ForgeLookup {
             parserEntries = parserEntries.concat(artifactoryDefinition);
         }
 
+        if(DEBUG_AJAX) {
+            console.log("ForgeLookup.buildMap() - parserMap %s", JSON.stringify(this.parserMap,null,2));
+        }
+
         this.parserMap = new Map(parserEntries);
     }
 

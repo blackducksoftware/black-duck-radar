@@ -45,11 +45,16 @@ class DomForgeParser extends ForgeParser {
 
                 const {
                     error,
+                    nameElementMissing,
+                    versionElementMissing,
                     extensionId,
                     nameText,
-                    versionText,
-                    forgeText
+                    versionText
                 } = request;
+
+                if(DEBUG_AJAX) {
+                    console.log("DOM FORGE PARSER - Parser script request: ",request);
+                }
 
                 if (id !== this.tabId) {
                     return;
@@ -61,14 +66,17 @@ class DomForgeParser extends ForgeParser {
                 chrome.runtime.onMessage.removeListener(listener);
 
                 if (error) {
-                    reject(new Error('Failed to fetch component text'));
+                    const message = `Failed to fetch component text, nameMissing: ${nameElementMissing}, versionMissing: ${versionElementMissing}`;
+                    if(DEBUG_AJAX) {
+                        console.log(message);
+                    }
+                    reject(new Error(message));
                     return;
                 }
 
                 resolve({
                     nameText,
-                    versionText,
-                    forgeText
+                    versionText
                 });
             };
 

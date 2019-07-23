@@ -126,39 +126,50 @@ export default {
             "type": "ARTIFACTORY",
             "forgeSeparator": ":",
             "blackDuckSeparator": ":",
-            "nameQuery": "#jf-artifacts div.content-wrapper.ng-scope div div div div div.artifact-details-header div h2",
-            "versionQuery": "#jf-artifacts div.content-wrapper.ng-scope div div div div div.artifact-details-header div h2",
+            "nameQuery": "",
+            "versionQuery": "",
             "forgeQuery": "#jf-artifacts div.content-wrapper.ng-scope div div div div jf-artifact-info div jf-tabs.ng-isolate-scope ul.nav.nav-tabs li a span",
             "forgeTabIndex": 1,
             "forgeMap": {
+                "Composer Info": {
+                    "name": "packagist",
+                    "forgeSeparator": ":",
+                    "blackDuckSeparator": ":",
+                    "tableQuery": "jf-tab[name='ComposerInfo'] jf-composer table.jf-data-table.ng-scope tbody tr td",
+                    "nameIndex": 1,
+                    "versionIndex": 3
+                },
                 "RubyGems": {
                     "name": "rubygems",
                     "forgeSeparator": "/",
                     "blackDuckSeparator": "/",
-                    "nameVersionDelimeter": "-"
+                    "tableQuery": "jf-tab[name='RubyGems'] jf-ruby-gems table.jf-data-table.ng-scope tbody tr td",
+                    "nameIndex": 1,
+                    "versionIndex": 3
                 },
                 "PyPi Info": {
                     "name": "pypi",
                     "forgeSeparator": "/",
                     "blackDuckSeparator": "/",
-                    "nameVersionDelimeter": "-"
+                    "tableQuery": "jf-tab[name='PyPIInfo'] jf-py-pi table.jf-data-table.ng-scope tbody tr td",
+                    "nameIndex": 1,
+                    "versionIndex": 3
                 },
                 "NuPkg Info": {
                     "name": "nuget",
                     "forgeSeparator": "/",
-                    "blackDuckSeparator": "/"
-                },
-                "Composer Info": {
-                    "name": "packagist",
-                    "forgeSeparator": ":",
-                    "blackDuckSeparator": ":",
-                    "nameVersionDelimeter": "-"
+                    "blackDuckSeparator": "/",
+                    "tableQuery": "jf-tab[name='NuPkgInfo'] jf-nuget table.jf-data-table.ng-scope tbody tr td",
+                    "nameIndex": 1,
+                    "versionIndex": 5
                 },
                 "Npm Info": {
                     "name": "npmjs",
-                    "nameVersionDelimeter": "-",
                     "forgeSeparator": "/",
-                    "blackDuckSeparator": "/"
+                    "blackDuckSeparator": "/",
+                    "tableQuery": "jf-tab[name='NpmInfo'] jf-npm-info table.jf-data-table.ng-scope tbody tr td",
+                    "nameIndex": 1,
+                    "versionIndex": 3
                 }
             }
         }

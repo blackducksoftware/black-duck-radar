@@ -147,7 +147,7 @@ export default {
                     "nameIndex": 1,
                     "versionIndex": 3
                 },
-                "PyPi Info": {
+                "PyPI Info": {
                     "name": "pypi",
                     "forgeSeparator": "/",
                     "blackDuckSeparator": "/",

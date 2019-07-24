@@ -112,7 +112,8 @@ export const performBearerTokenRequest = ({ blackduckApiToken, tabId }) => {
                 dispatch(setBlackduckConfiguredState(loginEnum.CONFIGURED));
                 // check if there is data for the tab in the extension
                 // this is a tab the extension should display data.
-                if (forgeComponentKeysMap && tabId && tabId.toString() in forgeComponentKeysMap) {
+
+                if (componentKeys) {
                     dispatch(performPhoneHomeIfNeeded());
                     dispatch(refreshComponent({ tabId }));
                 }

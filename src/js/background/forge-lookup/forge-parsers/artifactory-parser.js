@@ -1,5 +1,4 @@
 import DomForgeParser from "./dom-forge-parser";
-import { getForgeName } from "../../store/actions/hub-component";
 
 class ArtifactoryForgeParser extends DomForgeParser {
     constructor(opts) {
@@ -7,6 +6,9 @@ class ArtifactoryForgeParser extends DomForgeParser {
         this.forgeQuery = opts.forgeQuery;
         this.forgeMap = opts.forgeMap;
         this.forgeTabIndex = opts.forgeTabIndex;
+        this.getForgeText = this.getForgeText.bind(this);
+        this.getComponentText = this.getComponentText.bind(this);
+        this.getForgeData = this.getForgeData.bind(this);
     }
 
     async getComponentKeys() {
@@ -14,28 +16,20 @@ class ArtifactoryForgeParser extends DomForgeParser {
             forgeQuery: this.forgeQuery,
             forgeTabIndex: this.forgeTabIndex
         };
-        const forgeText = await this.getForgeText(forgeQueryObject);
+        const componentData = await this.getForgeText(forgeQueryObject);
         if (DEBUG_AJAX) {
-            console.log('ARTIFACTORY FORGE PARSER: parsed forge text %s', JSON.stringify(forgeText));
+            console.log('ARTIFACTORY FORGE PARSER: parsed component text: %s', JSON.stringify(componentData));
         }
-
-        const forgeData = this.getForgeData(forgeText);
-        if (forgeData) {
-            this.forgeName = forgeData.name;
-            const componentQueryObject = {
-                tableQuery: forgeData.tableQuery,
-                nameIndex: forgeData.nameIndex,
-                versionIndex: forgeData.versionIndex
-            };
-            const componentText = await this.getComponentText(componentQueryObject);
-            const name = componentText.nameText;
-            const version = componentText.versionText;
+        if (componentData) {
+            const name = componentData.nameText;
+            const version = componentData.versionText;
             if (name && version) {
+                this.forgeName = componentData.forgeName;
                 const nameVersionArray = [name.trim(), version.trim()];
-                const kbReleaseForgeId = nameVersionArray.join(forgeData.forgeSeparator);
-                const hubExternalId = encodeURI(nameVersionArray.join(forgeData.blackDuckSeparator));
+                const kbReleaseForgeId = nameVersionArray.join(componentData.forgeSeparator);
+                const hubExternalId = encodeURI(nameVersionArray.join(componentData.blackDuckSeparator));
                 if (DEBUG_AJAX) {
-                    console.log('ARTIFACTORY FORGE PARSER: %s - name: %s, version: %s, kbID: %s, externalID: %s', forgeData.name, name, version, kbReleaseForgeId, hubExternalId);
+                    console.log('ARTIFACTORY FORGE PARSER: %s - name: %s, version: %s, kbID: %s, externalID: %s', this.forgeName, name, version, kbReleaseForgeId, hubExternalId);
                 }
                 return this.createComponentKeys({
                     name,
@@ -45,6 +39,7 @@ class ArtifactoryForgeParser extends DomForgeParser {
                 });
             }
         }
+        return null;
     }
 
     getForgeData({forgeText}) {
@@ -59,7 +54,8 @@ class ArtifactoryForgeParser extends DomForgeParser {
         const code = this.buildForgeParserScript(queryObject);
 
         return new Promise((resolve, reject) => {
-            const listener = (request, sender) => {
+            const forgeListener = (request, sender) => {
+                chrome.runtime.onMessage.removeListener(forgeListener);
                 const { tab } = sender;
                 const { id } = tab;
 
@@ -81,7 +77,7 @@ class ArtifactoryForgeParser extends DomForgeParser {
                 if (extensionId !== chrome.runtime.id) {
                     return;
                 }
-                chrome.runtime.onMessage.removeListener(listener);
+
 
                 if (error) {
                     const message = `Failed to fetch component text, forgeMissing: ${forgeElementMissing}`;
@@ -92,21 +88,45 @@ class ArtifactoryForgeParser extends DomForgeParser {
                     return;
                 }
 
-                resolve({
-                    forgeText
-                });
+                const forgeData = this.getForgeData({ forgeText });
+                if (!forgeData) {
+                    reject(new Error(`Forge not found for: ${forgeText}`));
+                }
+
+                resolve(forgeData);
             };
 
-            chrome.runtime.onMessage.addListener(listener);
+            chrome.runtime.onMessage.addListener(forgeListener);
             chrome.tabs.executeScript(Number(this.tabId), { code });
+        }).then(forgeResult => {
+            const componentQueryObject = {
+                tableQuery: forgeResult.tableQuery,
+                nameIndex: forgeResult.nameIndex,
+                versionIndex: forgeResult.versionIndex
+            };
+            return this.getComponentText(componentQueryObject).then(componentResult => {
+                return {
+                    forgeName: forgeResult.name,
+                    forgeSeparator: forgeResult.forgeSeparator,
+                    blackDuckSeparator: forgeResult.blackDuckSeparator,
+                    nameText: componentResult.nameText,
+                    versionText: componentResult.versionText
+                };
+            }).catch(error => {
+                if(DEBUG_AJAX) {
+                    console.log("ARTIFACTORY FORGE PARSER - Error with component parser: ", error);
+                }
+            });
+        }).catch(error => {
+            if(DEBUG_AJAX) {
+                console.log("ARTIFACTORY FORGE PARSER - Error with forge parser: ", error);
+            }
         });
     }
 
     getComponentText(queryObject) {
-        const code = this.buildTabParserScript(queryObject);
-
         return new Promise((resolve, reject) => {
-            const listener = (request, sender) => {
+            const componentListener = (request, sender) => {
                 const { tab } = sender;
                 const { id } = tab;
 
@@ -118,6 +138,7 @@ class ArtifactoryForgeParser extends DomForgeParser {
                     nameText,
                     versionText,
                 } = request;
+
                 if (DEBUG_AJAX) {
                     console.log("ARTIFACTORY FORGE PARSER - Component Parser script request: ", request);
                 }
@@ -129,25 +150,29 @@ class ArtifactoryForgeParser extends DomForgeParser {
                 if (extensionId !== chrome.runtime.id) {
                     return;
                 }
-                chrome.runtime.onMessage.removeListener(listener);
 
-                if (error) {
-                    const message = `Failed to fetch component text, nameMissing: ${nameElementMissing}, versionMissing: ${versionElementMissing}`;
-                    if (DEBUG_AJAX) {
-                        console.log(message);
+                if(nameText && versionText) {
+                    chrome.runtime.onMessage.removeListener(componentListener);
+                    if (error) {
+                        const message = `Failed to fetch component text, nameMissing: ${nameElementMissing}, versionMissing: ${versionElementMissing}`;
+                        if (DEBUG_AJAX) {
+                            console.log(message);
+                        }
+                        reject(new Error(message));
+                        return;
                     }
-                    reject(new Error(message));
-                    return;
-                }
 
-                resolve({
-                    nameText,
-                    versionText
-                });
+                    resolve({
+                        nameText,
+                        versionText
+                    });
+                }
             };
 
-            chrome.runtime.onMessage.addListener(listener);
-            chrome.tabs.executeScript(Number(this.tabId), { code });
+            const componentScript = this.buildTabParserScript(queryObject);
+
+            chrome.runtime.onMessage.addListener(componentListener);
+            chrome.tabs.executeScript(Number(this.tabId), { code: componentScript });
         });
     }
 

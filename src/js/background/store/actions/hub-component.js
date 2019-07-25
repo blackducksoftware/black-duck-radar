@@ -130,7 +130,7 @@ export const syncHubExternalComponent = ({ tabId }) => {
         dispatch(setFetchingData(tabId,true));
         dispatch(setHubExternalComponent(tabId, SYNC_PENDING));
 
-        const componentKeys = store.getState('forgeComponentKeysMap', tabId);
+        const componentKeys = store.getState('forgeComponentKeysMap', tabId) || {};
         const externalComponents = await hubController.getExternalComponents(componentKeys);
         const component = externalComponents.pop() || null;
         if (component) {

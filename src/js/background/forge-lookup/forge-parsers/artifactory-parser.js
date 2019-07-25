@@ -8,6 +8,7 @@ class ArtifactoryForgeParser extends DomForgeParser {
         this.forgeTabIndex = opts.forgeTabIndex;
         this.defaultTabQuery = opts.defaultTabQuery;
         this.moduleIdIndex = opts.moduleIdIndex;
+        this.date = Date.now();
         this.getForgeText = this.getForgeText.bind(this);
         this.getComponentText = this.getComponentText.bind(this);
         this.getForgeData = this.getForgeData.bind(this);
@@ -20,9 +21,10 @@ class ArtifactoryForgeParser extends DomForgeParser {
             defaultTabQuery: this.defaultTabQuery,
             moduleIdIndex: this.moduleIdIndex
         };
+
         const componentData = await this.getForgeText(forgeQueryObject);
         if (DEBUG_AJAX) {
-            console.log('ARTIFACTORY FORGE PARSER: parsed component text: %s', JSON.stringify(componentData));
+            console.log('ARTIFACTORY FORGE PARSER - %s: parsed component text: %s', this.date, JSON.stringify(componentData));
         }
         if (componentData) {
             const name = componentData.nameText;
@@ -33,7 +35,7 @@ class ArtifactoryForgeParser extends DomForgeParser {
                 const kbReleaseForgeId = nameVersionArray.join(componentData.forgeSeparator);
                 const hubExternalId = encodeURI(nameVersionArray.join(componentData.blackDuckSeparator));
                 if (DEBUG_AJAX) {
-                    console.log('ARTIFACTORY FORGE PARSER: %s - name: %s, version: %s, kbID: %s, externalID: %s', this.forgeName, name, version, kbReleaseForgeId, hubExternalId);
+                    console.log('ARTIFACTORY FORGE PARSER - %s: %s - name: %s, version: %s, kbID: %s, externalID: %s', this.date, this.forgeName, name, version, kbReleaseForgeId, hubExternalId);
                 }
                 return this.createComponentKeys({
                     name,
@@ -78,7 +80,7 @@ class ArtifactoryForgeParser extends DomForgeParser {
                 } = request;
 
                 if (DEBUG_AJAX) {
-                    console.log("ARTIFACTORY FORGE PARSER - Forge Parser script request: ", request);
+                    console.log("ARTIFACTORY FORGE PARSER %s - Forge Parser script request: ", this.date, request);
                 }
 
                 if (id !== this.tabId) {
@@ -131,12 +133,12 @@ class ArtifactoryForgeParser extends DomForgeParser {
                 };
             }).catch(error => {
                 if(DEBUG_AJAX) {
-                    console.log("ARTIFACTORY FORGE PARSER - Error with component parser: ", error);
+                    console.log("ARTIFACTORY FORGE PARSER %s - Error with component parser: ", this.date, error);
                 }
             });
         }).catch(error => {
             if(DEBUG_AJAX) {
-                console.log("ARTIFACTORY FORGE PARSER - Error with forge parser: ", error);
+                console.log("ARTIFACTORY FORGE PARSER %s - Error with forge parser: ", this.date, error);
             }
         });
     }
@@ -157,7 +159,7 @@ class ArtifactoryForgeParser extends DomForgeParser {
                 } = request;
 
                 if (DEBUG_AJAX) {
-                    console.log("ARTIFACTORY FORGE PARSER - Component Parser script request: ", request);
+                    console.log("ARTIFACTORY FORGE PARSER %s - Component Parser script request: ",this.date, request);
                 }
 
                 if (id !== this.tabId) {
@@ -192,6 +194,7 @@ class ArtifactoryForgeParser extends DomForgeParser {
                         versionText: artifactVersion
                     });
                 }
+                resolve();
             };
 
             const componentScript = this.buildTabParserScript(queryObject);
@@ -204,6 +207,7 @@ class ArtifactoryForgeParser extends DomForgeParser {
     buildForgeParserScript({ forgeQuery, forgeTabIndex }) {
         return `
         (() => {
+            
             const forgeElements = document.querySelectorAll('${forgeQuery}');
 
             if (!forgeElements) {
@@ -227,7 +231,7 @@ class ArtifactoryForgeParser extends DomForgeParser {
         return `
         (() => {
             const tableElements = document.querySelectorAll("${tableQuery}");
-
+                        
             if (!tableElements) {
                 chrome.runtime.sendMessage({ 
                     tableElementMissing: !tableElements,

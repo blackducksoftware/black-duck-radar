@@ -35,11 +35,8 @@ class DomForgeParser extends ForgeParser {
 
     }
 
-    getComponentText() {
-        const code = buildParserScript({
-            nameQuery: this.nameQuery,
-            versionQuery: this.versionQuery
-        });
+    getComponentText(queryObject) {
+        const code = buildParserScript(queryObject);
 
         return new Promise((resolve, reject) => {
             const listener = (request, sender) => {
@@ -48,10 +45,16 @@ class DomForgeParser extends ForgeParser {
 
                 const {
                     error,
+                    nameElementMissing,
+                    versionElementMissing,
                     extensionId,
                     nameText,
                     versionText
                 } = request;
+
+                if(DEBUG_AJAX) {
+                    console.log("DOM FORGE PARSER - Parser script request: ",request);
+                }
 
                 if (id !== this.tabId) {
                     return;
@@ -63,7 +66,11 @@ class DomForgeParser extends ForgeParser {
                 chrome.runtime.onMessage.removeListener(listener);
 
                 if (error) {
-                    reject(new Error('Failed to fetch component text'));
+                    const message = `Failed to fetch component text, nameMissing: ${nameElementMissing}, versionMissing: ${versionElementMissing}`;
+                    if(DEBUG_AJAX) {
+                        console.log(message);
+                    }
+                    reject(new Error(message));
                     return;
                 }
 
@@ -79,7 +86,11 @@ class DomForgeParser extends ForgeParser {
     }
 
     async getComponentKeys() {
-        const componentText = await this.getComponentText();
+        const queryObject = {
+            nameQuery: this.nameQuery,
+            versionQuery: this.versionQuery
+        };
+        const componentText = await this.getComponentText(queryObject);
         if (DEBUG_AJAX) {
             console.log('DOM FORGE PARSER: %s - parsed component text %s', this.forgeName, JSON.stringify(componentText));
         }

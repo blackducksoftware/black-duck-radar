@@ -25,6 +25,7 @@ import parserDefinitions from './forge-parsers/parser-definitions';
 import DomForgeParser from './forge-parsers/dom-forge-parser';
 import WebFilePathParser from './forge-parsers/web-path-parser';
 import MavenParser from './forge-parsers/maven-parser';
+import ArtifactoryForgeParser from "./forge-parsers/artifactory-parser";
 
 class ForgeLookup {
     constructor() {
@@ -59,12 +60,26 @@ class ForgeLookup {
         return parserDefinitions;
     }
 
-    async buildMap() {
+    async buildMap({artifactoryUrl}) {
         const data = await this.loadData();
         if(DEBUG_AJAX) {
             console.log("ForgeLookup.buildMap() - Definitions Data: ", JSON.stringify(data, null, 2));
         }
-        const parserEntries = data.definitions.map(item => [item.site, item]);
+        let parserEntries = data.definitions
+            .filter(definition => definition.type !== 'ARTIFACTORY')
+            .map(definition => [definition.site, definition]);
+        if(artifactoryUrl) {
+            const artifactoryServerUrl = new URL(artifactoryUrl);
+            const artifactoryDefinition = data.definitions
+                .filter(definition => definition.type === 'ARTIFACTORY')
+                .map(definition => [artifactoryServerUrl.hostname, definition]);
+            parserEntries = parserEntries.concat(artifactoryDefinition);
+        }
+
+        if(DEBUG_AJAX) {
+            console.log("ForgeLookup.buildMap() - parserMap %s", JSON.stringify(this.parserMap,null,2));
+        }
+
         this.parserMap = new Map(parserEntries);
     }
 
@@ -82,6 +97,8 @@ class ForgeLookup {
                         return new MavenParser(props);
                     case 'WEB_PATH':
                         return new WebFilePathParser(props);
+                    case 'ARTIFACTORY':
+                        return new ArtifactoryForgeParser(props);
                     default:
                         return null;
                 }

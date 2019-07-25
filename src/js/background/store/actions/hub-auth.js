@@ -26,6 +26,7 @@ import * as store from '../index';
 import {
     BLACKDUCK_BEARER_TOKEN_SET,
     BLACKDUCK_TOKEN_SET,
+    ARTIFACTORY_URL_SET,
     HUB_AUTH_STATE_SET,
     HUB_LOGIN_WINDOW_SET,
     HUB_ORIGIN_SET,
@@ -62,6 +63,14 @@ export const setBearerToken = (token) => {
     return {
         type,
         token
+    };
+};
+
+export const setArtifactoryUrl = (artifactoryUrl) => {
+    const type = ARTIFACTORY_URL_SET;
+    return {
+        type,
+        artifactoryUrl
     };
 };
 
@@ -103,7 +112,8 @@ export const performBearerTokenRequest = ({ blackduckApiToken, tabId }) => {
                 dispatch(setBlackduckConfiguredState(loginEnum.CONFIGURED));
                 // check if there is data for the tab in the extension
                 // this is a tab the extension should display data.
-                if (forgeComponentKeysMap && tabId && tabId.toString() in forgeComponentKeysMap) {
+
+                if (componentKeys) {
                     dispatch(performPhoneHomeIfNeeded());
                     dispatch(refreshComponent({ tabId }));
                 }
@@ -121,15 +131,20 @@ export const performBlackduckConfiguredCheck = ({ tabId }) => {
         dispatch(setBlackduckConfiguredState(loginEnum.CONFIGURATION_PENDING));
         chrome.storage.local.get({
             blackduckUrl: null,
-            blackduckApiToken: null
+            blackduckApiToken: null,
+            artifactoryUrl: null
         }, (items) => {
-            const { blackduckUrl, blackduckApiToken } = items;
+            const { blackduckUrl, blackduckApiToken, artifactoryUrl } = items;
             if (blackduckUrl) {
                 dispatch(setBlackduckOrigin(blackduckUrl));
             }
 
             if (blackduckApiToken) {
                 dispatch(setBlackduckToken(blackduckApiToken));
+            }
+
+            if(artifactoryUrl) {
+                dispatch(setArtifactoryUrl(artifactoryUrl));
             }
             const urlMissing = !blackduckUrl || blackduckUrl.length <= 0;
             const tokenMissing = !blackduckApiToken || blackduckApiToken.length <= 0;

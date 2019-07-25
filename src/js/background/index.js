@@ -29,7 +29,7 @@ import ForgeComponent from './models/forge-component';
 import Frame from './models/frame';
 import { setForgeComponentKeys } from './store/actions/forge';
 import { performBlackduckConfiguredCheck } from './store/actions/hub-auth';
-import { collectUsageData } from './store/actions/hub-component';
+import { collectUsageData, refreshComponent } from './store/actions/hub-component';
 import { setChromeExtensionDetails } from './store/actions/extension';
 import { clearStore } from './store/actions/app';
 
@@ -39,7 +39,7 @@ import { clearStore } from './store/actions/app';
     await createStore();
 
     const forgeComponent = new ForgeComponent();
-    await forgeComponent.loadDefinitions();
+
 
     const processTabUpdate = async (tab, updateSummary = {}) => {
         const didNavigate = updateSummary.status === 'loading';
@@ -49,8 +49,16 @@ import { clearStore } from './store/actions/app';
         const isUrlHashUpdate = didNavigate && frame.isInserted();
         let componentKeys = getState('forgeComponentKeysMap', tabId);
         let externalComponent = getState('hubExternalComponentMap', tabId);
+        const artifactoryUrl = getState('artifactoryUrl');
         const hasComponentKeys = Boolean(componentKeys);
-
+        await forgeComponent.loadDefinitions({ artifactoryUrl });
+        if(DEBUG_AJAX) {
+            console.log("processTabUpdate - UpdateSummary:     ", updateSummary);
+            console.log("processTabUpdate - DidNavigate:       ", didNavigate);
+            console.log("processTabUpdate - ComponentKeys:     ", componentKeys);
+            console.log("processTabUpdate - ExternalComponent: ", externalComponent);
+            console.log("processTabUpdate - hasComponentKeys:  ", hasComponentKeys);
+        }
         if (isUrlHashUpdate) {
             // The browser URL has changed but the document hasn't reloaded,
             // probably because of navigating to a hash url. Unload the app because
@@ -85,7 +93,6 @@ import { clearStore } from './store/actions/app';
                 tabId,
                 url
             });
-
             if (componentKeys) {
                 dispatch(setForgeComponentKeys({
                     tabId,
@@ -93,6 +100,7 @@ import { clearStore } from './store/actions/app';
                 }));
             }
         }
+        dispatch(refreshComponent({ tabId }));
         dispatch(collectUsageData({ tabId }));
     };
 

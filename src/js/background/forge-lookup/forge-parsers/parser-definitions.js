@@ -120,6 +120,60 @@ export default {
             "blackDuckSeparator": ":",
             "artifactPrefixPath": "/maven2/",
             "artifactPrefixDelimeter": "."
+        },
+        {
+
+            "type": "ARTIFACTORY",
+            "forgeSeparator": ":",
+            "blackDuckSeparator": ":",
+            "nameQuery": "",
+            "versionQuery": "",
+            "forgeQuery": "#jf-artifacts div.content-wrapper.ng-scope div div div div jf-artifact-info div jf-tabs.ng-isolate-scope ul.nav.nav-tabs li a span",
+            "forgeTabIndex": 1,
+            "defaultTabQuery": "jf-tab[name='General'] jf-general table.jf-data-table.ng-scope tbody tr td",
+            "moduleIdIndex": 5,
+            "forgeMap": {
+                "Composer Info": {
+                    "name": "packagist",
+                    "forgeSeparator": ":",
+                    "blackDuckSeparator": ":",
+                    "tableQuery": "jf-tab[name='ComposerInfo'] jf-composer table.jf-data-table.ng-scope tbody tr td",
+                    "nameIndex": 1,
+                    "versionIndex": 3
+                },
+                "RubyGems": {
+                    "name": "rubygems",
+                    "forgeSeparator": "/",
+                    "blackDuckSeparator": "/",
+                    "tableQuery": "jf-tab[name='RubyGems'] jf-ruby-gems table.jf-data-table.ng-scope tbody tr td",
+                    "nameIndex": 1,
+                    "versionIndex": 3
+                },
+                "PyPI Info": {
+                    "name": "pypi",
+                    "forgeSeparator": "/",
+                    "blackDuckSeparator": "/",
+                    "tableQuery": "jf-tab[name='PyPIInfo'] jf-py-pi table.jf-data-table.ng-scope tbody tr td",
+                    "nameIndex": 1,
+                    "versionIndex": 3
+                },
+                "NuPkg Info": {
+                    "name": "nuget",
+                    "forgeSeparator": "/",
+                    "blackDuckSeparator": "/",
+                    "tableQuery": "jf-tab[name='NuPkgInfo'] jf-nuget table.jf-data-table.ng-scope tbody tr td",
+                    "nameIndex": 1,
+                    "versionIndex": 5
+                },
+                "Npm Info": {
+                    "name": "npmjs",
+                    "forgeSeparator": "/",
+                    "blackDuckSeparator": "/",
+                    "tableQuery": "jf-tab[name='NpmInfo'] jf-npm-info table.jf-data-table.ng-scope tbody tr td",
+                    "nameIndex": 1,
+                    "versionIndex": 3
+                }
+            }
         }
     ]
 };

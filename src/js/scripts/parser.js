@@ -28,15 +28,20 @@ export const buildParserScript = ({ nameQuery, versionQuery }) => {
             const versionElement = document.querySelector('${versionQuery}');
             
             if (!nameElement || !versionElement) {
-                chrome.runtime.sendMessage({ error: true });
+                chrome.runtime.sendMessage({ 
+                    nameElementMissing: !nameElement,
+                    versionElementMissing: !versionElement,
+                    error: true 
+                });
                 return;
             }
-
-             chrome.runtime.sendMessage({
+            const message = {
                  extensionId: '${chrome.runtime.id}',
                  nameText: nameElement.innerText,
                  versionText: versionElement.innerText
-             });
+             };
+             
+             chrome.runtime.sendMessage(message);
         })();
     `;
 };

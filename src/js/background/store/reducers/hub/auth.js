@@ -22,6 +22,7 @@
  */
 
 import {
+    ARTIFACTORY_URL_SET,
     BLACKDUCK_BEARER_TOKEN_SET,
     BLACKDUCK_TOKEN_SET,
     HUB_AUTH_STATE_SET,
@@ -75,6 +76,16 @@ export const blackduckBearerToken = (state = '', action) => {
         case BLACKDUCK_BEARER_TOKEN_SET:
             return token;
 
+        default:
+            return state;
+    }
+};
+
+export const artifactoryUrl = (state ='', action) => {
+    const {artifactoryUrl, type} = action;
+    switch(type) {
+        case ARTIFACTORY_URL_SET:
+            return artifactoryUrl;
         default:
             return state;
     }

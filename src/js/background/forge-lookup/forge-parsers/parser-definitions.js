@@ -130,6 +130,8 @@ export default {
             "versionQuery": "",
             "forgeQuery": "#jf-artifacts div.content-wrapper.ng-scope div div div div jf-artifact-info div jf-tabs.ng-isolate-scope ul.nav.nav-tabs li a span",
             "forgeTabIndex": 1,
+            "defaultTabQuery": "jf-tab[name='General'] jf-general table.jf-data-table.ng-scope tbody tr td",
+            "moduleIdIndex": 5,
             "forgeMap": {
                 "Composer Info": {
                     "name": "packagist",

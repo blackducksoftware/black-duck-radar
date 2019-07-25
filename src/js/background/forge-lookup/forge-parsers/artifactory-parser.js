@@ -6,6 +6,8 @@ class ArtifactoryForgeParser extends DomForgeParser {
         this.forgeQuery = opts.forgeQuery;
         this.forgeMap = opts.forgeMap;
         this.forgeTabIndex = opts.forgeTabIndex;
+        this.defaultTabQuery = opts.defaultTabQuery;
+        this.moduleIdIndex = opts.moduleIdIndex;
         this.getForgeText = this.getForgeText.bind(this);
         this.getComponentText = this.getComponentText.bind(this);
         this.getForgeData = this.getForgeData.bind(this);
@@ -14,7 +16,9 @@ class ArtifactoryForgeParser extends DomForgeParser {
     async getComponentKeys() {
         const forgeQueryObject = {
             forgeQuery: this.forgeQuery,
-            forgeTabIndex: this.forgeTabIndex
+            forgeTabIndex: this.forgeTabIndex,
+            defaultTabQuery: this.defaultTabQuery,
+            moduleIdIndex: this.moduleIdIndex
         };
         const componentData = await this.getForgeText(forgeQueryObject);
         if (DEBUG_AJAX) {
@@ -42,12 +46,19 @@ class ArtifactoryForgeParser extends DomForgeParser {
         return null;
     }
 
-    getForgeData({forgeText}) {
+    getForgeData({forgeText, defaultTabQuery, moduleIdIndex}) {
         const forgeFromMap = this.forgeMap[forgeText];
         if(forgeFromMap) {
             return forgeFromMap;
         }
-        return null;
+        return {
+            name: 'maven',
+            forgeSeparator: ":",
+            blackDuckSeparator: ":",
+            tableQuery: defaultTabQuery,
+            nameIndex: moduleIdIndex,
+            versionIndex: moduleIdIndex
+        };
     }
 
     getForgeText(queryObject) {
@@ -88,7 +99,11 @@ class ArtifactoryForgeParser extends DomForgeParser {
                     return;
                 }
 
-                const forgeData = this.getForgeData({ forgeText });
+                const forgeData = this.getForgeData({
+                    forgeText,
+                    defaultTabQuery: queryObject.defaultTabQuery,
+                    moduleIdIndex: queryObject.moduleIdIndex
+                });
                 if (!forgeData) {
                     reject(new Error(`Forge not found for: ${forgeText}`));
                 }
@@ -100,6 +115,8 @@ class ArtifactoryForgeParser extends DomForgeParser {
             chrome.tabs.executeScript(Number(this.tabId), { code });
         }).then(forgeResult => {
             const componentQueryObject = {
+                forgeName: forgeResult.name,
+                forgeSeparator: forgeResult.forgeSeparator,
                 tableQuery: forgeResult.tableQuery,
                 nameIndex: forgeResult.nameIndex,
                 versionIndex: forgeResult.versionIndex
@@ -153,6 +170,8 @@ class ArtifactoryForgeParser extends DomForgeParser {
 
                 if(nameText && versionText) {
                     chrome.runtime.onMessage.removeListener(componentListener);
+                    let artifactName = nameText;
+                    let artifactVersion = versionText;
                     if (error) {
                         const message = `Failed to fetch component text, nameMissing: ${nameElementMissing}, versionMissing: ${versionElementMissing}`;
                         if (DEBUG_AJAX) {
@@ -162,9 +181,15 @@ class ArtifactoryForgeParser extends DomForgeParser {
                         return;
                     }
 
+                    if(queryObject.forgeName === 'maven') {
+                        const lastSeparator = nameText.lastIndexOf(queryObject.forgeSeparator);
+                        artifactName = nameText.substring(0, lastSeparator);
+                        artifactVersion = nameText.substring(lastSeparator +1, nameText.length);
+                    }
+
                     resolve({
-                        nameText,
-                        versionText
+                        nameText: artifactName,
+                        versionText: artifactVersion
                     });
                 }
             };

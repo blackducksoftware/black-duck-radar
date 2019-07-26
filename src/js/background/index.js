@@ -42,6 +42,7 @@ import { clearStore } from './store/actions/app';
 
 
     const processTabUpdate = async (tab, updateSummary = {}) => {
+        const timestamp = Date.now();
         const didNavigate = updateSummary.status === 'loading';
         const { url, id: tabId } = tab;
         const frame = new Frame(tab);
@@ -50,14 +51,16 @@ import { clearStore } from './store/actions/app';
         let componentKeys = getState('forgeComponentKeysMap', tabId);
         let externalComponent = getState('hubExternalComponentMap', tabId);
         const artifactoryUrl = getState('artifactoryUrl');
-        const hasComponentKeys = Boolean(componentKeys);
         await forgeComponent.loadDefinitions({ artifactoryUrl });
         if(DEBUG_AJAX) {
-            console.log("processTabUpdate - UpdateSummary:     ", updateSummary);
-            console.log("processTabUpdate - DidNavigate:       ", didNavigate);
-            console.log("processTabUpdate - ComponentKeys:     ", componentKeys);
-            console.log("processTabUpdate - ExternalComponent: ", externalComponent);
-            console.log("processTabUpdate - hasComponentKeys:  ", hasComponentKeys);
+            console.log("processTabUpdate ---------------------");
+            console.log("processTabUpdate %s - tabId:             ", timestamp, tabId);
+            console.log("processTabUpdate %s - url:               ", timestamp, url);
+            console.log("processTabUpdate %s - UpdateSummary:     ", timestamp, updateSummary);
+            console.log("processTabUpdate %s - DidNavigate:       ", timestamp, didNavigate);
+            console.log("processTabUpdate %s - Old ComponentKeys:     ", timestamp, componentKeys);
+            console.log("processTabUpdate %s - Old ExternalComponent: ", timestamp, externalComponent);
+            console.log("processTabUpdate ---------------------");
         }
         if (isUrlHashUpdate) {
             // The browser URL has changed but the document hasn't reloaded,
@@ -65,7 +68,7 @@ import { clearStore } from './store/actions/app';
             // the state is potentially out of sync (this may no longer be a component page)
             frame.unload();
             return;
-        } else if (componentKeys && didNavigate) {
+        } else if (didNavigate) {
             // Clear the redux store entries for this tabId. This is important, otherwise the memory footprint
             // for redux will grow during the runtime of the application and eventually crash the extension
             dispatch(clearStore({ tabId }));
@@ -75,33 +78,41 @@ import { clearStore } from './store/actions/app';
         dispatch(performBlackduckConfiguredCheck({ tabId }));
         const chromeExtensionDetails = chrome.app.getDetails();
         dispatch(setChromeExtensionDetails({ chromeExtensionDetails }));
+        if(updateSummary.status === 'complete' || updateSummary.isActivated) {
+            const externalComponentFound = Boolean(externalComponent && componentKeys
+                && externalComponent.name === componentKeys.name
+                && externalComponent.version === componentKeys.version);
+            if(DEBUG_AJAX) {
+                console.log("processTabUpdate %s - externalComponentFound:   ", timestamp, externalComponentFound);
+            }
+            if(externalComponentFound) {
+                dispatch(refreshComponent({ tabId }));
+                // We've already fetched an external component for this tab
+                return;
+            }
 
-        if (externalComponent) {
-            // We've already fetched an external component for this tab
-            return;
-        }
-
-        Button.toggleGlow({
-            isEnabled: false,
-            tabId
-        });
-
-        if (hasComponentKeys === false) {
-            // This could be synchronous if we're parsing the keys from the url, but in cases
-            // like NPM where we need to parse them from the DOM, it may be asynchronous
             componentKeys = await forgeComponent.parseExternalKeys({
                 tabId,
                 url
             });
-            if (componentKeys) {
-                dispatch(setForgeComponentKeys({
-                    tabId,
-                    componentKeys
-                }));
+
+            if (DEBUG_AJAX) {
+                console.log("processTabUpdate ---------------------");
+                console.log("processTabUpdate %s - tabId:             ", timestamp, tabId);
+                console.log("processTabUpdate %s - url:               ", timestamp, url);
+                console.log("processTabUpdate %s - New ComponentKeys: ", timestamp, componentKeys);
+                console.log("processTabUpdate ---------------------");
             }
+
+            await dispatch(setForgeComponentKeys({
+                tabId,
+                componentKeys
+            }));
+
+
+            dispatch(collectUsageData({ tabId }));
         }
         dispatch(refreshComponent({ tabId }));
-        dispatch(collectUsageData({ tabId }));
     };
 
     Tabs.addActivationListener(processTabUpdate);

@@ -21,7 +21,7 @@
             "nameHasVersion": true,
             "nameVersionDelimeter": "-",
             "nameQuery": "div.pod.content.anchors p",
-            "versionQuery": "div.main-content ul.nav-list.slidepanel.sticky-panel-top span[itemprop=softwareVersion]"
+            "versionQuery": "div.main-content.col-md-12 ul.nav-list.slidepanel.sticky-panel-top span[itemprop=softwareVersion]"
         },
         {
 
@@ -132,6 +132,7 @@
             "forgeTabIndex": 1,
             "defaultTabQuery": "jf-tab[name='General'] jf-general table.jf-data-table.ng-scope tbody tr td",
             "moduleIdIndex": 5,
+            "scriptDelayMs": 500,
             "forgeMap": {
                 "Composer Info": {
                     "name": "packagist",

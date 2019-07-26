@@ -8,6 +8,7 @@ class ArtifactoryForgeParser extends DomForgeParser {
         this.forgeTabIndex = opts.forgeTabIndex;
         this.defaultTabQuery = opts.defaultTabQuery;
         this.moduleIdIndex = opts.moduleIdIndex;
+        this.scriptDelayMs = opts.scriptDelayMs || 1000;
         this.date = Date.now();
         this.getForgeText = this.getForgeText.bind(this);
         this.getComponentText = this.getComponentText.bind(this);
@@ -21,7 +22,7 @@ class ArtifactoryForgeParser extends DomForgeParser {
             defaultTabQuery: this.defaultTabQuery,
             moduleIdIndex: this.moduleIdIndex
         };
-
+        await this.sleep(this.scriptDelayMs);
         const componentData = await this.getForgeText(forgeQueryObject);
         if (DEBUG_AJAX) {
             console.log('ARTIFACTORY FORGE PARSER - %s: parsed component text: %s', this.date, JSON.stringify(componentData));

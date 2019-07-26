@@ -109,9 +109,10 @@ import { clearStore } from './store/actions/app';
                 componentKeys
             }));
 
-            dispatch(refreshComponent({ tabId }));
+
             dispatch(collectUsageData({ tabId }));
         }
+        dispatch(refreshComponent({ tabId }));
     };
 
     Tabs.addActivationListener(processTabUpdate);

@@ -102,7 +102,7 @@ export const performBearerTokenRequest = ({ blackduckApiToken, tabId }) => {
     return async (dispatch) => {
         const forgeComponentKeysMap = store.getState('forgeComponentKeysMap');
         try {
-            const componentKeys = forgeComponentKeysMap[tabId];
+            const componentKeys = forgeComponentKeysMap[tabId] || {};
             const token = await hubController.requestBearerToken({
                 blackduckToken: blackduckApiToken,
                 componentKeys

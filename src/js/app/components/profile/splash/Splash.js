@@ -100,7 +100,7 @@ const Splash = ({ isComponentPage, isComponentIdentified, isBlackduckConfigured 
                     3
                 </div>
                 <p className={stepDirection}>
-                    Click the Radar extension icon to see a breakdown of the package's operational, licensing and vulnerability risks.
+                    Click the Radar extension icon to see a breakdown of the package's operational, licensing, and vulnerability risks.
                 </p>
             </div>
             }

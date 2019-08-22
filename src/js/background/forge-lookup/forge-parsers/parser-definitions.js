@@ -164,7 +164,7 @@ export default {
                     "blackDuckSeparator": "/",
                     "tableQuery": "jf-tab[name='NuPkgInfo'] jf-nuget table.jf-data-table.ng-scope tbody tr td",
                     "nameIndex": 1,
-                    "versionIndex": 5
+                    "versionIndex": 3
                 },
                 "Npm Info": {
                     "name": "npmjs",

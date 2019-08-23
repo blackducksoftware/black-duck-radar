@@ -12,7 +12,6 @@
             "versionQuery": "div.inline-headline h1.hidden-xs span"
         },
         {
-
             "site": "metacpan.org",
             "forgeName": "cpan",
             "type": "DOM",
@@ -24,7 +23,6 @@
             "versionQuery": "div.main-content.col-md-12 ul.nav-list.slidepanel.sticky-panel-top span[itemprop=softwareVersion]"
         },
         {
-
             "site": "www.npmjs.com",
             "forgeName": "npmjs",
             "type": "DOM",
@@ -36,7 +34,6 @@
             "versionQuery": "div._702d723c.dib.w-50.bb.b--black-10.pr2 p"
         },
         {
-
             "site": "www.nuget.org",
             "forgeName": "nuget",
             "type": "DOM",
@@ -48,7 +45,6 @@
             "versionQuery": "div.package-title h1 small"
         },
         {
-
             "site": "packagist.org",
             "forgeName": "packagist",
             "type": "DOM",
@@ -60,7 +56,6 @@
             "versionQuery": "div.version-details div.title span.version-number"
         },
         {
-
             "site": "pypi.org",
             "forgeName": "pypi",
             "type": "DOM",
@@ -72,7 +67,6 @@
             "versionQuery": "div.package-header h1"
         },
         {
-
             "site": "rubygems.org",
             "forgeName": "rubygems",
             "type": "DOM",
@@ -84,7 +78,6 @@
             "versionQuery": "div.l-wrap--b h1.t-display i.page__subheading"
         },
         {
-
             "site": "search.maven.org",
             "forgeName": "maven",
             "type": "MAVEN",
@@ -93,7 +86,6 @@
             "artifactPrefixPath": "/artifact/"
         },
         {
-
             "site": "mvnrepository.com",
             "forgeName": "maven",
             "type": "MAVEN",
@@ -102,7 +94,6 @@
             "artifactPrefixPath": "/artifact/"
         },
         {
-
             "site": "repo.maven.apache.org",
             "forgeName": "maven",
             "type": "WEB_PATH",
@@ -112,7 +103,6 @@
             "artifactPrefixDelimeter": "."
         },
         {
-
             "site": "repo1.maven.org",
             "forgeName": "maven",
             "type": "WEB_PATH",
@@ -122,7 +112,6 @@
             "artifactPrefixDelimeter": "."
         },
         {
-
             "type": "ARTIFACTORY",
             "forgeSeparator": ":",
             "blackDuckSeparator": ":",

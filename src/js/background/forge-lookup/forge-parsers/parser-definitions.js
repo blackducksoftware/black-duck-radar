@@ -18,8 +18,8 @@ export default {
             "type": "DOM",
             "forgeSeparator": "/",
             "blackDuckSeparator": "/",
-            "nameHasVersion": true,
-            "nameVersionDelimeter": "-",
+            "nameHasVersion": false,
+            "nameVersionDelimeter": null,
             "nameQuery": "div.main-content.col-md-12 div.breadcrumbs > span[itemprop=name]",
             "versionQuery": "div.main-content.col-md-12 ul.nav-list.slidepanel.sticky-panel-top span[itemprop=softwareVersion]"
         },

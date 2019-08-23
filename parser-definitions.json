@@ -20,7 +20,7 @@
             "blackDuckSeparator": "/",
             "nameHasVersion": true,
             "nameVersionDelimeter": "-",
-            "nameQuery": "div.pod.content.anchors p",
+            "nameQuery": "div.main-content.col-md-12 div.breadcrumbs > span[itemprop=name]",
             "versionQuery": "div.main-content.col-md-12 ul.nav-list.slidepanel.sticky-panel-top span[itemprop=softwareVersion]"
         },
         {
@@ -54,10 +54,10 @@
             "type": "DOM",
             "forgeSeparator": ":",
             "blackDuckSeparator": ":",
-            "nameHasVersion": true,
-            "nameVersionDelimeter": "-",
+            "nameHasVersion": false,
+            "nameVersionDelimeter": null,
             "nameQuery": "h2.title",
-            "versionQuery": "div.version-details span.version-number"
+            "versionQuery": "div.version-details div.title span.version-number"
         },
         {
 
@@ -164,7 +164,7 @@
                     "blackDuckSeparator": "/",
                     "tableQuery": "jf-tab[name='NuPkgInfo'] jf-nuget table.jf-data-table.ng-scope tbody tr td",
                     "nameIndex": 1,
-                    "versionIndex": 5
+                    "versionIndex": 3
                 },
                 "Npm Info": {
                     "name": "npmjs",

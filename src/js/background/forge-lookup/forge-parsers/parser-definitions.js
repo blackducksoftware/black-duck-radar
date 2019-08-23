@@ -54,10 +54,10 @@ export default {
             "type": "DOM",
             "forgeSeparator": ":",
             "blackDuckSeparator": ":",
-            "nameHasVersion": true,
-            "nameVersionDelimeter": "-",
+            "nameHasVersion": false,
+            "nameVersionDelimeter": null,
             "nameQuery": "h2.title",
-            "versionQuery": "div.version-details span.version-number"
+            "versionQuery": "div.version-details div.title span.version-number"
         },
         {
 

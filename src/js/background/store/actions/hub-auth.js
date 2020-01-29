@@ -135,19 +135,20 @@ export const performBlackduckConfiguredCheck = ({ tabId }) => {
             artifactoryUrl: null
         }, (items) => {
             const { blackduckUrl, blackduckApiToken, artifactoryUrl } = items;
+            const decodedApiToken = blackduckApiToken? atob(blackduckApiToken) : null;
             if (blackduckUrl) {
                 dispatch(setBlackduckOrigin(blackduckUrl));
             }
 
-            if (blackduckApiToken) {
-                dispatch(setBlackduckToken(blackduckApiToken));
+            if (decodedApiToken) {
+                dispatch(setBlackduckToken(decodedApiToken));
             }
 
             if(artifactoryUrl) {
                 dispatch(setArtifactoryUrl(artifactoryUrl));
             }
             const urlMissing = !blackduckUrl || blackduckUrl.length <= 0;
-            const tokenMissing = !blackduckApiToken || blackduckApiToken.length <= 0;
+            const tokenMissing = !decodedApiToken || decodedApiToken.length <= 0;
             const invalidConfig = (urlMissing && !tokenMissing)
                 || (!urlMissing && tokenMissing);
 
@@ -157,7 +158,7 @@ export const performBlackduckConfiguredCheck = ({ tabId }) => {
                 dispatch(setBlackduckConfiguredState(loginEnum.INVALID_CONFIG));
             } else {
                 dispatch(performBearerTokenRequest({
-                    blackduckApiToken,
+                    blackduckApiToken: decodedApiToken,
                     tabId
                 }));
             }

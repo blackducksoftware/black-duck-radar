@@ -28,7 +28,7 @@ function saveOptions() {
     if (blackduckUrl && blackduckApiToken) {
         chrome.storage.local.set({
             blackduckUrl: blackduckUrl.value,
-            blackduckApiToken: blackduckApiToken.value,
+            blackduckApiToken: btoa(blackduckApiToken.value),
             artifactoryUrl: artifactoryUrl.value
         }, () => {
             const status = document.getElementById('status');
@@ -49,7 +49,6 @@ function saveOptions() {
         chrome.permissions.request({
             origins: originArray
         }, (granted) => {
-            console.log('granted', granted);
             if (granted) {
                 const status = document.getElementById('status');
                 status.textContent = 'Options saved.';
@@ -78,7 +77,7 @@ function restoreOptions() {
         }
         const tokenElement = document.getElementById('blackduckApiToken');
         if (tokenElement) {
-            tokenElement.value = items.blackduckApiToken;
+            tokenElement.value = atob(items.blackduckApiToken);
         }
         const artifactoryUrlElement = document.getElementById('artifactoryUrl');
         if (artifactoryUrlElement) {

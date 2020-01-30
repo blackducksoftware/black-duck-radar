@@ -1,6 +1,6 @@
 {
   "name": "hub-radar",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Chrome extension for displaying open source packages' licensing, security and operational risk via Black Duck's Knowledge Base",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

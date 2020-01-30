@@ -50,11 +50,7 @@ class Section extends Component {
     }
 
     getUiUrl(apiUrl) {
-        const { blackduckOrigin } = this.props;
-        const versionId = apiUrl.split('/')
-            .pop();
-        const url = new URL(blackduckOrigin);
-        url.pathname = `ui/versions/id:${versionId}`;
+        const url = new URL(apiUrl);
         return url;
     }
 
@@ -64,14 +60,14 @@ class Section extends Component {
         }
 
         const { projectList } = this.props;
-
         return [
             projectList.map(project => {
+                const componentsLink = project._meta.links.find(link => link.rel === 'components').href;
                 return (
                     <Project
                         name={project.projectName}
                         version={project.versionName}
-                        url={this.getUiUrl(project._meta.href)}
+                        url={this.getUiUrl(componentsLink)}
                         phase={project.phase}
                     />
                 );

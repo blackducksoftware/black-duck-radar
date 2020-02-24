@@ -332,8 +332,12 @@ class Hub {
      * */
     get(baseUrl, { queryMap, fetchOpts } = {}) {
         const url = this.getRequestUrl(baseUrl, queryMap);
+        const headers = {
+            Accept: 'application/json'
+        };
         const opts = Object.assign({
-            method: 'GET'
+            method: 'GET',
+            headers
         }, fetchOpts);
 
         return this.fetch(url, opts);

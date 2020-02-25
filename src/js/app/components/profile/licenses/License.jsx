@@ -35,19 +35,21 @@ class License extends Component {
 
     getSharingLabel() {
         const { licenseTypeUrl } = this.props;
-        const sharingLabel = this.props.codeSharing
+        let codeSharingLabel = "";
+        if(this.props.codeSharing) {
+            codeSharingLabel = this.props.codeSharing
             .split('_')
             .map(str => str[0] + str.slice(1)
-                .toLocaleLowerCase())
+            .toLocaleLowerCase())
             .join(' ');
-
-        if (sharingLabel) {
+        }
+        if (codeSharingLabel) {
             return (
                 <a href={licenseTypeUrl}
                    target='_blank'
-                   title={sharingLabel}
+                   title={codeSharingLabel}
                    rel='noopener noreferrer'>
-                    {sharingLabel}
+                    {codeSharingLabel}
                 </a>
             );
         }

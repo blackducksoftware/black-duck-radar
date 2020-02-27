@@ -29,7 +29,7 @@ import Tab from 'app/models/tab';
 import { block } from 'css/common/blocks';
 import { SYNC_PENDING } from 'shared/constants';
 
-class LicenseContainer extends Component {
+class LicensesContainer extends Component {
     static contextTypes = {
         store: PropTypes.object,
         router: PropTypes.object
@@ -63,7 +63,7 @@ class LicenseContainer extends Component {
     getUiUrl(apiUrl) {
         const { blackduckOrigin } = this.props;
         const licenseId = apiUrl.split('/')
-            .pop();
+        .pop();
         const url = new URL(blackduckOrigin);
         url.pathname = `api/licenses/${licenseId}/text`;
         return url;
@@ -82,6 +82,7 @@ class LicenseContainer extends Component {
                 <License
                     key={license.license}
                     name={license.name}
+                    licenseFamilySummary={license.licenseFamilySummary}
                     codeSharing={license.codeSharing}
                     licenseUrl={this.getUiUrl(license.license)}
                     licenseTypeUrl={this.getLicenseTypeUrl()}
@@ -120,4 +121,4 @@ const mapStateToProps = ({ blackduckOrigin, hubComponentVersionMap }) => {
     };
 };
 
-export default connect(mapStateToProps)(LicenseContainer);
+export default connect(mapStateToProps)(LicensesContainer);

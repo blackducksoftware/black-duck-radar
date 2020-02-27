@@ -23,37 +23,39 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { licenseRow, licenseStatus, nameLabel, sharingLabel } from 'css/license';
+import { licenseRow, nameLabel, sharingLabel } from 'css/license';
 
 class License extends Component {
-    static propTypes = {
-        codeSharing: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        licenseUrl: PropTypes.object.isRequired,
-        licenseTypeUrl: PropTypes.string.isRequired
-    };
 
     getSharingLabel() {
-        const { licenseTypeUrl } = this.props;
-        let codeSharingLabel = "";
-        if(this.props.codeSharing) {
-            codeSharingLabel = this.props.codeSharing
+        const { licenseTypeUrl, licenseFamilySummary } = this.props;
+        let finalLicenseTypeLabel = "";
+        let finalLicenseTypeURL = "";
+        if (this.props.codeSharing) {
+            finalLicenseTypeURL = licenseTypeUrl;
+            finalLicenseTypeLabel = this.props.codeSharing
             .split('_')
             .map(str => str[0] + str.slice(1)
             .toLocaleLowerCase())
             .join(' ');
         }
-        if (codeSharingLabel) {
+        if (licenseFamilySummary && licenseFamilySummary.href && licenseFamilySummary.name) {
+            finalLicenseTypeURL = licenseFamilySummary.href;
+            finalLicenseTypeLabel = licenseFamilySummary.name;
+        }
+
+
+        if (finalLicenseTypeLabel) {
             return (
-                <a href={licenseTypeUrl}
+                <a href={finalLicenseTypeURL}
                    target='_blank'
-                   title={codeSharingLabel}
+                   title={finalLicenseTypeLabel}
                    rel='noopener noreferrer'>
-                    {codeSharingLabel}
+                    {finalLicenseTypeLabel}
                 </a>
             );
         }
-        return codeSharingLabel;
+        return finalLicenseTypeLabel;
     }
 
     getNameLabel() {
@@ -84,5 +86,13 @@ class License extends Component {
         );
     }
 }
+
+License.propTypes = {
+    licenseFamilySummary: PropTypes.object.isRequired,
+    codeSharing: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    licenseUrl: PropTypes.object.isRequired,
+    licenseTypeUrl: PropTypes.string.isRequired
+};
 
 export default License;

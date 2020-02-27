@@ -127,7 +127,7 @@ export const syncHubExternalComponent = ({ tabId }) => {
             // We're currently syncing this value
             return;
         }
-        dispatch(setFetchingData(tabId,true));
+        dispatch(setFetchingData(tabId, true));
         dispatch(setHubExternalComponent(tabId, SYNC_PENDING));
 
         const componentKeys = store.getState('forgeComponentKeysMap', tabId) || {};
@@ -141,7 +141,7 @@ export const syncHubExternalComponent = ({ tabId }) => {
         }
 
         dispatch(setHubExternalComponent(tabId, component));
-        dispatch(setFetchingData(tabId,false));
+        dispatch(setFetchingData(tabId, false));
         return component;
     };
 };
@@ -161,11 +161,11 @@ export const syncHubComponentVersion = ({ tabId, externalComponent }) => {
             // We're currently syncing this value
             return;
         }
-        dispatch(setFetchingData(tabId,true));
+        dispatch(setFetchingData(tabId, true));
         dispatch(setHubComponentVersion(tabId, SYNC_PENDING));
         const componentVersion = await hubController.getComponentVersion(externalComponent);
         dispatch(setHubComponentVersion(tabId, componentVersion));
-        dispatch(setFetchingData(tabId,false));
+        dispatch(setFetchingData(tabId, false));
         return componentVersion;
     };
 };
@@ -185,11 +185,11 @@ export const syncHubComponentVersionReferenceProjects = ({ tabId, componentVersi
             // We're currently syncing this value
             return;
         }
-        dispatch(setFetchingData(tabId,true));
+        dispatch(setFetchingData(tabId, true));
         dispatch(setHubComponentVersionReferenceProjects(tabId, SYNC_PENDING));
         const referenceProjects = await hubController.getComponentVersionReferenceProjects(componentVersion);
         dispatch(setHubComponentVersionReferenceProjects(tabId, referenceProjects));
-        dispatch(setFetchingData(tabId,false));
+        dispatch(setFetchingData(tabId, false));
         return referenceProjects;
     };
 };
@@ -209,11 +209,11 @@ export const syncHubProjectVersionComponents = ({ tabId, externalComponent, refe
             // We're currently syncing this value
             return;
         }
-        dispatch(setFetchingData(tabId,true));
+        dispatch(setFetchingData(tabId, true));
         dispatch(setHubProjectVersionComponents(tabId, SYNC_PENDING));
         const projectVersionComponents = await hubController.getMatchingBOMComponents(externalComponent, referenceProjects);
         dispatch(setHubProjectVersionComponents(tabId, projectVersionComponents));
-        dispatch(setFetchingData(tabId,false));
+        dispatch(setFetchingData(tabId, false));
         return projectVersionComponents;
     };
 };
@@ -233,7 +233,7 @@ export const syncHubComponentPolicyRules = ({ tabId, projectVersionComponents })
             // We're currently syncing this value
             return;
         }
-        dispatch(setFetchingData(tabId,true));
+        dispatch(setFetchingData(tabId, true));
         dispatch(setHubComponentPolicyRules(tabId, SYNC_PENDING));
         const projectVersionsWithViolations = projectVersionComponents.filter(component => {
             const hasPolicyViolation = component.policyStatus && component.policyStatus === 'IN_VIOLATION';
@@ -251,7 +251,7 @@ export const syncHubComponentPolicyRules = ({ tabId, projectVersionComponents })
         });
         // policies is an array of arrays, concat is just flattening them
         dispatch(setHubComponentPolicyRules(tabId, filteredPolicyList));
-        dispatch(setFetchingData(tabId,false));
+        dispatch(setFetchingData(tabId, false));
         return filteredPolicyList;
     };
 };
@@ -271,12 +271,12 @@ export const syncHubComponentVulnerabilities = ({ tabId, componentVersion }) => 
             // We're currently syncing this value
             return;
         }
-        dispatch(setFetchingData(tabId,true));
+        dispatch(setFetchingData(tabId, true));
         dispatch(setHubComponentVulnerabilities(tabId, SYNC_PENDING));
         const vulnerabilities = await hubController.getComponentVulnerabilities(componentVersion);
         // policies is an array of arrays, concat is just flattening them
         dispatch(setHubComponentVulnerabilities(tabId, vulnerabilities));
-        dispatch(setFetchingData(tabId,false));
+        dispatch(setFetchingData(tabId, false));
         return vulnerabilities;
     };
 };
@@ -297,11 +297,11 @@ export const syncHubComponentRiskProfile = ({ tabId, componentVersion }) => {
             return;
         }
 
-        dispatch(setFetchingData(tabId,true));
+        dispatch(setFetchingData(tabId, true));
         dispatch(setHubComponentRiskProfile(tabId, SYNC_PENDING));
         const riskProfile = await hubController.getComponentRiskProfile(componentVersion);
         dispatch(setHubComponentRiskProfile(tabId, riskProfile));
-        dispatch(setFetchingData(tabId,false));
+        dispatch(setFetchingData(tabId, false));
     };
 };
 
@@ -414,7 +414,7 @@ export const isForgeToBeAdded = (phoneHomeData, forgeName) => {
 };
 
 export const getForgeName = (tabId, forgeComponentKeysMap) => {
-    if (tabId && tabId.toString() in forgeComponentKeysMap) {
+    if (tabId && tabId.toString() in forgeComponentKeysMap && forgeComponentKeysMap[tabId]) {
         return forgeComponentKeysMap[tabId].forgeName;
     }
     return null;
@@ -459,7 +459,7 @@ export const performPhoneHomeIfNeeded = () => {
                 const newPhoneHomeData = {
                     phoneHomeData: {
                         lastUpdated: Date.now()
-                            .toString(),
+                        .toString(),
                         forgeNames: []
                     }
                 };

@@ -84,23 +84,25 @@ class ForgeLookup {
     }
 
     getForgeParser(opts) {
-        const parsedUrl = new URL(opts.url);
-        const { hostname } = parsedUrl;
-        if(this.parserMap) {
-            const definition = this.parserMap.get(hostname);
-            if (definition) {
-                const props = Object.assign({}, definition, opts, { url: parsedUrl });
-                switch (definition.type) {
-                    case 'DOM':
-                        return new DomForgeParser(props);
-                    case 'MAVEN':
-                        return new MavenParser(props);
-                    case 'WEB_PATH':
-                        return new WebFilePathParser(props);
-                    case 'ARTIFACTORY':
-                        return new ArtifactoryForgeParser(props);
-                    default:
-                        return null;
+        if (opts && opts.url && opts.url.length > 0) {
+            const parsedUrl = new URL(opts.url);
+            const { hostname } = parsedUrl;
+            if (this.parserMap) {
+                const definition = this.parserMap.get(hostname);
+                if (definition) {
+                    const props = Object.assign({}, definition, opts, { url: parsedUrl });
+                    switch (definition.type) {
+                        case 'DOM':
+                            return new DomForgeParser(props);
+                        case 'MAVEN':
+                            return new MavenParser(props);
+                        case 'WEB_PATH':
+                            return new WebFilePathParser(props);
+                        case 'ARTIFACTORY':
+                            return new ArtifactoryForgeParser(props);
+                        default:
+                            return null;
+                    }
                 }
             }
         }

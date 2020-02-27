@@ -227,9 +227,7 @@ class Hub {
      * */
     getProjectVersionComponents(projectVersion, externalComponent) {
         let componentQuery = null;
-        let check = externalComponent && externalComponent.componentName && externalComponent.componentName.length > 0;
-        console.log(`The check was ${check}`);
-        if (check) {
+        if (externalComponent && externalComponent.componentName && externalComponent.componentName.length > 0) {
             componentQuery = {
                 q: `componentOrVersionName:${externalComponent.componentName}`
             };

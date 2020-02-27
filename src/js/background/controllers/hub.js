@@ -75,12 +75,12 @@ class Hub {
                 console.log('execute request to validate authentication token');
             }
             const response = await promise
-                .catch((error) => {
-                    if (DEBUG_AJAX) {
-                        console.log('error token is invalid. cause: ', error);
-                    }
-                    return error;
-                });
+            .catch((error) => {
+                if (DEBUG_AJAX) {
+                    console.log('error token is invalid. cause: ', error);
+                }
+                return error;
+            });
             // error occurred make sure it isn't 401 or 403.
             let tokenResponse = false;
             if (response.status_code) {
@@ -122,7 +122,7 @@ class Hub {
             };
             const response = await fetch(url, opts);
             const body = await response.json()
-                .catch(() => null);
+            .catch(() => null);
             if (body) {
                 currentBearerToken = body.bearerToken;
             }
@@ -137,7 +137,7 @@ class Hub {
 
     getCurrentUser() {
         return this.get('/api/v1/currentuser')
-            .catch(() => null);
+        .catch(() => null);
     }
 
     createExternalComponentsPromise({ forgeName, hubExternalId } = {}) {
@@ -196,7 +196,7 @@ class Hub {
     * */
     async getReferenceProjectVersion({ projectName, projectVersionUrl } = {}) {
         const projectVersion = await this.get(projectVersionUrl)
-            .catch(() => null);
+        .catch(() => null);
 
         if (projectVersion) {
             projectVersion.projectName = projectName;
@@ -210,12 +210,12 @@ class Hub {
      * @param {ProjectVersion[]}
      * Returns an array of components, one from each project's BOM that match the external component
      * */
-    async getMatchingBOMComponents({ version }, projectVersions) {
+    async getMatchingBOMComponents(externalComponent, projectVersions) {
         return Promise.all(projectVersions.map(async (projectVersion) => {
-            const bomComponents = await this.getProjectVersionComponents(projectVersion);
-            return bomComponents.filter(({ componentVersion }) => componentVersion === version);
+            const bomComponents = await this.getProjectVersionComponents(projectVersion, externalComponent);
+            return bomComponents.filter(({ componentVersion }) => componentVersion === externalComponent);
         }))
-            .then(componentArrays => Array.prototype.concat.apply([], componentArrays));
+        .then(componentArrays => Array.prototype.concat.apply([], componentArrays));
     }
 
     getComponentPolicyViolations(bomComponent) {
@@ -225,8 +225,16 @@ class Hub {
     /*
      * @param {ProjectVersion}
      * */
-    getProjectVersionComponents(projectVersion) {
-        return this.getListRelation(projectVersion, 'components');
+    getProjectVersionComponents(projectVersion, externalComponent) {
+        let componentQuery = null;
+        let check = externalComponent && externalComponent.componentName && externalComponent.componentName.length > 0;
+        console.log(`The check was ${check}`);
+        if (check) {
+            componentQuery = {
+                q: `componentOrVersionName:${externalComponent.componentName}`
+            };
+        }
+        return this.getListRelation(projectVersion, 'components', componentQuery);
     }
 
     async getComponentVulnerabilities(componentVersion) {
@@ -253,7 +261,11 @@ class Hub {
     }
 
     async getListRelation(model, relationship) {
-        const response = await this.getRelation(model, relationship);
+        return this.getListRelation(model, relationship, null)
+    }
+
+    async getListRelation(model, relationship, query) {
+        const response = await this.getRelation(model, relationship, query);
         return response ? response.items : [];
     }
 
@@ -286,14 +298,23 @@ class Hub {
     }
 
     getRelation(model, relationship) {
+        return this.getRelation(model, relationship, null)
+    }
+
+    getRelation(model, relationship, query) {
         const hateoasModel = new HateoasModel(model);
         const relationUrl = hateoasModel.getFirstLink(relationship);
-        return this.get(relationUrl, {
+        let getOpts = {
             queryMap: {
                 limit: 10000
             }
-        })
-            .catch(() => null);
+        };
+        if (query) {
+            const queryMap = Object.assign(getOpts.queryMap, query);
+            getOpts = { queryMap };
+        }
+        return this.get(relationUrl, getOpts)
+        .catch(() => null);
     }
 
     /*
@@ -319,9 +340,9 @@ class Hub {
         }
 
         Object.keys(queryMap)
-            .forEach(key => {
-                url.searchParams.append(key, queryMap[key]);
-            });
+        .forEach(key => {
+            url.searchParams.append(key, queryMap[key]);
+        });
 
         return url;
     }
@@ -371,7 +392,7 @@ class Hub {
 
         const response = await fetch(url, opts);
         const body = await response.json()
-            .catch(() => null);
+        .catch(() => null);
 
         if (!response.ok) {
             if (DEBUG_AJAX) {

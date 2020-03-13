@@ -239,7 +239,7 @@ class Hub {
         const vulnerabilities = await this.getListRelation(componentVersion, 'vulnerabilities');
         return vulnerabilities.map(vulnerability => {
             if(!vulnerability) {
-                return undefined;
+                return {};
             }
             let detailsUrl = '';
             let vulnerabilityName = vulnerability.vulnerabilityName;

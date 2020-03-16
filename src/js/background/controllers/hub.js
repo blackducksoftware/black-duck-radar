@@ -238,17 +238,39 @@ class Hub {
     async getComponentVulnerabilities(componentVersion) {
         const vulnerabilities = await this.getListRelation(componentVersion, 'vulnerabilities');
         return vulnerabilities.map(vulnerability => {
+            if(!vulnerability) {
+                return {};
+            }
             let detailsUrl = '';
+            let vulnerabilityName = vulnerability.vulnerabilityName;
+            let vulnerabilityPublishedDate = vulnerability.vulnerabilityPublishedDate;
+            let vulnerabilityUpdatedDate = vulnerability.vulnerabilityUpdatedDate;
 
-            if (vulnerability.source === 'NVD') {
-                detailsUrl = `https://web.nvd.nist.gov/view/vuln/search-results?query=${vulnerability.vulnerabilityName}&search_type=all&cves=on`;
-            } else if (vulnerability.source === 'VULNDB') {
-                detailsUrl = `${this.getOrigin()}/#vulnerabilities/id:${vulnerability.vulnerabilityName}/view:overview`;
-            } else if (vulnerability.source === 'BDSA') {
-                detailsUrl = `${this.getOrigin()}/api/vulnerabilities/${vulnerability.vulnerabilityName}/overview`;
+            if(vulnerability.name) {
+                vulnerabilityName = vulnerability.name;
+            }
+            if(vulnerability.publishedDate) {
+                vulnerabilityPublishedDate = vulnerability.publishedDate;
             }
 
+            if(vulnerability.updatedDate) {
+                vulnerabilityUpdatedDate = vulnerability.updatedDate;
+            }
+
+            if (vulnerability.source === 'NVD') {
+                detailsUrl = `https://web.nvd.nist.gov/view/vuln/search-results?query=${vulnerabilityName}&search_type=all&cves=on`;
+            } else if (vulnerability.source === 'VULNDB') {
+                detailsUrl = `${this.getOrigin()}/#vulnerabilities/id:${vulnerabilityName}/view:overview`;
+            } else if (vulnerability.source === 'BDSA') {
+                detailsUrl = `${this.getOrigin()}/api/vulnerabilities/${vulnerabilityName}/overview`;
+            }
+
+            // always add vulnerabilityName, vulnerabilityPublishedDate, and vulnerabilityUpdatedDate
+            // since that is the key the vulnerability section is looking for.
             return Object.assign(vulnerability, {
+                vulnerabilityName,
+                vulnerabilityPublishedDate,
+                vulnerabilityUpdatedDate,
                 detailsUrl
             });
         });

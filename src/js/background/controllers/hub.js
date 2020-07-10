@@ -213,7 +213,7 @@ class Hub {
     async getMatchingBOMComponents(externalComponent, projectVersions) {
         return Promise.all(projectVersions.map(async (projectVersion) => {
             const bomComponents = await this.getProjectVersionComponents(projectVersion, externalComponent);
-            return bomComponents.filter(({ componentVersion }) => componentVersion === externalComponent);
+            return bomComponents.filter(({ componentVersion }) => componentVersion === externalComponent.version);
         }))
         .then(componentArrays => Array.prototype.concat.apply([], componentArrays));
     }

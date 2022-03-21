@@ -33,7 +33,7 @@ export default {
             "nameHasVersion": false,
             "nameVersionDelimeter": null,
             "nameQuery": "div.w-100.ph0-l.ph3.ph4-m h2.cd6ce1fd.flex.flex-row.justify-start.items-center.w-100.fw6.mt3.black.dib.ma0.tracked-tight.no-underline.hover-black.f3-ns span",
-            "versionQuery": "div._702d723c.dib.w-50.bb.b--black-10.pr2 p"
+            "versionQuery": "div._702d723c.dib.w-50.bb.b--black-10.pr2 p.f2874b88.fw6.mb3.mt2.truncate.black-80.f4"
         },
         {
 
@@ -42,10 +42,10 @@ export default {
             "type": "DOM",
             "forgeSeparator": "/",
             "blackDuckSeparator": "/",
-            "nameHasVersion": true,
+            "nameHasVersion": false,
             "nameVersionDelimeter": " ",
-            "nameQuery": "div.package-title h1",
-            "versionQuery": "div.package-title h1 small"
+            "nameQuery": "div.package-title h1 span.title",
+            "versionQuery": "div.package-title h1 span.version-title"
         },
         {
 
